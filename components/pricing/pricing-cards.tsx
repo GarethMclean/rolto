@@ -56,7 +56,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
                     <span className="mr-2 text-muted-foreground/80 line-through">
                       ${offer.prices.monthly}
                     </span>
-                    <span>${offer.prices.yearly / 12}</span>
+                    <span>${(offer.prices.yearly / 12).toFixed(2)}</span>
                   </>
                 ) : (
                   `$${offer.prices.monthly}`
