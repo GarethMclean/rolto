@@ -2,50 +2,50 @@ import { FeatureLdg, InfoLdg, TestimonialType } from "types";
 
 export const infos: InfoLdg[] = [
   {
-    title: "Empower your projects",
+    title: "Smarter Conversations. Happier Customers.",
     description:
-      "Unlock the full potential of your projects with our open-source SaaS platform. Collaborate seamlessly, innovate effortlessly, and scale limitlessly.",
+      "Rolto helps your business deliver instant, AI-powered chat experiences that feel human — without the heavy lift. Automate answers, hand off to real agents, and build better customer relationships, faster.",
     image: "/_static/illustrations/work-from-home.jpg",
     list: [
       {
-        title: "Collaborative",
-        description: "Work together with your team members in real-time.",
+        title: "AI-First, Human-Friendly",
+        description: "Start with AI, escalate to humans when needed — no disconnects.",
         icon: "laptop",
       },
       {
-        title: "Innovative",
-        description: "Stay ahead of the curve with access constant updates.",
+        title: "Always On",
+        description: "Provide 24/7 responses with contextual accuracy and no extra staff.",
         icon: "settings",
       },
       {
-        title: "Scalable",
+        title: "Built to Grow",
         description:
-          "Our platform offers the scalability needed to adapt to your needs.",
+          "Easily scale support across teams, channels, and customer types as you grow.",
         icon: "search",
       },
     ],
   },
   {
-    title: "Seamless Integration",
+    title: "Plug into Your Workflow",
     description:
-      "Integrate our open-source SaaS seamlessly into your existing workflows. Effortlessly connect with your favorite tools and services for a streamlined experience.",
+      "Rolto integrates with your website in minutes and connects to your tools, docs, and workflows. No code. No friction. Just smarter support.",
     image: "/_static/illustrations/work-from-home.jpg",
     list: [
       {
-        title: "Flexible",
+        title: "Drop-in Widget",
         description:
-          "Customize your integrations to fit your unique requirements.",
+          "Embed with a single script tag and customize the look and feel instantly.",
         icon: "laptop",
       },
       {
-        title: "Efficient",
-        description: "Streamline your processes and reducing manual effort.",
+        title: "RAG-Ready",
+        description: "Upload your docs or connect sources — AI learns what matters.",
         icon: "search",
       },
       {
-        title: "Reliable",
+        title: "Customizable Logic",
         description:
-          "Rely on our robust infrastructure and comprehensive documentation.",
+          "Set chat modes, fallback behavior, and handoff rules that suit your brand.",
         icon: "settings",
       },
     ],
@@ -54,97 +54,91 @@ export const infos: InfoLdg[] = [
 
 export const features: FeatureLdg[] = [
   {
-    title: "Feature 1",
-    description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
-    link: "/",
-    icon: "nextjs",
-  },
-  {
-    title: "Feature 2",
-    description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
-    link: "/",
-    icon: "google",
-  },
-  {
-    title: "Feature 3",
-    description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
-    link: "/",
-    icon: "gitHub",
-  },
-  {
-    title: "Feature 4",
-    description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
+    title: "AI Chat Widget",
+    description: "A fully branded, intelligent chatbot you can embed on any website.",
     link: "/",
     icon: "laptop",
   },
   {
-    title: "Feature 5",
-    description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
+    title: "Human Handoff",
+    description: "Let agents jump in when needed via the Rolto business dashboard.",
     link: "/",
     icon: "user",
   },
   {
-    title: "Feature 6",
-    description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
+    title: "Custom Knowledge Base",
+    description: "Upload files or paste content to train your bot — no engineering needed.",
     link: "/",
     icon: "copy",
+  },
+  {
+    title: "Session History",
+    description: "View and analyze all chat sessions, AI responses, and handoffs.",
+    link: "/",
+    icon: "gitHub",
+  },
+  {
+    title: "Company Dashboard",
+    description: "Manage your chatbot setup, team permissions, and conversation logs.",
+    link: "/",
+    icon: "settings",
+  },
+  {
+    title: "Flexible Modes",
+    description: "Choose between AI-first, agent-first, hybrid, or menu-only flows.",
+    link: "/",
+    icon: "nextjs",
   },
 ];
 
 export const testimonials: TestimonialType[] = [
   {
-    name: "John Doe",
-    job: "Full Stack Developer",
-    image: "https://randomuser.me/api/portraits/men/1.jpg",
+    name: "Natalie Reed",
+    job: "Customer Experience Lead",
+    image: "https://randomuser.me/api/portraits/women/11.jpg",
     review:
-      "The next-saas-stripe-starter repo has truly revolutionized my development workflow. With its comprehensive features and seamless integration with Stripe, I've been able to build and deploy projects faster than ever before. The documentation is clear and concise, making it easy to navigate through the setup process. I highly recommend next-saas-stripe-starter to any developer.",
+      "Rolto has completely transformed how we handle customer support. Our team is faster, our customers are happier, and our response times dropped overnight.",
   },
   {
-    name: "Alice Smith",
-    job: "UI/UX Designer",
-    image: "https://randomuser.me/api/portraits/women/2.jpg",
+    name: "Marcus Lee",
+    job: "Head of Growth",
+    image: "https://randomuser.me/api/portraits/men/14.jpg",
     review:
-      "Thanks to next-saas-stripe-starter, I've been able to create modern and attractive user interfaces in record time. The starter kit provides a solid foundation for building sleek and intuitive designs, allowing me to focus more on the creative aspects of my work.",
+      "We deployed Rolto in under 10 minutes. The AI answers 80% of inbound questions, freeing up our team to focus on actual growth.",
   },
   {
-    name: "David Johnson",
-    job: "DevOps Engineer",
-    image: "https://randomuser.me/api/portraits/men/3.jpg",
+    name: "Sara Mitchell",
+    job: "Product Manager",
+    image: "https://randomuser.me/api/portraits/women/15.jpg",
     review:
-      "Thanks to next-saas-stripe-starter, I was able to streamline the entire process and get payments up and running in no time. ",
+      "What I love about Rolto is how flexible it is. From onboarding to support to feedback loops, it just fits into everything we do.",
   },
   {
-    name: "Michael Wilson",
-    job: "Project Manager",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
+    name: "Tom Alvarez",
+    job: "Startup Founder",
+    image: "https://randomuser.me/api/portraits/men/17.jpg",
     review:
-      "I'm impressed by the quality of code and clear documentation of next-saas-stripe-starter. Kudos to the team!",
+      "We used to spend hours responding to support emails. Now Rolto handles most of it — and customers still feel heard. Game-changer.",
   },
   {
-    name: "Sophia Garcia",
-    job: "Data Analyst",
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
+    name: "Priya Desai",
+    job: "Digital Marketer",
+    image: "https://randomuser.me/api/portraits/women/19.jpg",
     review:
-      "next-saas-stripe-starter provided me with the tools I needed to efficiently manage user data. Thank you so much!",
+      "Rolto’s real-time responses helped us convert more website visitors than any other channel. It’s like having a smart sales rep working 24/7.",
   },
   {
-    name: "Emily Brown",
-    job: "Marketing Manager",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
+    name: "Liam Carter",
+    job: "Operations Director",
+    image: "https://randomuser.me/api/portraits/men/21.jpg",
     review:
-      "next-saas-stripe-starter has been an invaluable asset in my role as a marketing manager. With its seamless integration with Stripe, I've been able to launch targeted marketing campaigns with built-in payment functionality, allowing us to monetize our products and services more effectively.",
+      "Rolto is one of those tools that just quietly does its job perfectly. It's simple, fast, and exactly what we needed.",
   },
   {
-    name: "Jason Stan",
-    job: "Web Designer",
-    image: "https://randomuser.me/api/portraits/men/9.jpg",
+    name: "Jade Thompson",
+    job: "UX Designer",
+    image: "https://randomuser.me/api/portraits/women/23.jpg",
     review:
-      "Thanks to next-saas-stripe-starter, I've been able to create modern and attractive user interfaces in record time. The starter kit provides a solid foundation for building sleek and intuitive designs, allowing me to focus more on the creative aspects of my work.",
+      "We wanted a chatbot that didn't feel robotic. Rolto nails that balance of automation and empathy.",
   },
 ];

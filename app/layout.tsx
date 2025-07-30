@@ -1,10 +1,12 @@
+"use client";
 import "@/styles/globals.css";
 
 import { fontGeist, fontHeading, fontSans, fontUrban } from "@/assets/fonts";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import { useEffect } from "react";
 
-import { cn, constructMetadata } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@/components/analytics";
 import ModalProvider from "@/components/modals/providers";
@@ -14,9 +16,24 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export const metadata = constructMetadata();
-
 export default function RootLayout({ children }: RootLayoutProps) {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const chatbotId = "cb_49a4cf98";
+      const script = document.createElement("script");
+      script.src = "https://chat-to-eight.vercel.app/widget.js";
+      script.onload = function () {
+        // @ts-ignore
+        window.AIChatbot?.init({
+          chatbotId,
+          position: "bottom-right",
+          theme: "light",
+        });
+      };
+      document.head.appendChild(script);
+    }
+  }, []);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
@@ -29,6 +46,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontGeist.variable,
         )}
       >
+        <div id="ai-chatbot-widget"></div>
         <SessionProvider>
           <ThemeProvider
             attribute="class"
