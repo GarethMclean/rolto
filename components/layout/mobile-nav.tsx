@@ -100,7 +100,9 @@ export function NavMobile() {
             <>
               <li className="py-3">
                 <Link
-                  href="/login"
+                  href="https://app.rolto.io/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
                   className="flex w-full font-medium capitalize"
                 >
@@ -110,7 +112,9 @@ export function NavMobile() {
 
               <li className="py-3">
                 <Link
-                  href="/register"
+                  href="https://app.rolto.io/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
                   className="flex w-full font-medium capitalize"
                 >
