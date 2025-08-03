@@ -1,26 +1,22 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
-import { env } from "@/env.mjs";
 import { siteConfig } from "@/config/site";
 import { cn, nFormatter } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
 
-export default async function HeroLanding() {
-  const { stargazers_count: stars } = await fetch(
-    "https://api.github.com/repos/mickasmt/next-saas-stripe-starter",
-    {
-      ...(env.GITHUB_OAUTH_TOKEN && {
-        headers: {
-          Authorization: `Bearer ${process.env.GITHUB_OAUTH_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      }),
-      next: { revalidate: 3600 },
-    },
-  )
-    .then((res) => res.json())
-    .catch((e) => console.log(e));
+export default function HeroLanding() {
+  const [stars, setStars] = useState<number>(0);
+
+  useEffect(() => {
+    fetch("https://api.github.com/repos/mickasmt/next-saas-stripe-starter")
+      .then((res) => res.json())
+      .then((data) => setStars(data.stargazers_count))
+      .catch((e) => console.log(e));
+  }, []);
 
   return (
     <section className="space-y-6 py-12 sm:py-20 lg:py-20">
