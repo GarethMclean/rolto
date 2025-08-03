@@ -98,12 +98,12 @@ export default function PreviewLanding() {
     <div className="pb-6 sm:pb-16">
       <MaxWidthWrapper>
         <div className="rounded-xl h-[calc(100vh-2rem)] md:h-[calc(100vh-4rem)] lg:h-[calc(100vh-6rem)] border border-gray-200 dark:border-gray-800 bg-background shadow-sm">
-          <div id="preview-container" className="relative h-full w-full overflow-hidden rounded-xl">
+          <div id="preview-container" className="relative size-full overflow-hidden rounded-xl">
             {showIframe && websiteUrl ? (
-              <div className="relative h-full w-full iframe-container">
+              <div className="relative size-full iframe-container">
                 <iframe
                   src={websiteUrl}
-                  className="absolute inset-0 h-full w-full"
+                  className="absolute inset-0 size-full"
                   allow="fullscreen"
                   onError={handleIframeError}
                   sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"
@@ -114,7 +114,7 @@ export default function PreviewLanding() {
                   className="absolute bottom-4 right-4 z-[100] pointer-events-auto"
                 />
                 {/* Button container */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
+                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
                   <Button
                     size="sm"
                     variant="secondary"
@@ -132,10 +132,10 @@ export default function PreviewLanding() {
                 </div>
               </div>
             ) : (
-              <div className="relative h-full w-full">
+              <div className="relative size-full">
                 {/* Blurred website placeholder */}
                 <div
-                  className="absolute inset-0 bg-cover bg-center blur-sm opacity-50"
+                  className="absolute inset-0 bg-center bg-cover blur-sm opacity-50"
                   style={{
                     backgroundImage: "url('/placeholder-website.png')",
                     filter: "grayscale(1)",
@@ -143,20 +143,20 @@ export default function PreviewLanding() {
                 />
 
                 {/* URL input overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/30 p-6 backdrop-blur-sm">
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 bg-black/30 backdrop-blur-sm">
                   <div className="w-full max-w-md space-y-4">
                     <Input
                       type="url"
                       placeholder="Enter your website URL (e.g., example.com)"
                       value={inputUrl}
                       onChange={(e) => setInputUrl(e.target.value)}
-                      className="h-12 bg-white/10 text-lg"
+                      className="text-lg h-12 bg-white/10"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleSubmit();
                       }}
                     />
                     <Button
-                      className="w-full h-12 text-lg"
+                      className="h-12 w-full text-lg"
                       variant="default"
                       onClick={handleSubmit}
                     >
