@@ -97,10 +97,10 @@ export default function PreviewLanding() {
   };
 
   return (
-    <div className="pb-6 sm:pb-16">
+    <div className="sm:pb-16 pb-6">
       <MaxWidthWrapper>
-        <div className="rounded-xl h-[calc(100vh-2rem)] md:h-[calc(100vh-4rem)] lg:h-[calc(100vh-6rem)] border border-gray-200 dark:border-gray-800 bg-background shadow-sm">
-          <div id="preview-container" className="relative size-full overflow-hidden rounded-xl">
+        <div className="h-[calc(100vh-2rem)] md:h-[calc(100vh-4rem)] lg:h-[calc(100vh-6rem)] border border-gray-200 dark:border-gray-800 rounded-xl bg-background shadow-sm">
+          <div id="preview-container" className="relative overflow-hidden size-full rounded-xl">
             {showIframe && websiteUrl ? (
               <div className="relative size-full iframe-container">
                 <iframe
@@ -113,14 +113,14 @@ export default function PreviewLanding() {
                 {/* AI Chatbot Widget (rendered inside this container via script) */}
                 <div
                   id="ai-chatbot-widget"
-                  className="pointer-events-auto absolute right-4 bottom-4 z-[100]"
+                  className="absolute right-4 bottom-4 z-[100] pointer-events-auto"
                 />
                 {/* Button container */}
-                <div className="p-4 absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent">
+                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
                   <Button
                     size="sm"
                     variant="secondary"
-                    className="hover:text-primary-foreground hover:bg-primary"
+                    className="hover:bg-primary hover:text-primary-foreground"
                     onClick={() => {
                       setShowIframe(false);
                       setWebsiteUrl("");
@@ -134,10 +134,10 @@ export default function PreviewLanding() {
                 </div>
               </div>
             ) : (
-              <div className="size-full relative">
+              <div className="relative size-full">
                 {/* Blurred website placeholder */}
                 <div
-                  className="absolute inset-0 bg-center bg-cover opacity-50 blur-sm"
+                  className="absolute inset-0 bg-center bg-cover blur-sm opacity-50"
                   style={{
                     backgroundImage: "url('/placeholder-website.png')",
                     filter: "grayscale(1)",
@@ -146,19 +146,19 @@ export default function PreviewLanding() {
 
                 {/* URL input overlay */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 bg-black/30 backdrop-blur-sm">
-                  <div className="w-full max-w-md space-y-4">
+                  <div className="max-w-md w-full space-y-4">
                     <Input
                       type="url"
                       placeholder="Enter your website URL (e.g., example.com)"
                       value={inputUrl}
                       onChange={(e) => setInputUrl(e.target.value)}
-                      className="text-lg h-12 bg-white/10"
+                      className="h-12 text-lg bg-white/10"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleSubmit();
                       }}
                     />
                     <Button
-                      className="text-lg w-full h-12"
+                      className="h-12 w-full text-lg"
                       variant="default"
                       onClick={handleSubmit}
                     >
