@@ -28,14 +28,23 @@ export default function PreviewLanding() {
   const [websiteUrl, setWebsiteUrl] = useState("");
   const [inputUrl, setInputUrl] = useState("");
 
-  // Clean up chatbot and remove script on unmount
+  // Clean up chatbot and remove script on unmount or navigation
   useEffect(() => {
-    return () => {
-      if (window.AIChatbot?.destroy) {
-        window.AIChatbot.destroy();
+    const cleanup = () => {
+      try {
+        if (window.AIChatbot?.destroy) {
+          window.AIChatbot.destroy();
+        }
+        const scripts = document.querySelectorAll('script[src*="widget.js"]');
+        scripts.forEach((s) => s.remove());
+      } catch (err) {
+        console.error('Cleanup error:', err);
       }
-      const scripts = document.querySelectorAll('script[src*="widget.js"]');
-      scripts.forEach((s) => s.remove());
+    };
+
+    // Clean up on unmount
+    return () => {
+      cleanup();
     };
   }, []);
 
@@ -43,21 +52,43 @@ export default function PreviewLanding() {
   useEffect(() => {
     if (!showIframe) return;
 
-    const existingScript = document.querySelector('script[src="https://app.rolto.io/widget.js"]');
-    if (existingScript) return;
+    let mounted = true;
 
-    const script = document.createElement("script");
-    script.src = "https://app.rolto.io/widget.js";
-    script.async = true;
-    script.onload = () => {
-      window.AIChatbot?.init({
-        chatbotId: "cb_1dd521c7",
-        position: "bottom-right",
-        theme: "light",
-        containerSelector: "#preview-container",
-      });
+    const initChatbot = async () => {
+      try {
+        const existingScript = document.querySelector('script[src="https://app.rolto.io/widget.js"]');
+        if (existingScript) return;
+
+        const script = document.createElement("script");
+        script.src = "https://app.rolto.io/widget.js";
+        script.async = true;
+        
+        const loadPromise = new Promise((resolve, reject) => {
+          script.onload = resolve;
+          script.onerror = reject;
+        });
+
+        document.body.appendChild(script);
+        await loadPromise;
+
+        if (!mounted) return;
+
+        window.AIChatbot?.init({
+          chatbotId: "cb_1dd521c7",
+          position: "bottom-right",
+          theme: "light",
+          containerSelector: "#preview-container",
+        });
+      } catch (err) {
+        console.error('Chatbot initialization error:', err);
+      }
     };
-    document.body.appendChild(script);
+
+    initChatbot();
+
+    return () => {
+      mounted = false;
+    };
   }, [showIframe]);
 
   const handleSubmit = () => {
