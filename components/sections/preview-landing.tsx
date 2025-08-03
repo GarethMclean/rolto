@@ -1,5 +1,3 @@
-
-/* eslint-disable tailwindcss/classnames-order */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -113,14 +111,14 @@ export default function PreviewLanding() {
                 {/* AI Chatbot Widget (rendered inside this container via script) */}
                 <div
                   id="ai-chatbot-widget"
-                  className="pointer-events-auto absolute right-4 bottom-4 z-[100]"
+                  className="absolute bottom-4 right-4 z-[100] pointer-events-auto"
                 />
                 {/* Button container */}
-                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
+                <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
                   <Button
                     size="sm"
                     variant="secondary"
-                    className="hover:bg-primary hover:text-primary-foreground"
+                    className="hover:text-primary-foreground hover:bg-primary"
                     onClick={() => {
                       setShowIframe(false);
                       setWebsiteUrl("");
@@ -137,7 +135,7 @@ export default function PreviewLanding() {
               <div className="relative size-full">
                 {/* Blurred website placeholder */}
                 <div
-                  className="absolute inset-0 bg-center bg-cover blur-sm opacity-50"
+                  className="absolute inset-0 bg-cover bg-center blur-sm opacity-50"
                   style={{
                     backgroundImage: "url('/placeholder-website.png')",
                     filter: "grayscale(1)",
@@ -145,20 +143,20 @@ export default function PreviewLanding() {
                 />
 
                 {/* URL input overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 bg-black/30 backdrop-blur-sm">
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/30 p-6 backdrop-blur-sm">
                   <div className="w-full max-w-md space-y-4">
                     <Input
                       type="url"
                       placeholder="Enter your website URL (e.g., example.com)"
                       value={inputUrl}
                       onChange={(e) => setInputUrl(e.target.value)}
-                      className="text-lg h-12 bg-white/10"
+                      className="h-12 bg-white/10 text-lg"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleSubmit();
                       }}
                     />
                     <Button
-                      className="h-12 w-full text-lg"
+                      className="w-full h-12 text-lg"
                       variant="default"
                       onClick={handleSubmit}
                     >
