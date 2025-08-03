@@ -111,10 +111,10 @@ export default function PreviewLanding() {
                 {/* AI Chatbot Widget (rendered inside this container via script) */}
                 <div
                   id="ai-chatbot-widget"
-                  className="absolute bottom-4 right-4 z-[100] pointer-events-auto"
+                  className="pointer-events-auto absolute right-4 bottom-4 z-[100]"
                 />
                 {/* Button container */}
-                <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
+                <div className="p-4 absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent">
                   <Button
                     size="sm"
                     variant="secondary"
@@ -132,10 +132,10 @@ export default function PreviewLanding() {
                 </div>
               </div>
             ) : (
-              <div className="relative size-full">
+              <div className="size-full relative">
                 {/* Blurred website placeholder */}
                 <div
-                  className="absolute inset-0 bg-cover bg-center blur-sm opacity-50"
+                  className="absolute inset-0 bg-center bg-cover opacity-50 blur-sm"
                   style={{
                     backgroundImage: "url('/placeholder-website.png')",
                     filter: "grayscale(1)",
@@ -143,20 +143,20 @@ export default function PreviewLanding() {
                 />
 
                 {/* URL input overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/30 p-6 backdrop-blur-sm">
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 bg-black/30 backdrop-blur-sm">
                   <div className="w-full max-w-md space-y-4">
                     <Input
                       type="url"
                       placeholder="Enter your website URL (e.g., example.com)"
                       value={inputUrl}
                       onChange={(e) => setInputUrl(e.target.value)}
-                      className="h-12 bg-white/10 text-lg"
+                      className="text-lg h-12 bg-white/10"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleSubmit();
                       }}
                     />
                     <Button
-                      className="w-full h-12 text-lg"
+                      className="text-lg w-full h-12"
                       variant="default"
                       onClick={handleSubmit}
                     >
