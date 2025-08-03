@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable tailwindcss/classnames-order */
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +13,7 @@ declare global {
   interface Window {
     AIChatbot?: {
       init: (config: { 
-        chatbotId: string; 
+        chatbotId: string;  
         position: string; 
         theme: string;
         containerSelector?: string;
