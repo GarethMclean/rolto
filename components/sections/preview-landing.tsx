@@ -111,7 +111,7 @@ export default function PreviewLanding() {
                 {/* AI Chatbot Widget (rendered inside this container via script) */}
                 <div
                   id="ai-chatbot-widget"
-                  className="absolute bottom-4 right-4 z-[100] pointer-events-auto"
+                  className="pointer-events-auto absolute right-4 bottom-4 z-[100]"
                 />
                 {/* Button container */}
                 <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
