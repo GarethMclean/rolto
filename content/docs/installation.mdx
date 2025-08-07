@@ -1,65 +1,73 @@
 ---
 title: Installation
-description: How to install the project.
+description: How to install Rolto on your website.
 ---
+
+# Installing Rolto
+
+Get Rolto up and running on your website in under 5 minutes.
 
 <Steps>
 
-### Create project
+### 1. Sign up for Rolto
 
-Start by creating a new Next.js project using `create-next-app`:
+First, create your free Rolto account:
 
-```bash
-npx create-next-app my-saas-project --example "https://github.com/mickasmt/next-saas-stripe-starter"
+1. Go to [app.rolto.io](https://app.rolto.io)
+2. Click "Join Now" to create your account
+3. Complete the signup process
+
+### 2. Upload your content
+
+Add your documentation and knowledge base:
+
+1. In your Rolto dashboard, go to "Content"
+2. Upload your PDFs, documentation, FAQs, or knowledge base
+3. Rolto will automatically learn from your content
+
+### 3. Add the widget to your website
+
+Copy and paste this single line of code into your website's HTML, just before the closing `</body>` tag:
+
+```html
+<script src="https://app.rolto.io/widget.js"></script>
 ```
 
-Or deploy with Vercel :
+### 4. Customize your widget (optional)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmickasmt%2Fnext-saas-stripe-starter)
+You can customize the appearance and behavior of your widget:
 
-<Callout type="warning" twClass="mt-4">
-  A good way to create your repository, but the deployment will fail because you
-  need to add your environment variables locally in your project. Follow the
-  documentation for that.
+```html
+<script>
+  window.RoltoConfig = {
+    position: 'bottom-right', // or 'bottom-left'
+    theme: 'light', // or 'dark'
+    welcomeMessage: 'Hi! How can I help you today?'
+  };
+</script>
+<script src="https://app.rolto.io/widget.js"></script>
+```
+
+### 5. Test your installation
+
+1. Visit your website
+2. Look for the Rolto chat widget in the bottom corner
+3. Try asking a question to test the AI responses
+
+<Callout type="info" twClass="mt-4">
+  The widget will automatically appear on all pages where you've added the script. 
+  Make sure to add it to every page where you want customer support available.
 </Callout>
 
-### Install dependencies
-
-Enter in the folder and install dependencies for your project:
-
-```bash
-cd my-saas-project
-pnpm install
-```
-
-### Create a `.env` file
-
-Copy/paste the `.env.example` in the `.env` file:
-
-```md title=".env"
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-
-AUTH_SECRET=
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-GITHUB_OAUTH_TOKEN=
-
-DATABASE_URL=
-
-RESEND_API_KEY=
-EMAIL_FROM=
-
-STRIPE_API_KEY=
-STRIPE_WEBHOOK_SECRET=
-
-NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID=
-NEXT_PUBLIC_STRIPE_PRO_YEARLY_PLAN_ID=
-NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID=
-NEXT_PUBLIC_STRIPE_BUSINESS_YEARLY_PLAN_ID=
-```
-
-### Configuration part
-
-Let's check the configuration part for update all environment variables before use `pnpm run dev`.
-
 </Steps>
+
+## Next Steps
+
+- [Customize your widget](/docs/customization)
+- [Set up human handoff](/docs/handoff)
+- [View your analytics](/docs/analytics)
+- [Get help and support](/docs/support)
+
+## Need Help?
+
+If you run into any issues during installation, contact us at [contact@rolto.io](mailto:contact@rolto.io) or check our [troubleshooting guide](/docs/troubleshooting).

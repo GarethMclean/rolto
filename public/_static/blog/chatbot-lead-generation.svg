@@ -1,0 +1,53 @@
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0fdf4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dcfce7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="400" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="100" r="60" fill="#16a34a" opacity="0.1"/>
+  <circle cx="700" cy="300" r="80" fill="#15803d" opacity="0.1"/>
+  <circle cx="650" cy="80" r="40" fill="#22c55e" opacity="0.1"/>
+  
+  <!-- Lead generation funnel -->
+  <rect x="200" y="80" width="400" height="280" rx="20" fill="url(#cardGradient)" stroke="#e2e8f0" stroke-width="2"/>
+  
+  <!-- Funnel top -->
+  <rect x="250" y="120" width="300" height="40" rx="8" fill="#16a34a"/>
+  <text x="400" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Website Visitors</text>
+  
+  <!-- Funnel middle -->
+  <rect x="300" y="180" width="200" height="40" rx="8" fill="#22c55e"/>
+  <text x="400" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Engaged Leads</text>
+  
+  <!-- Funnel bottom -->
+  <rect x="350" y="240" width="100" height="40" rx="8" fill="#15803d"/>
+  <text x="400" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Sales</text>
+  
+  <!-- Chatbot icon -->
+  <g transform="translate(150, 200)">
+    <rect x="-20" y="-15" width="40" height="30" rx="8" fill="#16a34a"/>
+    <circle cx="-10" cy="-5" r="2" fill="#ffffff"/>
+    <circle cx="10" cy="-5" r="2" fill="#ffffff"/>
+    <rect x="-8" y="5" width="16" height="2" rx="1" fill="#ffffff"/>
+  </g>
+  
+  <!-- Statistics -->
+  <text x="200" y="320" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1e293b">300% Lead Qualification</text>
+  <text x="200" y="340" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1e293b">40% Higher Conversions</text>
+  <text x="200" y="360" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1e293b">50% Cost Reduction</text>
+  
+  <!-- Title -->
+  <text x="400" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1e293b">Chatbot Lead Generation</text>
+  <text x="400" y="75" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1e293b">15 Statistics That Transform</text>
+</svg> 

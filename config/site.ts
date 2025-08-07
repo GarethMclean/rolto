@@ -6,14 +6,13 @@ const site_url = env.NEXT_PUBLIC_APP_URL;
 export const siteConfig: SiteConfig = {
   name: "Rolto",
   description:
-    "Get your project off to an explosive start with SaaS Starter! Harness the power of Next.js 14, Prisma, Neon, Auth.js v5, Resend, React Email, Shadcn/ui and Stripe to build your next big thing.",
+    "Transform any website into an intelligent helpdesk with Rolto's embeddable AI assistant. Get instant, context-aware answers from your content with just one line of code.",
   url: site_url,
   ogImage: `${site_url}/_static/og.jpg`,
   links: {
-    twitter: "https://twitter.com/miickasmt",
-    github: "https://github.com/mickasmt/next-saas-stripe-starter",
+    twitter: "https://twitter.com/rolto_ai",
   },
-  mailSupport: "support@saas-starter.com",
+  mailSupport: "support@rolto.io",
 };
 
 export const footerLinks: SidebarNavItem[] = [
@@ -21,27 +20,23 @@ export const footerLinks: SidebarNavItem[] = [
     title: "Company",
     items: [
       { title: "About", href: "#" },
-      { title: "Enterprise", href: "#" },
       { title: "Terms", href: "/terms" },
       { title: "Privacy", href: "/privacy" },
     ],
   },
-  /*{
+  {
     title: "Product",
     items: [
-      { title: "Security", href: "#" },
-      { title: "Customization", href: "#" },
-      { title: "Customers", href: "#" },
-      { title: "Changelog", href: "#" },
+      { title: "Features", href: "#features" },
+      { title: "Pricing", href: "/pricing" },
+      { title: "Blog", href: "/blog" },
     ],
   },
   {
-    title: "Docs",
+    title: "Support",
     items: [
-      { title: "Introduction", href: "#" },
-      { title: "Installation", href: "#" },
-      { title: "Components", href: "#" },
-      { title: "Code Blocks", href: "#" },
+      { title: "Contact", href: "mailto:contact@rolto.io" },
+      { title: "Help Center", href: "#" },
     ],
-  },*/
+  },
 ];

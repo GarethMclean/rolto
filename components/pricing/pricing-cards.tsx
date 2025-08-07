@@ -177,11 +177,11 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
           Email{" "}
           <a
             className="font-medium text-primary hover:underline"
-            href="mailto:support@saas-starter.com"
+            href="mailto:contact@rolto.io"
           >
-            support@saas-starter.com
+            contact@rolto.io
           </a>{" "}
-          for to contact our support team.
+          to contact our support team.
           <br />
           <strong>
             You can test the subscriptions and won&apos;t be charged.
