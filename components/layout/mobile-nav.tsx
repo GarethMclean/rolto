@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -12,14 +12,17 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
 import { Icons } from "@/components/shared/icons";
+import { ModalContext } from "@/components/modals/providers";
+import { useMobileMenu } from "./mobile-menu-context";
 
 import { ModeToggle } from "./mode-toggle";
 
 export function NavMobile() {
   const { data: session } = useSession();
-  const [open, setOpen] = useState(false);
+  const { isMobileMenuOpen, setIsMobileMenuOpen } = useMobileMenu();
   const selectedLayout = useSelectedLayoutSegment();
   const documentation = selectedLayout === "docs";
+  const { setShowLeadCaptureModal } = useContext(ModalContext);
 
   const configMap = {
     docs: docsConfig.mainNav,
@@ -30,23 +33,23 @@ export function NavMobile() {
 
   // prevent body scroll when modal is open
   useEffect(() => {
-    if (open) {
+    if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-  }, [open]);
+  }, [isMobileMenuOpen]);
 
   return (
     <>
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         className={cn(
           "fixed right-2 top-2.5 z-50 rounded-full p-2 transition-colors duration-200 hover:bg-muted focus:outline-none active:bg-muted md:hidden",
-          open && "hover:bg-muted active:bg-muted",
+          isMobileMenuOpen && "bg-muted hover:bg-muted/80",
         )}
       >
-        {open ? (
+        {isMobileMenuOpen ? (
           <X className="size-5 text-muted-foreground" />
         ) : (
           <Menu className="size-5 text-muted-foreground" />
@@ -55,8 +58,8 @@ export function NavMobile() {
 
       <nav
         className={cn(
-          "fixed inset-0 z-20 hidden w-full overflow-auto bg-background px-5 py-16 lg:hidden",
-          open && "block",
+          "fixed inset-0 z-30 hidden w-full overflow-auto bg-background px-5 py-16 lg:hidden",
+          isMobileMenuOpen && "block",
         )}
       >
         <ul className="grid divide-y divide-muted">
@@ -64,7 +67,7 @@ export function NavMobile() {
             <li key={href} className="py-3">
               <Link
                 href={href}
-                onClick={() => setOpen(false)}
+                onClick={() => setIsMobileMenuOpen(false)}
                 className="flex w-full font-medium capitalize"
               >
                 {title}
@@ -78,7 +81,7 @@ export function NavMobile() {
                 <li className="py-3">
                   <Link
                     href="/admin"
-                    onClick={() => setOpen(false)}
+                    onClick={() => setIsMobileMenuOpen(false)}
                     className="flex w-full font-medium capitalize"
                   >
                     Admin
@@ -89,7 +92,7 @@ export function NavMobile() {
               <li className="py-3">
                 <Link
                   href="/dashboard"
-                  onClick={() => setOpen(false)}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="flex w-full font-medium capitalize"
                 >
                   Dashboard
@@ -97,45 +100,27 @@ export function NavMobile() {
               </li>
             </>
           ) : (
-            <>
-              <li className="py-3">
-                <Link
-                  href="https://app.rolto.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setOpen(false)}
-                  className="flex w-full font-medium capitalize"
-                >
-                  Login
-                </Link>
-              </li>
-
-              <li className="py-3">
-                <Link
-                  href="https://app.rolto.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setOpen(false)}
-                  className="flex w-full font-medium capitalize"
-                >
-                  Sign up
-                </Link>
-              </li>
-            </>
+            <li className="py-3">
+              <button
+                onClick={() => {
+                  setShowLeadCaptureModal(true);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="flex w-full font-medium capitalize"
+              >
+                Join Now
+              </button>
+            </li>
           )}
         </ul>
 
         {documentation ? (
           <div className="mt-8 block md:hidden">
-            <DocsSidebarNav setOpen={setOpen} />
+            <DocsSidebarNav setOpen={setIsMobileMenuOpen} />
           </div>
         ) : null}
 
         <div className="mt-5 flex items-center justify-end space-x-4">
-          <Link href={siteConfig.links.github} target="_blank" rel="noreferrer">
-            <Icons.gitHub className="size-6" />
-            <span className="sr-only">GitHub</span>
-          </Link>
           <ModeToggle />
         </div>
       </nav>

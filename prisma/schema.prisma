@@ -70,6 +70,19 @@ model User {
   @@map(name: "users")
 }
 
+model WebsiteLead {
+  id            String   @id @default(cuid())
+  fullName      String   @map(name: "full_name")
+  email         String
+  company       String
+  companyWebsite String? @map(name: "company_website")
+  source        String?  @default("waitlist")
+  createdAt     DateTime @default(now()) @map(name: "created_at")
+  updatedAt     DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "website_leads")
+}
+
 model VerificationToken {
   identifier String
   token      String   @unique

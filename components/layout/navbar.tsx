@@ -25,7 +25,7 @@ interface NavBarProps {
 export function NavBar({ scroll = false }: NavBarProps) {
   const scrolled = useScroll(50);
   const { data: session, status } = useSession();
-  const { setShowSignInModal } = useContext(ModalContext);
+  const { setShowSignInModal, setShowLeadCaptureModal } = useContext(ModalContext);
 
   const selectedLayout = useSelectedLayoutSegment();
   const documentation = selectedLayout === "docs";
@@ -87,16 +87,6 @@ export function NavBar({ scroll = false }: NavBarProps) {
               <div className="flex lg:hidden">
                 <Icons.search className="size-6 text-muted-foreground" />
               </div>
-              <div className="flex space-x-4">
-                <Link
-                  href={siteConfig.links.github}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Icons.gitHub className="size-7" />
-                  <span className="sr-only">GitHub</span>
-                </Link>
-              </div>
             </div>
           ) : null}
 
@@ -115,17 +105,16 @@ export function NavBar({ scroll = false }: NavBarProps) {
               </Button>
             </Link>
           ) : status === "unauthenticated" ? (
-            <Link href="https://app.rolto.io/" target="_blank" rel="noopener noreferrer">
-              <Button
-                className="hidden gap-2 px-5 md:flex"
-                variant="default"
-                size="sm"
-                rounded="full"
-              >
-                <span>Sign In</span>
-                <Icons.arrowRight className="size-4" />
-              </Button>
-            </Link>
+            <Button
+              onClick={() => setShowLeadCaptureModal(true)}
+              className="hidden gap-2 px-5 md:flex"
+              variant="default"
+              size="sm"
+              rounded="full"
+            >
+              <span>Join Now</span>
+              <Icons.arrowRight className="size-4" />
+            </Button>
           ) : (
             <Skeleton className="hidden h-9 w-28 rounded-full lg:flex" />
           )}
