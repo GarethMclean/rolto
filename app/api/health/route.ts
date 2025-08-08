@@ -1,15 +1,33 @@
 import { NextResponse } from "next/server";
 import { Pool } from 'pg';
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-
 export async function GET() {
   try {
     console.log("=== HEALTH CHECK DEBUG ===");
     console.log("DATABASE_URL exists:", !!process.env.DATABASE_URL);
     console.log("DATABASE_URL starts with:", process.env.DATABASE_URL?.substring(0, 20) + "...");
+    console.log("Full DATABASE_URL:", process.env.DATABASE_URL);
+    
+    // Test DNS resolution first
+    const url = new URL(process.env.DATABASE_URL!);
+    console.log("Hostname:", url.hostname);
+    console.log("Port:", url.port);
+    
+    try {
+      // Try to resolve the hostname
+      const dns = require('dns').promises;
+      const addresses = await dns.resolve4(url.hostname);
+      console.log("DNS resolution successful:", addresses);
+    } catch (dnsError) {
+      console.error("DNS resolution failed:", dnsError.message);
+    }
+    
+    const pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      // Add connection timeout
+      connectionTimeoutMillis: 10000,
+      query_timeout: 10000,
+    });
     
     const client = await pool.connect();
     
@@ -46,9 +64,15 @@ export async function GET() {
     
   } catch (error: any) {
     console.error("Health check failed:", error);
+    console.error("Error name:", error.name);
+    console.error("Error code:", error.code);
+    console.error("Error message:", error.message);
+    
     return NextResponse.json({
       status: "unhealthy",
       error: error.message,
+      errorCode: error.code,
+      errorName: error.name,
       environment: {
         nodeEnv: process.env.NODE_ENV,
         hasDatabaseUrl: !!process.env.DATABASE_URL
