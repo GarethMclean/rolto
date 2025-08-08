@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolto Open Graph Image Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .og-image {
+            width: 1200px;
+            height: 630px;
+            position: relative;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px;
+            box-sizing: border-box;
+        }
+        
+        .background-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 25% 25%, #6366f1 0%, transparent 50%), 
+                radial-gradient(circle at 75% 75%, #a855f7 0%, transparent 50%);
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 9999px;
+            border: 1px solid #1e40af;
+            background-color: #1e3a8a;
+            color: #93c5fd;
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 32px;
+            width: fit-content;
+        }
+        
+        .trust-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #10b981;
+        }
+        
+        .main-heading {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 28px;
+            line-height: 1.4;
+            color: #d1d5db;
+            margin-bottom: 32px;
+            max-width: 800px;
+        }
+        
+        .description {
+            font-size: 20px;
+            line-height: 1.5;
+            color: #9ca3af;
+            margin-bottom: 32px;
+            max-width: 640px;
+        }
+        
+        .trust-indicators {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+        
+        .trust-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .trust-indicator .dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #10b981;
+        }
+        
+        .bottom-section {
+            position: absolute;
+            bottom: 48px;
+            left: 48px;
+            right: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .brand-section {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+        }
+        
+        .brand-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            margin-right: 12px;
+        }
+        
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .brand-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .brand-tagline {
+            color: #9ca3af;
+        }
+        
+        .website-link {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            color: #9ca3af;
+        }
+        
+        .website-link svg {
+            margin-right: 8px;
+        }
+        
+        .instructions {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #1f2937;
+        }
+        
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h3>📸 Screenshot Instructions</h3>
+        <ol>
+            <li>Make sure the image below is fully visible</li>
+            <li>Take a screenshot of just the dark image area (1200x630px)</li>
+            <li>Save it as <code>og.jpg</code> in your <code>public</code> folder</li>
+            <li>Delete the <code>app/opengraph-image.tsx</code> file</li>
+        </ol>
+    </div>
+    
+    <div class="og-image">
+        <div class="background-pattern"></div>
+        
+        <div class="main-content">
+            <div class="trust-badge">
+                <div class="dot"></div>
+                <span>Join the future of customer support</span>
+            </div>
+            
+            <div class="main-heading">Rolto</div>
+            
+            <div class="subtitle">
+                Transform Your Website into an Intelligent Conversational Platform
+            </div>
+            
+            <div class="description">
+                Capture leads, provide instant support, and engage visitors with AI that understands your business.
+            </div>
+            
+            <div class="trust-indicators">
+                <div class="trust-indicator">
+                    <div class="dot"></div>
+                    <span>Setup in 5 minutes</span>
+                </div>
+                <div class="trust-indicator">
+                    <div class="dot"></div>
+                    <span>14-day free trial</span>
+                </div>
+                <div class="trust-indicator">
+                    <div class="dot"></div>
+                    <span>24/7 AI support</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bottom-section">
+            <div class="brand-section">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="brand-info">
+                    <div class="brand-name">Rolto</div>
+                    <div class="brand-tagline">AI-Powered Conversational Platform</div>
+                </div>
+            </div>
+            
+            <div class="website-link">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>rolto.io</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
