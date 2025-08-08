@@ -1,12 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Pool } from 'pg';
+
+// Create a connection pool
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 export async function POST(request: NextRequest) {
   try {
+    // Debug logging
+    console.log("=== LEAD SUBMISSION DEBUG ===");
+    console.log("DATABASE_URL exists:", !!process.env.DATABASE_URL);
+    console.log("DATABASE_URL starts with:", process.env.DATABASE_URL?.substring(0, 20) + "...");
+    
     const body = await request.json();
     const { fullName, email, company, companyWebsite, source } = body;
 
+    console.log("Received data:", { fullName, email, company, companyWebsite, source });
+
     // Validate required fields
     if (!fullName || !email || !company) {
+      console.log("Validation failed: missing required fields");
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -16,6 +30,7 @@ export async function POST(request: NextRequest) {
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
+      console.log("Validation failed: invalid email format");
       return NextResponse.json(
         { error: "Invalid email format" },
         { status: 400 },
@@ -33,71 +48,83 @@ export async function POST(request: NextRequest) {
       cleanedWebsite = website;
     }
 
-    // Generate a unique ID
-    const id = `lead_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-    // Direct Supabase connection using fetch
-    const supabaseUrl = process.env.DATABASE_URL;
-    if (!supabaseUrl) {
-      console.error("DATABASE_URL not found");
-      return NextResponse.json(
-        { error: "Database configuration missing" },
-        { status: 500 },
-      );
-    }
-
     try {
-      // Extract connection details from DATABASE_URL
-      const url = new URL(supabaseUrl);
-      const host = url.hostname;
-      const port = url.port || '5432';
-      const database = url.pathname.slice(1);
-      const username = url.username;
-      const password = url.password;
+      console.log("Attempting database connection...");
+      const client = await pool.connect();
+      console.log("Database connection successful");
 
-      // Create direct PostgreSQL connection using fetch to a simple endpoint
-      // For now, let's just return success and log the data
+      // Check if email already exists
+      const existingLead = await client.query(
+        'SELECT id FROM website_leads WHERE email = $1',
+        [email.toLowerCase()]
+      );
+
+      if (existingLead.rows.length > 0) {
+        console.log("Email already exists:", email);
+        client.release();
+        return NextResponse.json(
+          { error: "Email already registered" },
+          { status: 409 },
+        );
+      }
+
+      // Generate a unique ID
+      const id = `lead_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+      console.log("Inserting new lead with ID:", id);
+
+      // Create new lead
+      const result = await client.query(
+        `INSERT INTO website_leads (id, full_name, email, company, company_website, source)
+         VALUES ($1, $2, $3, $4, $5, $6)
+         RETURNING id, email, company, source, created_at`,
+        [
+          id,
+          fullName.trim(),
+          email.toLowerCase().trim(),
+          company.trim(),
+          cleanedWebsite,
+          source || "waitlist"
+        ]
+      );
+
+      client.release();
+
+      const newLead = result.rows[0];
+
       console.log("Lead captured successfully:", {
-        id,
-        fullName,
-        email,
-        company,
-        companyWebsite: cleanedWebsite,
-        source: source || "waitlist",
-        timestamp: new Date().toISOString()
+        id: newLead.id,
+        email: newLead.email,
+        company: newLead.company,
+        source: newLead.source,
+        timestamp: newLead.created_at,
       });
 
-      // In production, you would insert into Supabase here
-      // For now, we'll simulate success
       return NextResponse.json(
         {
           success: true,
           message: "Lead captured successfully",
-          leadId: id,
+          leadId: newLead.id,
         },
         { status: 201 },
       );
 
     } catch (dbError: any) {
       console.error("Database error:", dbError);
+      console.error("Database error code:", dbError.code);
+      console.error("Database error message:", dbError.message);
       
-      // For development/testing, still return success
-      console.log("Development mode: Lead would be captured:", {
-        id,
-        fullName,
-        email,
-        company,
-        companyWebsite: cleanedWebsite,
-        source: source || "waitlist",
-      });
+      // Handle specific database errors
+      if (dbError.code === '23505') { // Unique constraint violation
+        return NextResponse.json(
+          { error: "Email already registered" },
+          { status: 409 },
+        );
+      }
 
       return NextResponse.json(
-        {
-          success: true,
-          message: "Lead captured successfully (development mode)",
-          note: "Database connection not available, but lead data was processed",
-        },
-        { status: 201 },
+        { error: "Failed to save lead to database" },
+        { status: 500 },
       );
     }
   } catch (error) {
