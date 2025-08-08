@@ -25,7 +25,8 @@ interface NavBarProps {
 export function NavBar({ scroll = false }: NavBarProps) {
   const scrolled = useScroll(50);
   const { data: session, status } = useSession();
-  const { setShowSignInModal, setShowLeadCaptureModal } = useContext(ModalContext);
+  const { setShowSignInModal, setShowLeadCaptureModal } =
+    useContext(ModalContext);
 
   const selectedLayout = useSelectedLayoutSegment();
   const documentation = selectedLayout === "docs";

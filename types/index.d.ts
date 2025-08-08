@@ -100,3 +100,16 @@ export type TestimonialType = {
   image: string;
   review: string;
 };
+
+// Chatbot widget types
+declare global {
+  interface Window {
+    AIChatbot?: {
+      init: (config: {
+        chatbotId: string;
+        position: string;
+        theme: string;
+      }) => void;
+    };
+  }
+}

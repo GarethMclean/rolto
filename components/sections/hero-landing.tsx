@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState, useContext } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { Icons } from "@/components/shared/icons";
-import { ModalContext } from "@/components/modals/providers";
 import { useMobileMenu } from "@/components/layout/mobile-menu-context";
+import { ModalContext } from "@/components/modals/providers";
+import { Icons } from "@/components/shared/icons";
 
 interface ChatBubble {
   id: number;
@@ -31,7 +31,7 @@ const chatMessages = [
   "🚀 Ready to capture more leads?",
   "💬 Need help with your order?",
   "🎯 Want to see our pricing?",
-  "✨ Transform your website today!"
+  "✨ Transform your website today!",
 ];
 
 export default function HeroLanding() {
@@ -46,35 +46,44 @@ export default function HeroLanding() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Create water-drop style falling bubbles
   useEffect(() => {
-    console.log('Hero useEffect triggered, isMobile:', isMobile, 'isMobileMenuOpen:', isMobileMenuOpen);
-    
+    console.log(
+      "Hero useEffect triggered, isMobile:",
+      isMobile,
+      "isMobileMenuOpen:",
+      isMobileMenuOpen,
+    );
+
     const createWaterDrops = () => {
       const bubbles: ChatBubble[] = [];
 
       // Strategic positions for mobile vs desktop - find open spaces
-      const positions = isMobile ? [
-        { x: 10, y: 15 },   // Top left - lots of space above header
-        { x: 90, y: 15 },   // Top right - lots of space above header
-        { x: 10, y: 85 },   // Bottom left - below CTA buttons
-        { x: 90, y: 85 },   // Bottom right - below CTA buttons
-      ] : [
-        { x: 12, y: 20 }, // Top left area
-        { x: 88, y: 25 }, // Top right area
-        { x: 15, y: 80 }, // Bottom left area
-        { x: 85, y: 75 }, // Bottom right area
-      ];
+      const positions = isMobile
+        ? [
+            { x: 10, y: 15 }, // Top left - lots of space above header
+            { x: 90, y: 15 }, // Top right - lots of space above header
+            { x: 10, y: 85 }, // Bottom left - below CTA buttons
+            { x: 90, y: 85 }, // Bottom right - below CTA buttons
+          ]
+        : [
+            { x: 12, y: 20 }, // Top left area
+            { x: 88, y: 25 }, // Top right area
+            { x: 15, y: 80 }, // Bottom left area
+            { x: 85, y: 75 }, // Bottom right area
+          ];
 
       for (let i = 0; i < 4; i++) {
-        const finalX = positions[i].x + (Math.random() - 0.5) * (isMobile ? 1 : 8);
-        const finalY = positions[i].y + (Math.random() - 0.5) * (isMobile ? 1 : 6);
+        const finalX =
+          positions[i].x + (Math.random() - 0.5) * (isMobile ? 1 : 8);
+        const finalY =
+          positions[i].y + (Math.random() - 0.5) * (isMobile ? 1 : 6);
 
         const bubble: ChatBubble = {
           id: i,
@@ -87,8 +96,10 @@ export default function HeroLanding() {
           hasLanded: false,
           velocity: 0.8 + Math.random() * 0.4,
           rotation: (Math.random() - 0.5) * (isMobile ? 10 : 15),
-          scale: (isMobile ? 0.7 : 0.85) + Math.random() * (isMobile ? 0.15 : 0.3),
-          opacity: (isMobile ? 0.65 : 0.75) + Math.random() * (isMobile ? 0.2 : 0.25),
+          scale:
+            (isMobile ? 0.7 : 0.85) + Math.random() * (isMobile ? 0.15 : 0.3),
+          opacity:
+            (isMobile ? 0.65 : 0.75) + Math.random() * (isMobile ? 0.2 : 0.25),
           bounceCount: 0,
           finalX: finalX,
           finalY: finalY,
@@ -96,14 +107,17 @@ export default function HeroLanding() {
         bubbles.push(bubble);
       }
 
-      console.log('Created bubbles:', bubbles.length);
+      console.log("Created bubbles:", bubbles.length);
       setChatBubbles(bubbles);
 
       // Start falling animations with staggered timing
       bubbles.forEach((bubble, index) => {
-        setTimeout(() => {
-          startWaterDropAnimation(bubble.id);
-        }, index * (isMobile ? 600 : 800));
+        setTimeout(
+          () => {
+            startWaterDropAnimation(bubble.id);
+          },
+          index * (isMobile ? 600 : 800),
+        );
       });
     };
 
@@ -121,36 +135,39 @@ export default function HeroLanding() {
     }
   }, [isMobileMenuOpen]);
 
-  const startWaterDropAnimation = (bubbleId: number) => {
-    const fallDuration = (isMobile ? 1200 : 1600) + Math.random() * (isMobile ? 400 : 500);
+  const startWaterDropAnimation = useCallback((bubbleId: number) => {
+    const fallDuration =
+      (isMobile ? 1200 : 1600) + Math.random() * (isMobile ? 400 : 500);
     const startTime = Date.now();
 
     const animateFall = () => {
       const elapsed = Date.now() - startTime;
 
-      setChatBubbles(prev => prev.map(bubble => {
-        if (bubble.id === bubbleId && bubble.isFalling) {
-          const currentY = bubble.y + bubble.velocity;
-          
-          if (currentY >= bubble.finalY) {
+      setChatBubbles((prev) =>
+        prev.map((bubble) => {
+          if (bubble.id === bubbleId && bubble.isFalling) {
+            const currentY = bubble.y + bubble.velocity;
+
+            if (currentY >= bubble.finalY) {
+              return {
+                ...bubble,
+                y: bubble.finalY,
+                isFalling: false,
+                isBouncing: true,
+                hasLanded: true,
+                velocity: 0,
+              };
+            }
+
             return {
               ...bubble,
-              y: bubble.finalY,
-              isFalling: false,
-              isBouncing: true,
-              hasLanded: true,
-              velocity: 0,
+              y: currentY,
+              velocity: bubble.velocity + 0.02,
             };
           }
-
-          return {
-            ...bubble,
-            y: currentY,
-            velocity: bubble.velocity + 0.02,
-          };
-        }
-        return bubble;
-      }));
+          return bubble;
+        }),
+      );
 
       if (elapsed < fallDuration) {
         requestAnimationFrame(animateFall);
@@ -158,23 +175,25 @@ export default function HeroLanding() {
     };
 
     animateFall();
-  };
+  }, [isMobile]);
 
   // Handle bounce completion
   useEffect(() => {
-    chatBubbles.forEach(bubble => {
+    chatBubbles.forEach((bubble) => {
       if (bubble.isBouncing) {
         setTimeout(() => {
-          setChatBubbles(prev => prev.map(b => {
-            if (b.id === bubble.id && b.isBouncing) {
-              return {
-                ...b,
-                isBouncing: false,
-                opacity: 0.9,
-              };
-            }
-            return b;
-          }));
+          setChatBubbles((prev) =>
+            prev.map((b) => {
+              if (b.id === bubble.id && b.isBouncing) {
+                return {
+                  ...b,
+                  isBouncing: false,
+                  opacity: 0.9,
+                };
+              }
+              return b;
+            }),
+          );
         }, 200);
       }
     });
@@ -184,9 +203,11 @@ export default function HeroLanding() {
   const handleMouseDown = (e: React.MouseEvent, bubbleId: number) => {
     e.preventDefault();
     setDraggedBubble(bubbleId);
-    setChatBubbles(prev => prev.map(bubble => 
-      bubble.id === bubbleId ? { ...bubble, isDragging: true } : bubble
-    ));
+    setChatBubbles((prev) =>
+      prev.map((bubble) =>
+        bubble.id === bubbleId ? { ...bubble, isDragging: true } : bubble,
+      ),
+    );
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -195,19 +216,29 @@ export default function HeroLanding() {
       const x = ((e.clientX - rect.left) / rect.width) * 100;
       const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-      setChatBubbles(prev => prev.map(bubble => 
-        bubble.id === draggedBubble 
-          ? { ...bubble, x: Math.max(5, Math.min(95, x)), y: Math.max(5, Math.min(95, y)) }
-          : bubble
-      ));
+      setChatBubbles((prev) =>
+        prev.map((bubble) =>
+          bubble.id === draggedBubble
+            ? {
+                ...bubble,
+                x: Math.max(5, Math.min(95, x)),
+                y: Math.max(5, Math.min(95, y)),
+              }
+            : bubble,
+        ),
+      );
     }
   };
 
   const handleMouseUp = () => {
     if (draggedBubble !== null) {
-      setChatBubbles(prev => prev.map(bubble => 
-        bubble.id === draggedBubble ? { ...bubble, isDragging: false } : bubble
-      ));
+      setChatBubbles((prev) =>
+        prev.map((bubble) =>
+          bubble.id === draggedBubble
+            ? { ...bubble, isDragging: false }
+            : bubble,
+        ),
+      );
       setDraggedBubble(null);
     }
   };
@@ -216,9 +247,11 @@ export default function HeroLanding() {
   const handleTouchStart = (e: React.TouchEvent, bubbleId: number) => {
     e.preventDefault();
     setDraggedBubble(bubbleId);
-    setChatBubbles(prev => prev.map(bubble => 
-      bubble.id === bubbleId ? { ...bubble, isDragging: true } : bubble
-    ));
+    setChatBubbles((prev) =>
+      prev.map((bubble) =>
+        bubble.id === bubbleId ? { ...bubble, isDragging: true } : bubble,
+      ),
+    );
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
@@ -229,56 +262,68 @@ export default function HeroLanding() {
       const x = ((touch.clientX - rect.left) / rect.width) * 100;
       const y = ((touch.clientY - rect.top) / rect.height) * 100;
 
-      setChatBubbles(prev => prev.map(bubble => 
-        bubble.id === draggedBubble 
-          ? { ...bubble, x: Math.max(5, Math.min(95, x)), y: Math.max(5, Math.min(95, y)) }
-          : bubble
-      ));
+      setChatBubbles((prev) =>
+        prev.map((bubble) =>
+          bubble.id === draggedBubble
+            ? {
+                ...bubble,
+                x: Math.max(5, Math.min(95, x)),
+                y: Math.max(5, Math.min(95, y)),
+              }
+            : bubble,
+        ),
+      );
     }
   };
 
   const handleTouchEnd = () => {
     if (draggedBubble !== null) {
-      setChatBubbles(prev => prev.map(bubble => 
-        bubble.id === draggedBubble ? { ...bubble, isDragging: false } : bubble
-      ));
+      setChatBubbles((prev) =>
+        prev.map((bubble) =>
+          bubble.id === draggedBubble
+            ? { ...bubble, isDragging: false }
+            : bubble,
+        ),
+      );
       setDraggedBubble(null);
     }
   };
 
   return (
-    <section 
-      className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden"
+    <section
+      className="relative overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24"
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="container flex max-w-5xl flex-col items-center gap-6 sm:gap-8 md:gap-10 text-center">
+      <div className="container flex max-w-5xl flex-col items-center gap-6 text-center sm:gap-8 md:gap-10">
         {/* Trust Indicator Badge */}
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 rounded-full text-sm font-medium text-blue-700 dark:text-blue-300 mb-6 sm:mb-8">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+        <div className="mb-6 flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-300 sm:mb-8">
+          <div className="size-2 animate-pulse rounded-full bg-green-500"></div>
           Join the future of customer support
         </div>
 
-        <h1 className="text-balance font-urban text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight mb-4 sm:mb-6 md:mb-8">
+        <h1 className="mb-4 text-balance font-urban text-3xl font-extrabold tracking-tight sm:mb-6 sm:text-4xl md:mb-8 md:text-5xl lg:text-6xl xl:text-7xl">
           Transform Your Website into an{" "}
           <span className="text-gradient_indigo-purple font-extrabold">
             Intelligent Conversational Platform
           </span>
         </h1>
 
-        <p className="max-w-2xl text-balance leading-normal text-muted-foreground text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 md:mb-10">
-          Capture leads, provide instant support, and engage visitors with AI that understands your business. One line of code to turn any website into a powerful conversational experience.
+        <p className="mb-6 max-w-2xl text-balance text-base leading-normal text-muted-foreground sm:mb-8 sm:text-lg md:mb-10 md:text-xl lg:text-2xl">
+          Capture leads, provide instant support, and engage visitors with AI
+          that understands your business. One line of code to turn any website
+          into a powerful conversational experience.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto mb-6 sm:mb-8 md:mb-10">
+        <div className="mb-6 flex w-full flex-col items-center justify-center gap-3 sm:mb-8 sm:w-auto sm:flex-row sm:gap-4 md:mb-10">
           <button
             onClick={() => setShowLeadCaptureModal(true)}
             className={cn(
               buttonVariants({ size: "lg", rounded: "full" }),
-              "gap-2 w-full sm:w-auto"
+              "w-full gap-2 sm:w-auto",
             )}
           >
             <span>Join Now</span>
@@ -288,8 +333,12 @@ export default function HeroLanding() {
             href="/pricing"
             prefetch={true}
             className={cn(
-              buttonVariants({ variant: "outline", size: "lg", rounded: "full" }),
-              "w-full sm:w-auto"
+              buttonVariants({
+                variant: "outline",
+                size: "lg",
+                rounded: "full",
+              }),
+              "w-full sm:w-auto",
             )}
           >
             <span>View Pricing</span>
@@ -297,71 +346,80 @@ export default function HeroLanding() {
         </div>
 
         {/* Trust Indicators */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-8 text-sm text-muted-foreground mb-4 sm:mb-6">
+        <div className="mb-4 flex flex-col items-center justify-center gap-4 text-sm text-muted-foreground sm:mb-6 sm:flex-row sm:gap-6 md:gap-8">
           <div className="flex items-center gap-2">
-            <Icons.check className="size-4 text-green-500 flex-shrink-0" />
+            <Icons.check className="size-4 shrink-0 text-green-500" />
             <span>Setup in 5 minutes</span>
           </div>
           <div className="flex items-center gap-2">
-            <Icons.check className="size-4 text-green-500 flex-shrink-0" />
+            <Icons.check className="size-4 shrink-0 text-green-500" />
             <span>Free forever plan</span>
           </div>
           <div className="flex items-center gap-2">
-            <Icons.check className="size-4 text-green-500 flex-shrink-0" />
+            <Icons.check className="size-4 shrink-0 text-green-500" />
             <span>24/7 AI support</span>
           </div>
         </div>
 
         {/* Social Proof */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+          <div className="size-2 rounded-full bg-green-500"></div>
           <span>Join the future of conversational AI</span>
         </div>
       </div>
 
       {/* Water-Drop Chat Bubbles */}
-      {!isMobileMenuOpen && chatBubbles.map((bubble) => (
-        <div
-          key={bubble.id}
-          className={cn(
-            "absolute z-10 cursor-grab select-none touch-none",
-            bubble.isDragging && "cursor-grabbing z-15"
-          )}
-          style={{
-            left: `${bubble.x}%`,
-            top: `${bubble.y}%`,
-            transform: `translate(-50%, -50%) scale(${bubble.scale}) rotate(${bubble.rotation}deg)`,
-            opacity: bubble.opacity,
-            transition: bubble.isDragging ? 'none' : 'transform 0.1s ease-out',
-          }}
-          onMouseDown={(e) => handleMouseDown(e, bubble.id)}
-          onTouchStart={(e) => handleTouchStart(e, bubble.id)}
-        >
-          <div className={cn(
-            "relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl px-2.5 sm:px-3 md:px-4 py-2 sm:py-3 shadow-lg border border-gray-200/50 dark:border-gray-700/50 max-w-[140px] sm:max-w-[200px] md:max-w-xs",
-            bubble.isDragging && "shadow-xl scale-105"
-          )}>
-            {/* Chat bubble tail */}
-            <div className="absolute -bottom-2 left-2.5 sm:left-3 md:left-4 w-3 h-3 sm:w-4 sm:h-4 bg-white/90 dark:bg-gray-800/90 border-b border-r border-gray-200/50 dark:border-gray-700/50 transform rotate-45"></div>
-            
-            {/* Message content */}
-            <div className="flex items-start gap-2">
-              <div className="flex-shrink-0">
-                <div className="w-6 h-6 sm:w-7 sm:h-7 bg-blue-500 rounded-full flex items-center justify-center">
-                  <Icons.bot className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+      {!isMobileMenuOpen &&
+        chatBubbles.map((bubble) => (
+          <div
+            key={bubble.id}
+            className={cn(
+              "absolute z-10 cursor-grab touch-none select-none",
+              bubble.isDragging && "z-15 cursor-grabbing",
+            )}
+            style={{
+              left: `${bubble.x}%`,
+              top: `${bubble.y}%`,
+              transform: `translate(-50%, -50%) scale(${bubble.scale}) rotate(${bubble.rotation}deg)`,
+              opacity: bubble.opacity,
+              transition: bubble.isDragging
+                ? "none"
+                : "transform 0.1s ease-out",
+            }}
+            onMouseDown={(e) => handleMouseDown(e, bubble.id)}
+            onTouchStart={(e) => handleTouchStart(e, bubble.id)}
+          >
+            <div
+              className={cn(
+                "relative max-w-[140px] rounded-2xl border border-gray-200/50 bg-white/90 px-2.5 py-2 shadow-lg backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/90 sm:max-w-[200px] sm:p-3 md:max-w-xs md:px-4",
+                bubble.isDragging && "scale-105 shadow-xl",
+              )}
+            >
+              {/* Chat bubble tail */}
+              <div className="absolute -bottom-2 left-2.5 size-3 rotate-45 border-b border-r border-gray-200/50 bg-white/90 dark:border-gray-700/50 dark:bg-gray-800/90 sm:left-3 sm:size-4 md:left-4"></div>
+
+              {/* Message content */}
+              <div className="flex items-start gap-2">
+                <div className="shrink-0">
+                  <div className="flex size-6 items-center justify-center rounded-full bg-blue-500 sm:size-7">
+                    <Icons.bot className="size-3 text-white sm:size-4" />
+                  </div>
                 </div>
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1 mb-1">
-                  <span className="text-xs font-medium text-blue-600 dark:text-blue-400">Rolto AI</span>
-                  <span className="text-xs text-muted-foreground">• now</span>
+                <div className="min-w-0 flex-1">
+                  <div className="mb-1 flex items-center gap-1">
+                    <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
+                      Rolto AI
+                    </span>
+                    <span className="text-xs text-muted-foreground">• now</span>
+                  </div>
+                  <p className="text-xs leading-relaxed text-foreground sm:text-sm">
+                    {bubble.message}
+                  </p>
                 </div>
-                <p className="text-xs sm:text-sm text-foreground leading-relaxed">{bubble.message}</p>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
     </section>
   );
 }

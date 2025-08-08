@@ -1,9 +1,15 @@
 "use client";
 
-import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 
-import { useSignInModal } from "@/components/modals/sign-in-modal";
 import LeadCaptureModal from "@/components/modals/lead-capture-modal";
+import { useSignInModal } from "@/components/modals/sign-in-modal";
 
 export const ModalContext = createContext<{
   setShowSignInModal: Dispatch<SetStateAction<boolean>>;
@@ -25,9 +31,9 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
       }}
     >
       <SignInModal />
-      <LeadCaptureModal 
-        isOpen={showLeadCaptureModal} 
-        onClose={() => setShowLeadCaptureModal(false)} 
+      <LeadCaptureModal
+        isOpen={showLeadCaptureModal}
+        onClose={() => setShowLeadCaptureModal(false)}
       />
       {children}
     </ModalContext.Provider>

@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Icons } from "@/components/shared/icons";
 import {
   Dialog,
   DialogContent,
@@ -14,14 +12,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Icons } from "@/components/shared/icons";
 
 interface LeadCaptureModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalProps) {
+export default function LeadCaptureModal({
+  isOpen,
+  onClose,
+}: LeadCaptureModalProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -56,7 +59,7 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
         toast.success("Successfully joined the waitlist!", {
           description: "We'll notify you as soon as Rolto launches.",
         });
-        
+
         // Reset form
         setFormData({
           fullName: "",
@@ -64,7 +67,7 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
           company: "",
           companyWebsite: "",
         });
-        
+
         // Close modal after a short delay
         setTimeout(() => {
           onClose();
@@ -77,7 +80,8 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
     } catch (error) {
       console.error("Error submitting waitlist signup:", error);
       toast.error("Failed to join waitlist", {
-        description: error instanceof Error ? error.message : "Please try again later.",
+        description:
+          error instanceof Error ? error.message : "Please try again later.",
       });
     } finally {
       setIsLoading(false);
@@ -85,9 +89,9 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -108,28 +112,29 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
         {isSuccess ? (
-          <div className="text-center py-8">
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-50 dark:bg-green-950">
-              <Icons.check className="h-8 w-8 text-green-600 dark:text-green-400" />
+          <div className="py-8 text-center">
+            <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-green-50 dark:bg-green-950">
+              <Icons.check className="size-8 text-green-600 dark:text-green-400" />
             </div>
             <DialogTitle className="text-2xl font-bold text-green-600 dark:text-green-400">
               Welcome to the waitlist!
             </DialogTitle>
-            <DialogDescription className="text-lg text-muted-foreground mt-4">
-              Thank you for joining! We'll notify you as soon as Rolto launches.
+            <DialogDescription className="mt-4 text-lg text-muted-foreground">
+              Thank you for joining! We&apos;ll notify you as soon as Rolto launches.
             </DialogDescription>
           </div>
         ) : (
           <>
             <DialogHeader className="text-center">
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-950">
-                <Icons.bot className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+              <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-950">
+                <Icons.bot className="size-8 text-blue-600 dark:text-blue-400" />
               </div>
               <DialogTitle className="text-2xl font-bold">
                 Join the waitlist
               </DialogTitle>
               <DialogDescription className="text-lg text-muted-foreground">
-                Be among the first to experience AI-powered customer support when we launch.
+                Be among the first to experience AI-powered customer support
+                when we launch.
               </DialogDescription>
             </DialogHeader>
 
@@ -144,7 +149,9 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
                     type="text"
                     placeholder="John Doe"
                     value={formData.fullName}
-                    onChange={(e) => handleInputChange("fullName", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("fullName", e.target.value)
+                    }
                     required
                     disabled={isLoading}
                     className="mt-2 h-12 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500"
@@ -176,7 +183,9 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
                     type="text"
                     placeholder="Acme Corp"
                     value={formData.company}
-                    onChange={(e) => handleInputChange("company", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("company", e.target.value)
+                    }
                     required
                     disabled={isLoading}
                     className="mt-2 h-12 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500"
@@ -184,15 +193,21 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
                 </div>
 
                 <div>
-                  <Label htmlFor="companyWebsite" className="text-sm font-medium">
-                    Company Website <span className="text-muted-foreground">(optional)</span>
+                  <Label
+                    htmlFor="companyWebsite"
+                    className="text-sm font-medium"
+                  >
+                    Company Website{" "}
+                    <span className="text-muted-foreground">(optional)</span>
                   </Label>
                   <Input
                     id="companyWebsite"
                     type="text"
                     placeholder="apple.com or https://apple.com"
                     value={formData.companyWebsite}
-                    onChange={(e) => handleInputChange("companyWebsite", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("companyWebsite", e.target.value)
+                    }
                     disabled={isLoading}
                     className="mt-2 h-12 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500"
                   />
@@ -202,23 +217,24 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg transition-all duration-200"
+                className="h-12 w-full rounded-xl bg-blue-600 text-lg font-semibold text-white transition-all duration-200 hover:bg-blue-700"
               >
                 {isLoading ? (
                   <>
-                    <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
+                    <Icons.spinner className="mr-2 size-5 animate-spin" />
                     Joining waitlist...
                   </>
                 ) : (
                   <>
                     Join Waitlist
-                    <Icons.arrowRight className="ml-2 h-5 w-5" />
+                    <Icons.arrowRight className="ml-2 size-5" />
                   </>
                 )}
               </Button>
 
-              <p className="text-xs text-center text-muted-foreground">
-                We'll notify you as soon as Rolto launches. No spam, just updates about our launch.
+              <p className="text-center text-xs text-muted-foreground">
+                We&apos;ll notify you as soon as Rolto launches. No spam, just
+                updates about our launch.
               </p>
             </form>
           </>
@@ -226,4 +242,4 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
       </DialogContent>
     </Dialog>
   );
-} 
+}

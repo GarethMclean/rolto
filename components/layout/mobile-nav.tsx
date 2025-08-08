@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -11,10 +11,10 @@ import { marketingConfig } from "@/config/marketing";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
-import { Icons } from "@/components/shared/icons";
 import { ModalContext } from "@/components/modals/providers";
-import { useMobileMenu } from "./mobile-menu-context";
+import { Icons } from "@/components/shared/icons";
 
+import { useMobileMenu } from "./mobile-menu-context";
 import { ModeToggle } from "./mode-toggle";
 
 export function NavMobile() {
@@ -63,17 +63,19 @@ export function NavMobile() {
         )}
       >
         <ul className="grid divide-y divide-muted">
-          {links && links.length > 0 && links.map(({ title, href }) => (
-            <li key={href} className="py-3">
-              <Link
-                href={href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex w-full font-medium capitalize"
-              >
-                {title}
-              </Link>
-            </li>
-          ))}
+          {links &&
+            links.length > 0 &&
+            links.map(({ title, href }) => (
+              <li key={href} className="py-3">
+                <Link
+                  href={href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex w-full font-medium capitalize"
+                >
+                  {title}
+                </Link>
+              </li>
+            ))}
 
           {session ? (
             <>

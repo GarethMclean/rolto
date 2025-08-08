@@ -50,8 +50,8 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
               className="font-medium underline underline-offset-4"
             >
               Rolto
-            </Link>
-            {" "}for You{" "}
+            </Link>{" "}
+            for You{" "}
           </p>
 
           <div className="flex items-center gap-3">
