@@ -34,7 +34,6 @@ const nextConfig = {
   // Experimental features for performance
   experimental: {
     serverComponentsExternalPackages: ["@prisma/client"],
-    optimizeCss: true,
     optimizePackageImports: ['@radix-ui/react-icons', 'lucide-react'],
   },
   

@@ -48,7 +48,7 @@ export const pricingData: SubscriptionPlan[] = [
     ],
     prices: {
       monthly: 29,
-      yearly: 290,
+      yearly: 278,
     },
     stripeIds: {
       monthly: env.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PLAN_ID,
@@ -73,7 +73,7 @@ export const pricingData: SubscriptionPlan[] = [
     limitations: [],
     prices: {
       monthly: 99,
-      yearly: 990,
+      yearly: 950,
     },
     stripeIds: {
       monthly: env.NEXT_PUBLIC_STRIPE_BUSINESS_MONTHLY_PLAN_ID,

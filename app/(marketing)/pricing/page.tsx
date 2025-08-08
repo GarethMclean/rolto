@@ -10,7 +10,8 @@ import { PricingFaq } from "@/components/pricing/pricing-faq";
 
 export const metadata = constructMetadata({
   title: "Pricing – Rolto",
-  description: "Simple, transparent pricing for Rolto's AI-powered customer support platform. Start free, scale as you grow.",
+  description:
+    "Simple, transparent pricing for Rolto's AI-powered customer support platform. Start free, scale as you grow.",
 });
 
 export default async function PricingPage() {

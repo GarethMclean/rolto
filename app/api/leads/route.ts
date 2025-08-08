@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { prisma } from "@/lib/db";
 
 export async function POST(request: NextRequest) {
@@ -10,7 +11,7 @@ export async function POST(request: NextRequest) {
     if (!fullName || !email || !company) {
       return NextResponse.json(
         { error: "Missing required fields" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest) {
     if (!emailRegex.test(email)) {
       return NextResponse.json(
         { error: "Invalid email format" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -28,8 +29,8 @@ export async function POST(request: NextRequest) {
     if (companyWebsite && companyWebsite.trim()) {
       let website = companyWebsite.trim();
       // Add https:// if no protocol is specified
-      if (!website.startsWith('http://') && !website.startsWith('https://')) {
-        website = 'https://' + website;
+      if (!website.startsWith("http://") && !website.startsWith("https://")) {
+        website = "https://" + website;
       }
       cleanedWebsite = website;
     }
@@ -42,15 +43,15 @@ export async function POST(request: NextRequest) {
       `;
 
       return NextResponse.json(
-        { 
-          success: true, 
-          message: "Lead captured successfully"
+        {
+          success: true,
+          message: "Lead captured successfully",
         },
-        { status: 201 }
+        { status: 201 },
       );
     } catch (dbError) {
       console.error("Database error:", dbError);
-      
+
       // In development, still return success even if database fails
       if (process.env.NODE_ENV === "development") {
         console.log("Development mode: Lead would be captured:", {
@@ -58,30 +59,30 @@ export async function POST(request: NextRequest) {
           email,
           company,
           companyWebsite: cleanedWebsite,
-          source: source || "waitlist"
+          source: source || "waitlist",
         });
-        
+
         return NextResponse.json(
-          { 
-            success: true, 
+          {
+            success: true,
             message: "Lead captured successfully (development mode)",
-            note: "Database connection not available, but lead data was processed"
+            note: "Database connection not available, but lead data was processed",
           },
-          { status: 201 }
+          { status: 201 },
         );
       }
-      
+
       // In production, return error
       return NextResponse.json(
         { error: "Database connection failed" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   } catch (error) {
     console.error("Error creating website lead:", error);
     return NextResponse.json(
       { error: "Failed to create lead" },
-      { status: 500 }
+      { status: 500 },
     );
   }
-} 
+}

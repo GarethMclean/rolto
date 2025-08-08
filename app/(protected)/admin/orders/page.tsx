@@ -22,7 +22,7 @@ export default async function OrdersPage() {
         text="Check and manage your latest orders."
       />
       <EmptyPlaceholder>
-        <EmptyPlaceholder.Icon name="package" />
+        <EmptyPlaceholder.Icon name="post" />
         <EmptyPlaceholder.Title>No orders listed</EmptyPlaceholder.Title>
         <EmptyPlaceholder.Description>
           You don&apos;t have any orders yet. Start ordering a product.

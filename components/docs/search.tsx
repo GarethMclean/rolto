@@ -1,11 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useRouter } from "next/navigation"
-import { allDocs } from "contentlayer/generated"
+import * as React from "react";
+import { useRouter } from "next/navigation";
+import { allDocs } from "contentlayer/generated";
 
-import { cn } from "@/lib/utils"
-import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils";
 import {
   CommandDialog,
   CommandEmpty,
@@ -13,29 +12,30 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
+import { Input } from "@/components/ui/input";
 
 interface DocsSearchProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function DocsSearch({ className, ...props }: DocsSearchProps) {
-  const [open, setOpen] = React.useState(false)
-  const router = useRouter()
+  const [open, setOpen] = React.useState(false);
+  const router = useRouter();
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        setOpen((open) => !open)
+        e.preventDefault();
+        setOpen((open) => !open);
       }
-    }
-    document.addEventListener("keydown", down)
-    return () => document.removeEventListener("keydown", down)
-  }, [])
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
 
   const runCommand = React.useCallback((command: () => unknown) => {
-    setOpen(false)
-    command()
-  }, [])
+    setOpen(false);
+    command();
+  }, []);
 
   // Filter and prepare docs for search
   const searchableDocs = allDocs
@@ -45,7 +45,7 @@ export function DocsSearch({ className, ...props }: DocsSearchProps) {
       description: doc.description || "",
       href: doc.slug,
       category: doc.slug.split("/")[1] || "General",
-    }))
+    }));
 
   return (
     <>
@@ -76,7 +76,7 @@ export function DocsSearch({ className, ...props }: DocsSearchProps) {
                 <CommandItem
                   key={doc.href}
                   onSelect={() => {
-                    runCommand(() => router.push(doc.href))
+                    runCommand(() => router.push(doc.href));
                   }}
                 >
                   <div className="flex flex-col">
@@ -90,15 +90,19 @@ export function DocsSearch({ className, ...props }: DocsSearchProps) {
                 </CommandItem>
               ))}
           </CommandGroup>
-          {searchableDocs.some((doc) => doc.category !== "docs" && doc.href !== "/docs") && (
+          {searchableDocs.some(
+            (doc) => doc.category !== "docs" && doc.href !== "/docs",
+          ) && (
             <CommandGroup heading="Other Documentation">
               {searchableDocs
-                .filter((doc) => doc.category !== "docs" && doc.href !== "/docs")
+                .filter(
+                  (doc) => doc.category !== "docs" && doc.href !== "/docs",
+                )
                 .map((doc) => (
                   <CommandItem
                     key={doc.href}
                     onSelect={() => {
-                      runCommand(() => router.push(doc.href))
+                      runCommand(() => router.push(doc.href));
                     }}
                   >
                     <div className="flex flex-col">
@@ -116,5 +120,5 @@ export function DocsSearch({ className, ...props }: DocsSearchProps) {
         </CommandList>
       </CommandDialog>
     </>
-  )
+  );
 }

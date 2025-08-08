@@ -1,10 +1,17 @@
 import {
   AlertTriangle,
   ArrowRight,
+  ArrowUpRight,
+  BarChart3,
+  Bot,
+  Brain,
   Check,
+  CheckCircle,
   ChevronLeft,
   ChevronRight,
+  Code,
   Command,
+  Copy,
   CreditCard,
   File,
   FileText,
@@ -13,30 +20,23 @@ import {
   Laptop,
   Loader2,
   LucideProps,
+  MessageSquare,
   Moon,
   MoreVertical,
   Pizza,
+  Play,
   Plus,
+  Search,
   Settings,
+  Shield,
+  Sparkles,
+  Star,
   SunMedium,
   Trash,
+  Upload,
   User,
   X,
-  Search,
-  Copy,
-  ArrowUpRight,
-  Bot,
-  MessageSquare,
-  Play,
   Zap,
-  Brain,
-  Shield,
-  Star,
-  Upload,
-  Code,
-  BarChart3,
-  CheckCircle,
-  Sparkles,
 } from "lucide-react";
 
 export type Icon = LucideProps;
@@ -76,12 +76,7 @@ const RoltoLogo = ({ ...props }: LucideProps) => (
       fill="none"
     />
     {/* Central dot representing the core/center */}
-    <circle
-      cx="12"
-      cy="12"
-      r="2"
-      fill="currentColor"
-    />
+    <circle cx="12" cy="12" r="2" fill="currentColor" />
   </svg>
 );
 

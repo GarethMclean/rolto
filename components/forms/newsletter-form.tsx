@@ -1,9 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -35,7 +35,7 @@ export function NewsletterForm() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
-    
+
     try {
       const response = await fetch("/api/leads", {
         method: "POST",
@@ -54,7 +54,8 @@ export function NewsletterForm() {
         form.reset();
         toast({
           title: "Successfully subscribed!",
-          description: "You'll receive updates about Rolto's launch and features.",
+          description:
+            "You'll receive updates about Rolto's launch and features.",
         });
       } else {
         throw new Error("Failed to subscribe");
@@ -95,16 +96,16 @@ export function NewsletterForm() {
             </FormItem>
           )}
         />
-        <Button 
-          type="submit" 
-          size="sm" 
-          rounded="full" 
+        <Button
+          type="submit"
+          size="sm"
+          rounded="full"
           className="px-4"
           disabled={isLoading}
         >
           {isLoading ? (
             <>
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="mr-2 size-4 animate-spin" />
               Subscribing...
             </>
           ) : (
