@@ -29,102 +29,169 @@ export async function GET(req: Request) {
 
     const fontSize = heading.length > 80 ? "60px" : "80px";
 
-    const githubName = "mickasmt";
-
     return new ImageResponse(
       (
         <div
-          tw="flex relative flex-col p-12 w-full h-full items-start"
+          tw="flex relative flex-col p-12 w-full h-full items-start justify-center"
           style={{
             color: paint,
             background:
               mode === "dark"
-                ? "linear-gradient(90deg, #000 0%, #111 100%)"
-                : "white",
+                ? "linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)"
+                : "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%)",
           }}
         >
+          {/* Background Pattern */}
           <div
-            tw="text-5xl"
+            tw="absolute inset-0 opacity-10"
             style={{
-              fontFamily: "Cal Sans",
-              fontWeight: "normal",
-              position: "relative",
-              background: "linear-gradient(90deg, #6366f1, #a855f7 80%)",
-              backgroundClip: "text",
-              color: "transparent",
+              backgroundImage: "radial-gradient(circle at 25% 25%, #6366f1 0%, transparent 50%), radial-gradient(circle at 75% 75%, #a855f7 0%, transparent 50%)",
             }}
-          >
-            SaaS Starter
-          </div>
+          />
 
-          <div tw="flex flex-col flex-1 py-16">
-            {/* Type : Blog or Doc */}
+          {/* Main Content */}
+          <div tw="relative z-10 flex flex-col w-full">
+            {/* Trust Badge */}
             <div
-              tw="flex text-xl uppercase font-bold tracking-tight"
-              style={{ fontFamily: "Inter", fontWeight: "normal" }}
+              tw="flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 mb-8 w-fit"
+              style={{
+                fontFamily: "Inter",
+                fontWeight: "normal",
+                borderColor: mode === "dark" ? "#1e40af" : "#bfdbfe",
+                backgroundColor: mode === "dark" ? "#1e3a8a" : "#eff6ff",
+                color: mode === "dark" ? "#93c5fd" : "#1d4ed8",
+              }}
             >
-              {values.type}
+              <div tw="w-2 h-2 rounded-full bg-green-500" />
+              <span>Join the future of customer support</span>
             </div>
-            {/* Title */}
+
+            {/* Main Heading */}
             <div
-              tw="flex leading-[1.15] text-[80px] font-bold"
+              tw="text-6xl font-extrabold leading-tight mb-6"
               style={{
                 fontFamily: "Cal Sans",
                 fontWeight: "bold",
-                marginLeft: "-3px",
-                fontSize,
+                background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
+                backgroundClip: "text",
+                color: "transparent",
+                fontSize: "72px",
+                lineHeight: "1.1",
               }}
             >
-              {heading}
+              Rolto
+            </div>
+
+            {/* Subtitle */}
+            <div
+              tw="text-2xl leading-relaxed text-gray-600 mb-8 max-w-2xl"
+              style={{
+                fontFamily: "Inter",
+                fontWeight: "normal",
+                color: mode === "dark" ? "#9ca3af" : "#4b5563",
+                fontSize: "28px",
+                lineHeight: "1.4",
+              }}
+            >
+              Transform Your Website into an Intelligent Conversational Platform
+            </div>
+
+            {/* Description */}
+            <div
+              tw="text-lg leading-relaxed text-gray-500 mb-8 max-w-xl"
+              style={{
+                fontFamily: "Inter",
+                fontWeight: "normal",
+                color: mode === "dark" ? "#6b7280" : "#6b7280",
+                fontSize: "20px",
+                lineHeight: "1.5",
+              }}
+            >
+              Capture leads, provide instant support, and engage visitors with AI that understands your business.
+            </div>
+
+            {/* Trust Indicators */}
+            <div tw="flex items-center gap-6 text-sm text-gray-500">
+              <div tw="flex items-center gap-2">
+                <div tw="w-4 h-4 rounded-full bg-green-500" />
+                <span style={{ fontFamily: "Inter", fontWeight: "normal" }}>Setup in 5 minutes</span>
+              </div>
+              <div tw="flex items-center gap-2">
+                <div tw="w-4 h-4 rounded-full bg-green-500" />
+                <span style={{ fontFamily: "Inter", fontWeight: "normal" }}>14-day free trial</span>
+              </div>
+              <div tw="flex items-center gap-2">
+                <div tw="w-4 h-4 rounded-full bg-green-500" />
+                <span style={{ fontFamily: "Inter", fontWeight: "normal" }}>24/7 AI support</span>
+              </div>
             </div>
           </div>
 
-          <div tw="flex items-center w-full justify-between">
-            <div
-              tw="flex items-center text-xl"
-              style={{ fontFamily: "Inter", fontWeight: "normal" }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                alt="avatar"
-                width="65"
-                src={`https://github.com/${githubName}.png`}
-                style={{
-                  borderRadius: 128,
-                }}
-              />
-
-              <div tw="flex flex-col" style={{ marginLeft: "15px" }}>
-                <div tw="text-[22px]" style={{ fontFamily: "Cal Sans" }}>
-                  {githubName}
+          {/* Bottom Section */}
+          <div tw="absolute bottom-12 left-12 right-12 flex items-center justify-between">
+            <div tw="flex items-center text-xl">
+              <div
+                tw="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600"
+                style={{ fontFamily: "Inter", fontWeight: "normal" }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 2L2 7L12 12L22 7L12 2Z"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M2 17L12 22L22 17"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M2 12L12 17L22 12"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div tw="flex flex-col ml-3">
+                <div
+                  tw="text-lg font-semibold"
+                  style={{ fontFamily: "Cal Sans", fontWeight: "bold" }}
+                >
+                  Rolto
                 </div>
-                <div>Open Source Designer</div>
+                <div style={{ fontFamily: "Inter", fontWeight: "normal" }}>
+                  AI-Powered Conversational Platform
+                </div>
               </div>
             </div>
 
             <div
-              tw="flex items-center text-xl"
+              tw="flex items-center text-lg"
               style={{ fontFamily: "Inter", fontWeight: "normal" }}
             >
-              <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
-                  d="M30 44v-8a9.6 9.6 0 0 0-2-7c6 0 12-4 12-11 .16-2.5-.54-4.96-2-7 .56-2.3.56-4.7 0-7 0 0-2 0-6 3-5.28-1-10.72-1-16 0-4-3-6-3-6-3-.6 2.3-.6 4.7 0 7a10.806 10.806 0 0 0-2 7c0 7 6 11 12 11a9.43 9.43 0 0 0-1.7 3.3c-.34 1.2-.44 2.46-.3 3.7v8"
-                  stroke={paint}
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+                  stroke={mode === "dark" ? "#9ca3af" : "#6b7280"}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
-                  d="M18 36c-9.02 4-10-4-14-4"
-                  stroke={paint}
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+                  stroke={mode === "dark" ? "#9ca3af" : "#6b7280"}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
-              <div tw="flex ml-2">
-                github.com/mickasmt/next-saas-stripe-starter
-              </div>
+              <div tw="ml-2">rolto.io</div>
             </div>
           </div>
         </div>
