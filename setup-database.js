@@ -1,7 +1,9 @@
-require('dotenv').config({ path: '.env.local' });
+// Simple script to set up the website_leads table
+// Run this if you need to manually create the table
+
 const { Pool } = require('pg');
 
-async function createTable() {
+async function setupDatabase() {
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
   });
@@ -27,14 +29,9 @@ async function createTable() {
     await client.query(createTableQuery);
     console.log('✅ website_leads table created successfully!');
     
-    // Create indexes
-    await client.query('CREATE INDEX IF NOT EXISTS idx_website_leads_email ON website_leads(email);');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_website_leads_created_at ON website_leads(created_at);');
-    console.log('✅ Indexes created successfully!');
-    
     client.release();
   } catch (error) {
-    console.error('❌ Error creating table:', error);
+    console.error('❌ Error setting up database:', error);
   } finally {
     await pool.end();
   }
@@ -42,8 +39,8 @@ async function createTable() {
 
 // Only run if DATABASE_URL is set
 if (process.env.DATABASE_URL) {
-  createTable();
+  setupDatabase();
 } else {
   console.log('❌ DATABASE_URL environment variable not set');
   console.log('Please set your DATABASE_URL and try again');
-} 
+}
