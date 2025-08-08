@@ -1,8 +1,8 @@
 import { auth } from "@/auth"
 import { NextResponse } from "next/server"
-import type { NextRequestWithAuth } from "next-auth/middleware"
+import type { NextRequest } from "next/server"
 
-export default auth((req: NextRequestWithAuth) => {
+export default auth((req) => {
   const isLoggedIn = !!req.auth
   const { pathname } = req.nextUrl
 
