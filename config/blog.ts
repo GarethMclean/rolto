@@ -27,9 +27,9 @@ export const BLOG_CATEGORIES: {
 
 export const BLOG_AUTHORS = {
   gareth: {
-    name: "Gareth McLean",
+    name: "Gareth Mclean",
     image: "/_static/avatars/gareth.png", // Will use PNG when available, falls back to SVG
-    twitter: "garethmclean",
+    twitter: "GarethGazMclean",
     title: "Founder & CEO at Rolto",
   },
   team: {
