@@ -1,9 +1,18 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 
 import { testimonials } from "@/config/landing";
 import { HeaderSection } from "@/components/shared/header-section";
 
 export default function Testimonials() {
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
+  const handleCardPress = (index: number) => {
+    setExpandedCard(expandedCard === index ? null : index);
+  };
+
   return (
     <section className="relative">
       {/* Subtle top border for visual separation */}
@@ -20,19 +29,35 @@ export default function Testimonials() {
           their websites into intelligent conversational platforms.
         </p>
 
-        {/* Mobile: Horizontal scrolling */}
+        {/* Mobile: Horizontal scrolling with interaction */}
         <div className="relative md:hidden">
           <div className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-8">
             {/* Left fade indicator */}
             <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-6 bg-gradient-to-r from-background to-transparent" />
             {/* Right fade indicator */}
             <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-6 bg-gradient-to-l from-background to-transparent" />
-            {testimonials.map((item) => (
+            {testimonials.map((item, index) => (
               <div
                 className="flex min-w-[200px] max-w-[240px] shrink-0 snap-start first:ml-0 last:mr-4"
                 key={item.name}
               >
-                <div className="relative w-full rounded-2xl border bg-muted/25 shadow-lg">
+                <div
+                  className={`relative w-full rounded-2xl border bg-muted/25 shadow-lg transition-all duration-300 ${
+                    expandedCard === index
+                      ? "shadow-xl ring-2 ring-primary/20"
+                      : "hover:shadow-md"
+                  }`}
+                  onClick={() => handleCardPress(index)}
+                  onTouchStart={() => handleCardPress(index)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleCardPress(index);
+                    }
+                  }}
+                >
                   <div className="flex flex-col px-4 py-5">
                     <div>
                       <div className="relative mb-4 flex items-center gap-3">
@@ -40,9 +65,14 @@ export default function Testimonials() {
                           <Image
                             width={100}
                             height={100}
-                            className="size-full rounded-full border-2 border-background shadow-md"
+                            className="size-full rounded-full border-2 border-background object-cover shadow-md"
                             src={item.image}
                             alt={item.name}
+                            onError={(e) => {
+                              // Fallback to a default avatar if image fails to load
+                              const target = e.target as HTMLImageElement;
+                              target.src = "/_static/avatars/gareth.png";
+                            }}
                           />
                         </span>
                         <div className="min-w-0 flex-1">
@@ -54,9 +84,30 @@ export default function Testimonials() {
                           </p>
                         </div>
                       </div>
-                      <q className="line-clamp-4 text-sm leading-relaxed text-muted-foreground">
+                      <q
+                        className={`text-sm leading-relaxed text-muted-foreground transition-all duration-300 ${
+                          expandedCard === index
+                            ? "line-clamp-none"
+                            : "line-clamp-4"
+                        }`}
+                      >
                         {item.review}
                       </q>
+                      {/* Expand/collapse indicator */}
+                      <div className="mt-3 flex items-center justify-between">
+                        <div className="text-xs text-muted-foreground/60">
+                          {expandedCard === index
+                            ? "Tap to collapse"
+                            : "Tap to expand"}
+                        </div>
+                        <div
+                          className={`text-xs transition-transform duration-300 ${
+                            expandedCard === index ? "rotate-180" : ""
+                          }`}
+                        >
+                          ▼
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -69,7 +120,7 @@ export default function Testimonials() {
               {testimonials.map((_, index) => (
                 <div
                   key={index}
-                  className="h-1.5 w-1.5 rounded-full bg-muted-foreground/30 transition-colors duration-200"
+                  className="size-1.5 rounded-full bg-muted-foreground/30 transition-colors duration-200"
                 />
               ))}
             </div>
@@ -80,7 +131,7 @@ export default function Testimonials() {
         <div className="column-1 hidden gap-4 space-y-4 sm:gap-6 sm:space-y-6 md:block md:columns-2 lg:columns-3">
           {testimonials.map((item) => (
             <div className="break-inside-avoid" key={item.name}>
-              <div className="relative rounded-xl border bg-muted/25 shadow-sm">
+              <div className="relative rounded-xl border bg-muted/25 shadow-sm transition-shadow duration-200 hover:shadow-md">
                 <div className="flex flex-col px-5 py-6">
                   <div>
                     <div className="relative mb-5 flex items-center gap-3">
@@ -88,9 +139,14 @@ export default function Testimonials() {
                         <Image
                           width={100}
                           height={100}
-                          className="size-full rounded-full border-2 border-background shadow-sm"
+                          className="size-full rounded-full border-2 border-background object-cover shadow-sm"
                           src={item.image}
                           alt={item.name}
+                          onError={(e) => {
+                            // Fallback to a default avatar if image fails to load
+                            const target = e.target as HTMLImageElement;
+                            target.src = "/_static/avatars/gareth.png";
+                          }}
                         />
                       </span>
                       <div>

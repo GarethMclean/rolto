@@ -110,36 +110,37 @@ export default function LeadCaptureModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="mx-4 max-h-[90vh] overflow-y-auto sm:mx-0 sm:max-w-md">
         {isSuccess ? (
-          <div className="py-8 text-center">
-            <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-green-50 dark:bg-green-950">
-              <Icons.check className="size-8 text-green-600 dark:text-green-400" />
+          <div className="py-6 text-center sm:py-8">
+            <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-green-50 dark:bg-green-950 sm:mb-6 sm:size-16">
+              <Icons.check className="size-6 text-green-600 dark:text-green-400 sm:size-8" />
             </div>
-            <DialogTitle className="text-2xl font-bold text-green-600 dark:text-green-400">
+            <DialogTitle className="text-xl font-bold text-green-600 dark:text-green-400 sm:text-2xl">
               Welcome to the waitlist!
             </DialogTitle>
-            <DialogDescription className="mt-4 text-lg text-muted-foreground">
-              Thank you for joining! We&apos;ll notify you as soon as Rolto launches.
+            <DialogDescription className="mt-3 text-base text-muted-foreground sm:mt-4 sm:text-lg">
+              Thank you for joining! We&apos;ll notify you as soon as Rolto
+              launches.
             </DialogDescription>
           </div>
         ) : (
           <>
             <DialogHeader className="text-center">
-              <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-950">
-                <Icons.bot className="size-8 text-blue-600 dark:text-blue-400" />
+              <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-950 sm:mb-6 sm:size-16">
+                <Icons.bot className="size-6 text-blue-600 dark:text-blue-400 sm:size-8" />
               </div>
-              <DialogTitle className="text-2xl font-bold">
+              <DialogTitle className="text-xl font-bold sm:text-2xl">
                 Join the waitlist
               </DialogTitle>
-              <DialogDescription className="text-lg text-muted-foreground">
+              <DialogDescription className="text-base text-muted-foreground sm:text-lg">
                 Be among the first to experience AI-powered customer support
                 when we launch.
               </DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+              <div className="space-y-3 sm:space-y-4">
                 <div>
                   <Label htmlFor="fullName" className="text-sm font-medium">
                     Full Name *
@@ -154,7 +155,7 @@ export default function LeadCaptureModal({
                     }
                     required
                     disabled={isLoading}
-                    className="mt-2 h-12 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-2 h-11 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500 sm:h-12"
                   />
                 </div>
 
@@ -170,7 +171,7 @@ export default function LeadCaptureModal({
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     required
                     disabled={isLoading}
-                    className="mt-2 h-12 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-2 h-11 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500 sm:h-12"
                   />
                 </div>
 
@@ -188,7 +189,7 @@ export default function LeadCaptureModal({
                     }
                     required
                     disabled={isLoading}
-                    className="mt-2 h-12 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-2 h-11 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500 sm:h-12"
                   />
                 </div>
 
@@ -209,7 +210,7 @@ export default function LeadCaptureModal({
                       handleInputChange("companyWebsite", e.target.value)
                     }
                     disabled={isLoading}
-                    className="mt-2 h-12 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-2 h-11 rounded-xl border-border bg-background text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:ring-blue-500 sm:h-12"
                   />
                 </div>
               </div>
@@ -217,7 +218,7 @@ export default function LeadCaptureModal({
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="h-12 w-full rounded-xl bg-blue-600 text-lg font-semibold text-white transition-all duration-200 hover:bg-blue-700"
+                className="h-11 w-full rounded-xl bg-blue-600 text-base font-semibold text-white transition-all duration-200 hover:bg-blue-700 sm:h-12 sm:text-lg"
               >
                 {isLoading ? (
                   <>
@@ -232,7 +233,7 @@ export default function LeadCaptureModal({
                 )}
               </Button>
 
-              <p className="text-center text-xs text-muted-foreground">
+              <p className="text-center text-xs text-muted-foreground sm:text-sm">
                 We&apos;ll notify you as soon as Rolto launches. No spam, just
                 updates about our launch.
               </p>
