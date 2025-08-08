@@ -36,11 +36,16 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      // Try to create website lead in database
-      await prisma.$executeRaw`
-        INSERT INTO website_leads (id, full_name, email, company, company_website, created_at, updated_at)
-        VALUES (gen_random_uuid()::text, ${fullName}, ${email}, ${company}, ${cleanedWebsite}, NOW(), NOW())
-      `;
+      // Try to create website lead in database using Prisma ORM
+      await prisma.websiteLead.create({
+        data: {
+          fullName,
+          email,
+          company,
+          companyWebsite: cleanedWebsite,
+          source: source || "waitlist",
+        },
+      });
 
       return NextResponse.json(
         {

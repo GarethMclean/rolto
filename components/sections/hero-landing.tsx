@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { useMobileMenu } from "@/components/layout/mobile-menu-context";
+
 import { ModalContext } from "@/components/modals/providers";
 import { Icons } from "@/components/shared/icons";
 
@@ -39,7 +39,6 @@ export default function HeroLanding() {
   const [draggedBubble, setDraggedBubble] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const { setShowLeadCaptureModal } = useContext(ModalContext);
-  const { isMobileMenuOpen } = useMobileMenu();
 
   // Detect mobile device
   useEffect(() => {
@@ -51,89 +50,6 @@ export default function HeroLanding() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  // Create water-drop style falling bubbles
-  useEffect(() => {
-    console.log(
-      "Hero useEffect triggered, isMobile:",
-      isMobile,
-      "isMobileMenuOpen:",
-      isMobileMenuOpen,
-    );
-
-    const createWaterDrops = () => {
-      const bubbles: ChatBubble[] = [];
-
-      // Strategic positions for mobile vs desktop - find open spaces
-      const positions = isMobile
-        ? [
-            { x: 10, y: 15 }, // Top left - lots of space above header
-            { x: 90, y: 15 }, // Top right - lots of space above header
-            { x: 10, y: 85 }, // Bottom left - below CTA buttons
-            { x: 90, y: 85 }, // Bottom right - below CTA buttons
-          ]
-        : [
-            { x: 12, y: 20 }, // Top left area
-            { x: 88, y: 25 }, // Top right area
-            { x: 15, y: 80 }, // Bottom left area
-            { x: 85, y: 75 }, // Bottom right area
-          ];
-
-      for (let i = 0; i < 4; i++) {
-        const finalX =
-          positions[i].x + (Math.random() - 0.5) * (isMobile ? 1 : 8);
-        const finalY =
-          positions[i].y + (Math.random() - 0.5) * (isMobile ? 1 : 6);
-
-        const bubble: ChatBubble = {
-          id: i,
-          message: chatMessages[i % chatMessages.length],
-          x: finalX + (Math.random() - 0.5) * (isMobile ? 2 : 12),
-          y: -30, // Start above viewport
-          isDragging: false,
-          isFalling: true,
-          isBouncing: false,
-          hasLanded: false,
-          velocity: 0.8 + Math.random() * 0.4,
-          rotation: (Math.random() - 0.5) * (isMobile ? 10 : 15),
-          scale:
-            (isMobile ? 0.7 : 0.85) + Math.random() * (isMobile ? 0.15 : 0.3),
-          opacity:
-            (isMobile ? 0.65 : 0.75) + Math.random() * (isMobile ? 0.2 : 0.25),
-          bounceCount: 0,
-          finalX: finalX,
-          finalY: finalY,
-        };
-        bubbles.push(bubble);
-      }
-
-      console.log("Created bubbles:", bubbles.length);
-      setChatBubbles(bubbles);
-
-      // Start falling animations with staggered timing
-      bubbles.forEach((bubble, index) => {
-        setTimeout(
-          () => {
-            startWaterDropAnimation(bubble.id);
-          },
-          index * (isMobile ? 600 : 800),
-        );
-      });
-    };
-
-    // Start the animation after a short delay, but only if mobile menu is not open
-    if (!isMobileMenuOpen) {
-      const timer = setTimeout(createWaterDrops, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [isMobile, isMobileMenuOpen]);
-
-  // Clear chat bubbles when mobile menu opens
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      setChatBubbles([]);
-    }
-  }, [isMobileMenuOpen]);
 
   const startWaterDropAnimation = useCallback((bubbleId: number) => {
     const fallDuration =
@@ -176,6 +92,79 @@ export default function HeroLanding() {
 
     animateFall();
   }, [isMobile]);
+
+  // Create water-drop style falling bubbles
+  useEffect(() => {
+    console.log(
+      "Hero useEffect triggered, isMobile:",
+      isMobile,
+    );
+
+    const createWaterDrops = () => {
+      const bubbles: ChatBubble[] = [];
+
+      // Strategic positions for mobile vs desktop - find open spaces
+      // Avoid covering text and stay within screen bounds
+      const positions = isMobile
+        ? [
+            { x: 8, y: 12 }, // Top left - above heading
+            { x: 92, y: 12 }, // Top right - above heading
+            { x: 8, y: 75 }, // Bottom left - above CTA buttons
+            { x: 92, y: 75 }, // Bottom right - above CTA buttons
+          ]
+        : [
+            { x: 10, y: 15 }, // Top left - above heading
+            { x: 90, y: 15 }, // Top right - above heading
+            { x: 12, y: 70 }, // Bottom left - above CTA buttons
+            { x: 88, y: 70 }, // Bottom right - above CTA buttons
+          ];
+
+      for (let i = 0; i < 4; i++) {
+        const finalX =
+          positions[i].x + (Math.random() - 0.5) * (isMobile ? 1 : 2);
+        const finalY =
+          positions[i].y + (Math.random() - 0.5) * (isMobile ? 1 : 2);
+
+        const bubble: ChatBubble = {
+          id: i,
+          message: chatMessages[i % chatMessages.length],
+          x: finalX + (Math.random() - 0.5) * (isMobile ? 2 : 12),
+          y: -30, // Start above viewport
+          isDragging: false,
+          isFalling: true,
+          isBouncing: false,
+          hasLanded: false,
+          velocity: 0.8 + Math.random() * 0.4,
+          rotation: (Math.random() - 0.5) * (isMobile ? 10 : 15),
+          scale:
+            (isMobile ? 0.55 : 0.7) + Math.random() * (isMobile ? 0.08 : 0.12),
+          opacity:
+            (isMobile ? 0.65 : 0.75) + Math.random() * (isMobile ? 0.2 : 0.25),
+          bounceCount: 0,
+          finalX: finalX,
+          finalY: finalY,
+        };
+        bubbles.push(bubble);
+      }
+
+      console.log("Created bubbles:", bubbles.length);
+      setChatBubbles(bubbles);
+
+      // Start falling animations with staggered timing
+      bubbles.forEach((bubble, index) => {
+        setTimeout(
+          () => {
+            startWaterDropAnimation(bubble.id);
+          },
+          index * (isMobile ? 600 : 800),
+        );
+      });
+    };
+
+    // Start the animation after a short delay
+    const timer = setTimeout(createWaterDrops, 500);
+    return () => clearTimeout(timer);
+  }, [isMobile, startWaterDropAnimation]);
 
   // Handle bounce completion
   useEffect(() => {
@@ -221,8 +210,8 @@ export default function HeroLanding() {
           bubble.id === draggedBubble
             ? {
                 ...bubble,
-                x: Math.max(5, Math.min(95, x)),
-                y: Math.max(5, Math.min(95, y)),
+                x: Math.max(8, Math.min(92, x)),
+                y: Math.max(8, Math.min(92, y)),
               }
             : bubble,
         ),
@@ -267,8 +256,8 @@ export default function HeroLanding() {
           bubble.id === draggedBubble
             ? {
                 ...bubble,
-                x: Math.max(5, Math.min(95, x)),
-                y: Math.max(5, Math.min(95, y)),
+                x: Math.max(8, Math.min(92, x)),
+                y: Math.max(8, Math.min(92, y)),
               }
             : bubble,
         ),
@@ -353,7 +342,7 @@ export default function HeroLanding() {
           </div>
           <div className="flex items-center gap-2">
             <Icons.check className="size-4 shrink-0 text-green-500" />
-            <span>Free forever plan</span>
+            <span>14-day free trial</span>
           </div>
           <div className="flex items-center gap-2">
             <Icons.check className="size-4 shrink-0 text-green-500" />
@@ -369,8 +358,7 @@ export default function HeroLanding() {
       </div>
 
       {/* Water-Drop Chat Bubbles */}
-      {!isMobileMenuOpen &&
-        chatBubbles.map((bubble) => (
+      {chatBubbles.map((bubble) => (
           <div
             key={bubble.id}
             className={cn(
@@ -391,12 +379,12 @@ export default function HeroLanding() {
           >
             <div
               className={cn(
-                "relative max-w-[140px] rounded-2xl border border-gray-200/50 bg-white/90 px-2.5 py-2 shadow-lg backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/90 sm:max-w-[200px] sm:p-3 md:max-w-xs md:px-4",
+                "relative max-w-[160px] rounded-3xl border border-gray-200/50 bg-white/90 px-3 py-2 shadow-lg backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/90 sm:max-w-[180px] sm:px-3.5 sm:py-2.5 md:max-w-[200px] md:px-4 md:py-3",
                 bubble.isDragging && "scale-105 shadow-xl",
               )}
             >
               {/* Chat bubble tail */}
-              <div className="absolute -bottom-2 left-2.5 size-3 rotate-45 border-b border-r border-gray-200/50 bg-white/90 dark:border-gray-700/50 dark:bg-gray-800/90 sm:left-3 sm:size-4 md:left-4"></div>
+              <div className="absolute -bottom-2 left-3 size-3 rotate-45 border-b border-r border-gray-200/50 bg-white/90 dark:border-gray-700/50 dark:bg-gray-800/90 sm:left-3.5 sm:size-3.5 md:left-4 md:size-4"></div>
 
               {/* Message content */}
               <div className="flex items-start gap-2">

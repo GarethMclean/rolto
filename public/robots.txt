@@ -1,20 +1,95 @@
+# Robots.txt for Rolto.io
+# Allow all search engines to crawl the site
+
 User-agent: *
 Allow: /
 
-# Sitemap
+# Sitemap location
 Sitemap: https://rolto.io/sitemap.xml
 
-# Crawl-delay
+# Crawl-delay for respectful crawling
 Crawl-delay: 1
 
-# Disallow admin and private areas
+# Disallow private and admin areas
 Disallow: /admin/
 Disallow: /api/
 Disallow: /_next/
 Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /protected/
+Disallow: /login/
+Disallow: /register/
 
-# Allow important pages
+# Allow important public pages
 Allow: /blog/
 Allow: /docs/
 Allow: /pricing/
-Allow: /about/ 
+Allow: /guides/
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /protected/
+Disallow: /login/
+Disallow: /register/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /protected/
+Disallow: /login/
+Disallow: /register/
+
+User-agent: Slurp
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /protected/
+Disallow: /login/
+Disallow: /register/
+
+# AI and LLM crawlers
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /protected/
+Disallow: /login/
+Disallow: /register/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /protected/
+Disallow: /login/
+Disallow: /register/
+
+User-agent: CCBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /protected/
+Disallow: /login/
+Disallow: /register/ 

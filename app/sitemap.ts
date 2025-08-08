@@ -15,35 +15,71 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/pricing`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: "daily" as const,
-      priority: 0.7,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/docs`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/docs/installation`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
       priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/docs/configuration/blog`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/docs/configuration/config-files`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/docs/configuration/email`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
     },
   ];
 
-  // Blog posts - simplified to avoid contentlayer issues
+  // Blog posts with proper metadata
   const blogPosts = [
     {
-      url: `${baseUrl}/blog/chatbot-lead-generation-stats`,
-      lastModified: new Date("2025-07-08"),
+      url: `${baseUrl}/blog/ai-chatbot-comparison-guide`,
+      lastModified: new Date("2025-01-15"),
       changeFrequency: "monthly" as const,
-      priority: 0.5,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/blog/chatbot-lead-generation-stats`,
+      lastModified: new Date("2025-01-10"),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/blog/chatbots-increase-conversions`,
-      lastModified: new Date("2025-08-05"),
+      lastModified: new Date("2025-01-08"),
       changeFrequency: "monthly" as const,
-      priority: 0.5,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/blog/how-ai-chatbots-revolutionize-customer-support`,
+      lastModified: new Date("2025-01-05"),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     },
   ];
 

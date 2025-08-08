@@ -130,7 +130,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 "@type": "Offer",
                 price: "0",
                 priceCurrency: "USD",
-                description: "Free trial available",
+                description: "14-day free trial available",
               },
               provider: {
                 "@type": "Organization",
@@ -172,12 +172,32 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta name="ai-category" content="conversational-ai-software" />
         <meta
           name="ai-features"
-          content="chatbot,ai-assistant,lead-generation,customer-support,website-widget,conversational-ai,customer-engagement"
+          content="chatbot,ai-assistant,lead-generation,customer-support,website-widget,conversational-ai,customer-engagement,rag,retrieval-augmented-generation"
         />
         <meta
           name="ai-use-cases"
-          content="lead-generation,customer-service,website-engagement,conversion-optimization,customer-support"
+          content="lead-generation,customer-service,website-engagement,conversion-optimization,customer-support,ai-chatbot,conversational-commerce"
         />
+        <meta name="ai-industry" content="saas,technology,ai,conversational-ai" />
+        <meta name="ai-target-audience" content="businesses,startups,enterprises,website-owners" />
+        
+        {/* Additional SEO Meta Tags */}
+        <meta name="google-site-verification" content="your-google-verification-code" />
+        <meta name="msvalidate.01" content="your-bing-verification-code" />
+        <meta name="yandex-verification" content="your-yandex-verification-code" />
+        
+        {/* Performance and Security */}
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="theme-color" content="#0370e3" />
+        <meta name="msapplication-TileColor" content="#0370e3" />
+        
+        {/* Social Media Optimization */}
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Rolto - AI-Powered Conversational Platform" />
+        <meta name="twitter:creator" content="@rolto_ai" />
+        <meta name="twitter:site" content="@rolto_ai" />
         <meta
           name="ai-target-audience"
           content="businesses,saas-companies,ecommerce,real-estate,healthcare,marketing-teams,sales-teams"
@@ -203,7 +223,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 "@type": "Offer",
                 price: "0",
                 priceCurrency: "USD",
-                description: "Free trial with premium plans available",
+                description: "14-day free trial with premium plans starting at $15/month",
               },
               provider: {
                 "@type": "Organization",
@@ -294,7 +314,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   name: "How much does Rolto cost?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Rolto offers a free trial with premium plans starting at $29/month. Pricing is based on usage and features needed for your conversational AI platform.",
+                    text: "Rolto offers a 14-day free trial with premium plans starting at $15/month. Pricing is based on usage and features needed for your conversational AI platform.",
                   },
                 },
                 {

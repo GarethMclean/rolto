@@ -128,7 +128,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
               rounded="full"
               onClick={() => setShowLeadCaptureModal(true)}
             >
-              Try Free Now
+              Start Free Now
             </Button>
           )}
         </div>
@@ -168,7 +168,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
         </div>
 
         <div className="grid gap-5 bg-inherit py-5 lg:grid-cols-3">
-          {pricingData.map((offer) => (
+          {pricingData.slice(0, 3).map((offer) => (
             <PricingCard offer={offer} key={offer.title} />
           ))}
         </div>
