@@ -41,6 +41,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta name="robots" content="index, follow" />
         <meta name="language" content="English" />
         <meta name="revisit-after" content="7 days" />
+        
+        {/* Search Engine Image (Google, Bing, etc.) */}
+        <meta name="image" content="https://rolto.io/R-logo-blue.svg" />
+        <meta itemprop="image" content="https://rolto.io/R-logo-blue.svg" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
