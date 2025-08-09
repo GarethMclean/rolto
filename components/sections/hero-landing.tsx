@@ -416,7 +416,7 @@ export default function HeroLanding() {
                     </span>
                     <span className="text-xs text-muted-foreground">• now</span>
                   </div>
-                  <p className="break-words text-xs leading-relaxed text-foreground line-clamp-2 whitespace-normal sm:text-sm">
+                  <p className="text-xs leading-relaxed text-foreground break-words line-clamp-2 whitespace-normal sm:text-sm">
                     {bubble.message}
                   </p>
                 </div>
