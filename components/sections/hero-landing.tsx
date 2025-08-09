@@ -118,30 +118,41 @@ export default function HeroLanding() {
     const createWaterDrops = () => {
       const bubbles: ChatBubble[] = [];
 
-      // Strategic positions for mobile vs desktop - find open spaces
-      // Avoid covering text and stay within screen bounds
-      const positions = isMobile
+      // Create very conservative safe zones - far left and far right only
+      // Content is centered, so safe zones are the extreme left and right edges
+      const safeZones = isMobile
         ? [
-            { x: 50, y: 12 }, // Center-top - above the trust badge
-            { x: 50, y: 35 }, // Center - between badge and headline
-            { x: 50, y: 55 }, // Center - between headline and description
-            { x: 50, y: 85 }, // Center-bottom - above the buttons
+            // Far left strip - well away from any content
+            { x: 8, y: 20, width: 12, height: 60 },
+            // Far right strip - well away from any content
+            { x: 80, y: 20, width: 12, height: 60 },
+            // Top-left corner - above all content
+            { x: 8, y: 8, width: 12, height: 10 },
+            // Top-right corner - above all content
+            { x: 80, y: 8, width: 12, height: 10 },
           ]
         : [
-            { x: 50, y: 15 }, // Center-top - above the trust badge
-            { x: 50, y: 40 }, // Center - between badge and headline
-            { x: 50, y: 60 }, // Center - between headline and description
-            { x: 50, y: 85 }, // Center-bottom - above the buttons
+            // Far left strip - well away from any content
+            { x: 10, y: 15, width: 15, height: 70 },
+            // Far right strip - well away from any content
+            { x: 75, y: 15, width: 15, height: 70 },
+            // Top-left corner - above all content
+            { x: 10, y: 8, width: 15, height: 8 },
+            // Top-right corner - above all content
+            { x: 75, y: 8, width: 15, height: 8 },
           ];
 
       // Create a shuffled array of messages to ensure no repetition
       const shuffledMessages = [...chatMessages].sort(() => Math.random() - 0.5);
 
       for (let i = 0; i < 4; i++) {
-        // Add controlled horizontal variation to spread bubbles across the width
-        const horizontalOffset = (i % 2 === 0 ? -1 : 1) * (isMobile ? 15 : 20);
-        const finalX = positions[i].x + horizontalOffset;
-        const finalY = positions[i].y + (Math.random() - 0.5) * (isMobile ? 1 : 2);
+        // Select a safe zone and position within it precisely
+        const safeZone = safeZones[i % safeZones.length];
+        
+        // Position within the safe zone with controlled randomness
+        // Leave 10% padding from edges to ensure bubble fits
+        const finalX = safeZone.x + (safeZone.width * 0.1) + (Math.random() * safeZone.width * 0.6);
+        const finalY = safeZone.y + (safeZone.height * 0.1) + (Math.random() * safeZone.height * 0.6);
 
         const bubble: ChatBubble = {
           id: i,
@@ -223,13 +234,17 @@ export default function HeroLanding() {
       const x = ((e.clientX - rect.left) / rect.width) * 100;
       const y = ((e.clientY - rect.top) / rect.height) * 100;
 
+      // Very conservative drag boundaries to prevent edge cutting
+      const constrainedX = Math.max(12, Math.min(88, x));
+      const constrainedY = Math.max(10, Math.min(90, y));
+
       setChatBubbles((prev) =>
         prev.map((bubble) =>
           bubble.id === draggedBubble
             ? {
                 ...bubble,
-                x: Math.max(25, Math.min(75, x)),
-                y: Math.max(10, Math.min(85, y)),
+                x: constrainedX,
+                y: constrainedY,
               }
             : bubble,
         ),
@@ -269,13 +284,17 @@ export default function HeroLanding() {
       const x = ((touch.clientX - rect.left) / rect.width) * 100;
       const y = ((touch.clientY - rect.top) / rect.height) * 100;
 
+      // Very conservative drag boundaries to prevent edge cutting
+      const constrainedX = Math.max(12, Math.min(88, x));
+      const constrainedY = Math.max(10, Math.min(90, y));
+
       setChatBubbles((prev) =>
         prev.map((bubble) =>
           bubble.id === draggedBubble
             ? {
                 ...bubble,
-                x: Math.max(25, Math.min(75, x)),
-                y: Math.max(10, Math.min(85, y)),
+                x: constrainedX,
+                y: constrainedY,
               }
             : bubble,
         ),
