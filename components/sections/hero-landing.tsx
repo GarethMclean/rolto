@@ -328,20 +328,20 @@ export default function HeroLanding() {
         {/* Trust Indicator Badge */}
         <div className="mb-8 flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-300 sm:mb-12">
           <div className="size-2 animate-pulse rounded-full bg-green-500"></div>
-          Join the future of customer support
+          Join the Future of Business Engagement
         </div>
 
         <h1 className="mb-6 text-balance font-urban text-3xl font-extrabold tracking-tight sm:mb-8 sm:text-4xl md:mb-10 md:text-5xl lg:text-6xl xl:text-7xl">
           Transform Your Website into an{" "}
           <span className="text-gradient_indigo-purple font-extrabold">
-            Intelligent Conversational Platform
+            Intelligent Engagement Platform
           </span>
         </h1>
 
         <p className="mb-8 max-w-2xl text-balance text-base leading-normal text-muted-foreground sm:mb-10 sm:text-lg md:mb-12 md:text-xl lg:text-2xl">
-          Capture leads, provide instant support, and engage visitors with AI
-          that understands your business. One line of code to turn any website
-          into a powerful conversational experience.
+          Capture leads, close deals, and support customers — all through AI
+          that understands your business. With one line of code, turn any website
+          into a powerful, intelligent engagement hub.
         </p>
 
         <div className="mb-8 flex w-full flex-col items-center justify-center gap-3 sm:mb-10 sm:w-auto sm:flex-row sm:gap-4 md:mb-12">
