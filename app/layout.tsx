@@ -47,13 +47,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta property="og:url" content="https://rolto.io" />
         <meta
           property="og:title"
-          content="Rolto - AI-Powered Conversational Platform"
+          content="Rolto - The AI-Powered Conversational Platform"
         />
         <meta
           property="og:description"
           content="Transform any website into an intelligent conversational platform with Rolto's embeddable AI assistant. Capture leads, provide instant support, and engage visitors."
         />
-        <meta property="og:image" content="https://rolto.io/opengraph-image.jpg" />
+        <meta property="og:image" content="https://rolto.io/opengraph-image.png" />
         <meta property="og:site_name" content="Rolto" />
         <meta property="og:locale" content="en_US" />
 
@@ -62,13 +62,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta name="twitter:url" content="https://rolto.io" />
         <meta
           name="twitter:title"
-          content="Rolto - AI-Powered Conversational Platform"
+          content="Rolto - The AI-Powered Conversational Platform"
         />
         <meta
           name="twitter:description"
           content="Transform any website into an intelligent conversational platform with Rolto's embeddable AI assistant."
         />
-        <meta name="twitter:image" content="https://rolto.io/opengraph-image.jpg" />
+        <meta name="twitter:image" content="https://rolto.io/opengraph-image.png" />
 
         {/* Additional SEO Meta Tags */}
         <meta
@@ -195,7 +195,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/* Social Media Optimization */}
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Rolto - AI-Powered Conversational Platform" />
+        <meta property="og:image:alt" content="Rolto - The AI-Powered Conversational Platform" />
         <meta name="twitter:creator" content="@rolto_ai" />
         <meta name="twitter:site" content="@rolto_ai" />
         <meta
