@@ -395,7 +395,7 @@ export default function HeroLanding() {
           >
             <div
               className={cn(
-                "relative w-[200px] h-[80px] rounded-3xl border border-gray-200/50 bg-white/90 px-4 py-3 shadow-lg backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/90 sm:w-[240px] sm:h-[90px] sm:px-5 sm:py-3.5 md:w-[280px] md:h-[100px] md:px-6 md:py-4",
+                "relative h-[80px] w-[200px] rounded-3xl border border-gray-200/50 bg-white/90 px-4 py-3 shadow-lg backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/90 sm:h-[90px] sm:w-[240px] sm:px-5 sm:py-3.5 md:h-[100px] md:w-[280px] md:px-6 md:py-4",
                 bubble.isDragging && "scale-105 shadow-xl",
               )}
             >
@@ -416,7 +416,7 @@ export default function HeroLanding() {
                     </span>
                     <span className="text-xs text-muted-foreground">• now</span>
                   </div>
-                  <p className="text-xs leading-relaxed text-foreground sm:text-sm whitespace-normal break-words line-clamp-2">
+                  <p className="break-words text-xs leading-relaxed text-foreground line-clamp-2 whitespace-normal sm:text-sm">
                     {bubble.message}
                   </p>
                 </div>
