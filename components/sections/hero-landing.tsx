@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
@@ -88,7 +88,7 @@ export default function HeroLanding() {
   };
 
   // Anchor positions per breakpoint (ordered by preference) - very permissive
-  const ANCHORS: Record<string, Anchor[]> = {
+  const ANCHORS = useMemo<Record<string, Anchor[]>>(() => ({
     desktop: [
       { x: 20, y: 20, name: 'top-left' },
       { x: 80, y: 20, name: 'top-right' },
@@ -113,7 +113,7 @@ export default function HeroLanding() {
       { x: 25, y: 50, name: 'mid-left' },
       { x: 75, y: 50, name: 'mid-right' },
     ]
-  };
+  }), []);
 
   // Detect breakpoint and layout stability
   useEffect(() => {
@@ -173,7 +173,7 @@ export default function HeroLanding() {
   }, [BREAKPOINTS.mobile, BREAKPOINTS.tablet]);
 
   // Positioning utilities
-  const getBubbleKey = (bubbleId: number, breakpoint: string) => `bubblePos:${bubbleId}:${breakpoint}`;
+  const getBubbleKey = useCallback((bubbleId: number, breakpoint: string) => `bubblePos:${bubbleId}:${breakpoint}`, []);
   
   const saveBubblePosition = (bubbleId: number, breakpoint: string, x: number, y: number) => {
     try {
@@ -185,7 +185,7 @@ export default function HeroLanding() {
     }
   };
 
-  const loadBubblePosition = (bubbleId: number, breakpoint: string): BubblePosition | null => {
+  const loadBubblePosition = useCallback((bubbleId: number, breakpoint: string): BubblePosition | null => {
     try {
       const key = getBubbleKey(bubbleId, breakpoint);
       const saved = localStorage.getItem(key);
@@ -194,7 +194,7 @@ export default function HeroLanding() {
       console.warn('Failed to load bubble position:', error);
       return null;
     }
-  };
+  }, [getBubbleKey]);
 
   const resetBubblePositions = () => {
     try {
