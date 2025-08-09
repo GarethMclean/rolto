@@ -359,10 +359,10 @@ export default function HeroLanding() {
         if (!placed) {
           // Positions in the open spaces - top 2 high, bottom 2 lower
           const positions = [
-            { x: 12, y: 12, name: 'top-left' },      // Above headline, left side
-            { x: 88, y: 12, name: 'top-right' },     // Above headline, right side
-            { x: 20, y: 75, name: 'mid-left' },      // Below content, left side
-            { x: 80, y: 75, name: 'mid-right' },     // Below content, right side
+            { x: 12, y: 14, name: 'top-left' },      // Above and left of headline (moved down slightly)
+            { x: 88, y: isMobile ? 32 : 45, name: 'top-right' },     // Right of headline/paragraph, aligned with text (moved up slightly on mobile, down on desktop)
+            { x: 18, y: 72, name: 'mid-left' },      // Below buttons, left of feature list (moved down)
+            { x: 82, y: 85, name: 'mid-right' },     // Below buttons, right of feature list (moved down quite a bit)
           ];
           
           const position = positions[bubbleId];
@@ -633,18 +633,6 @@ export default function HeroLanding() {
           <div className="size-2 rounded-full bg-green-500"></div>
           <span>Join the future of conversational AI</span>
         </div>
-        
-        {/* Debug: Reset button (remove in production) */}
-        <button
-          onClick={() => {
-            resetBubblePositions();
-            setIsLayoutStable(false);
-            setTimeout(() => setIsLayoutStable(true), 100);
-          }}
-          className="mt-4 text-xs text-gray-500 hover:text-gray-700"
-        >
-          Reset Bubble Positions
-        </button>
       </div>
 
       {/* Water-Drop Chat Bubbles */}

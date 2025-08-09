@@ -110,9 +110,9 @@ export default function LeadCaptureModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="mx-0 max-h-[100vh] w-full overflow-y-auto rounded-none border-0 bg-background p-0 shadow-none sm:mx-0 sm:max-h-[95vh] sm:w-auto sm:max-w-md sm:rounded-xl sm:border sm:p-6 sm:shadow-2xl">
+      <DialogContent className="mx-4 max-h-[95vh] w-[calc(100vw-2rem)] overflow-y-auto rounded-xl border bg-background p-6 shadow-2xl sm:mx-0 sm:max-h-[95vh] sm:w-auto sm:max-w-md">
         {isSuccess ? (
-          <div className="py-8 text-center sm:py-8">
+          <div className="py-8 text-center">
             <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-green-50 dark:bg-green-950 sm:mb-6 sm:size-16">
               <Icons.check className="size-8 text-green-600 dark:text-green-400 sm:size-8" />
             </div>
@@ -126,7 +126,7 @@ export default function LeadCaptureModal({
           </div>
         ) : (
           <>
-            <DialogHeader className="px-6 pt-6 text-center sm:px-0 sm:pt-0">
+            <DialogHeader className="text-center">
               <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-950 sm:mb-6 sm:size-16">
                 <Icons.bot className="size-8 text-blue-600 dark:text-blue-400 sm:size-8" />
               </div>
@@ -139,8 +139,8 @@ export default function LeadCaptureModal({
               </DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="px-6 pb-6 sm:px-0 sm:pb-0">
-              <div className="space-y-5 sm:space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-6">
                 <div>
                   <Label htmlFor="fullName" className="text-sm font-medium">
                     Full Name *
