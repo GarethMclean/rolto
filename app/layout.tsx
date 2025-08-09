@@ -53,7 +53,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           property="og:description"
           content="Transform any website into an intelligent conversational platform with Rolto's embeddable AI assistant. Capture leads, provide instant support, and engage visitors."
         />
-        <meta property="og:image" content="https://rolto.io/opengraph-image.png" />
+        <meta property="og:image" content="https://rolto.io/og.png" />
         <meta property="og:site_name" content="Rolto" />
         <meta property="og:locale" content="en_US" />
 
@@ -68,7 +68,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           name="twitter:description"
           content="Transform any website into an intelligent conversational platform with Rolto's embeddable AI assistant."
         />
-        <meta name="twitter:image" content="https://rolto.io/opengraph-image.png" />
+        <meta name="twitter:image" content="https://rolto.io/og.png" />
 
         {/* Additional SEO Meta Tags */}
         <meta
