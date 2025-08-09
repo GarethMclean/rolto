@@ -129,10 +129,7 @@ export default async function Image() {
               <div
                 tw="text-lg font-semibold"
               >
-                Rolto
-              </div>
-              <div>
-                AI-Powered Conversational Platform
+                Rolto - The AI-Powered Conversational Platform
               </div>
             </div>
           </div>

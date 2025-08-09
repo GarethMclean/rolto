@@ -47,7 +47,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta property="og:url" content="https://rolto.io" />
         <meta
           property="og:title"
-          content="Rolto - AI-Powered Conversational Platform"
+          content="Rolto - The AI-Powered Conversational Platform"
         />
         <meta
           property="og:description"
@@ -62,7 +62,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta name="twitter:url" content="https://rolto.io" />
         <meta
           name="twitter:title"
-          content="Rolto - AI-Powered Conversational Platform"
+          content="Rolto - The AI-Powered Conversational Platform"
         />
         <meta
           name="twitter:description"
@@ -195,7 +195,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/* Social Media Optimization */}
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Rolto - AI-Powered Conversational Platform" />
+        <meta property="og:image:alt" content="Rolto - The AI-Powered Conversational Platform" />
         <meta name="twitter:creator" content="@rolto_ai" />
         <meta name="twitter:site" content="@rolto_ai" />
         <meta

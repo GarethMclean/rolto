@@ -122,16 +122,16 @@ export default function HeroLanding() {
       // Avoid covering text and stay within screen bounds
       const positions = isMobile
         ? [
-            { x: 20, y: 15 }, // Top-left - well above headline, away from header
-            { x: 80, y: 15 }, // Top-right - well above headline, away from header
-            { x: 20, y: 60 }, // Mid-left - between headline and buttons
-            { x: 80, y: 70 }, // Bottom-right - above navigation bar
+            { x: 25, y: 20 }, // Top-left - well above headline, away from header
+            { x: 75, y: 20 }, // Top-right - well above headline, away from header
+            { x: 25, y: 65 }, // Mid-left - between headline and buttons
+            { x: 75, y: 75 }, // Bottom-right - above navigation bar
           ]
         : [
-            { x: 15, y: 30 }, // Top left - more open space above headline
-            { x: 85, y: 25 }, // Top right - moved higher and more to edge to avoid headline
-            { x: 15, y: 80 }, // Bottom left - more open space
-            { x: 85, y: 80 }, // Bottom right - more open space
+            { x: 20, y: 30 }, // Top left - more open space above headline
+            { x: 80, y: 25 }, // Top right - moved higher and more to edge to avoid headline
+            { x: 20, y: 80 }, // Bottom left - more open space
+            { x: 80, y: 80 }, // Bottom right - more open space
           ];
 
       // Create a shuffled array of messages to ensure no repetition
@@ -228,8 +228,8 @@ export default function HeroLanding() {
           bubble.id === draggedBubble
             ? {
                 ...bubble,
-                x: Math.max(15, Math.min(85, x)),
-                y: Math.max(10, Math.min(85, y)),
+                x: Math.max(20, Math.min(80, x)),
+                y: Math.max(15, Math.min(80, y)),
               }
             : bubble,
         ),
@@ -274,8 +274,8 @@ export default function HeroLanding() {
           bubble.id === draggedBubble
             ? {
                 ...bubble,
-                x: Math.max(15, Math.min(85, x)),
-                y: Math.max(10, Math.min(85, y)),
+                x: Math.max(20, Math.min(80, x)),
+                y: Math.max(15, Math.min(80, y)),
               }
             : bubble,
         ),
