@@ -122,16 +122,16 @@ export default function HeroLanding() {
       // Avoid covering text and stay within screen bounds
       const positions = isMobile
         ? [
-            { x: 8, y: 8 }, // Top-left - well above headline, minimal overlap
-            { x: 92, y: 8 }, // Top-right - well above headline, minimal overlap
-            { x: 8, y: 55 }, // Mid-left - well to the left of content
-            { x: 92, y: 75 }, // Bottom-right - well to the right of content
+            { x: 20, y: 15 }, // Top-left - well above headline, away from header
+            { x: 80, y: 15 }, // Top-right - well above headline, away from header
+            { x: 20, y: 60 }, // Mid-left - between headline and buttons
+            { x: 80, y: 70 }, // Bottom-right - above navigation bar
           ]
         : [
-            { x: 10, y: 30 }, // Top left - more open space above headline
-            { x: 90, y: 25 }, // Top right - moved higher and more to edge to avoid headline
-            { x: 12, y: 80 }, // Bottom left - more open space
-            { x: 88, y: 80 }, // Bottom right - more open space
+            { x: 15, y: 30 }, // Top left - more open space above headline
+            { x: 85, y: 25 }, // Top right - moved higher and more to edge to avoid headline
+            { x: 15, y: 80 }, // Bottom left - more open space
+            { x: 85, y: 80 }, // Bottom right - more open space
           ];
 
       // Create a shuffled array of messages to ensure no repetition
@@ -139,14 +139,14 @@ export default function HeroLanding() {
 
       for (let i = 0; i < 4; i++) {
         const finalX =
-          positions[i].x + (Math.random() - 0.5) * (isMobile ? 0.5 : 1);
+          positions[i].x + (Math.random() - 0.5) * (isMobile ? 2 : 3);
         const finalY =
-          positions[i].y + (Math.random() - 0.5) * (isMobile ? 0.5 : 1);
+          positions[i].y + (Math.random() - 0.5) * (isMobile ? 2 : 3);
 
         const bubble: ChatBubble = {
           id: i,
           message: shuffledMessages[i], // Use shuffled array to ensure unique messages
-          x: finalX + (Math.random() - 0.5) * (isMobile ? 0.5 : 1),
+          x: finalX + (Math.random() - 0.5) * (isMobile ? 1 : 2),
           y: -30, // Start above viewport
           isDragging: false,
           isFalling: true,
@@ -155,7 +155,7 @@ export default function HeroLanding() {
           velocity: 0.8 + Math.random() * 0.4,
           rotation: (Math.random() - 0.5) * (isMobile ? 10 : 15),
           scale:
-            (isMobile ? 0.55 : 0.7) + Math.random() * (isMobile ? 0.08 : 0.12),
+            (isMobile ? 0.5 : 0.7) + Math.random() * (isMobile ? 0.06 : 0.12),
           opacity:
             (isMobile ? 0.65 : 0.75) + Math.random() * (isMobile ? 0.2 : 0.25),
           bounceCount: 0,
@@ -228,8 +228,8 @@ export default function HeroLanding() {
           bubble.id === draggedBubble
             ? {
                 ...bubble,
-                x: Math.max(8, Math.min(92, x)),
-                y: Math.max(8, Math.min(92, y)),
+                x: Math.max(15, Math.min(85, x)),
+                y: Math.max(10, Math.min(85, y)),
               }
             : bubble,
         ),
@@ -274,8 +274,8 @@ export default function HeroLanding() {
           bubble.id === draggedBubble
             ? {
                 ...bubble,
-                x: Math.max(8, Math.min(92, x)),
-                y: Math.max(8, Math.min(92, y)),
+                x: Math.max(15, Math.min(85, x)),
+                y: Math.max(10, Math.min(85, y)),
               }
             : bubble,
         ),
