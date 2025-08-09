@@ -110,7 +110,7 @@ export default function LeadCaptureModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="mx-2 max-h-[95vh] w-[calc(100vw-16px)] overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl sm:mx-0 sm:w-auto sm:max-w-md sm:rounded-xl sm:border sm:p-6">
+      <DialogContent className="mx-4 max-h-[95vh] w-[calc(100vw-32px)] overflow-y-auto rounded-2xl border-0 bg-background p-0 shadow-2xl sm:mx-0 sm:w-auto sm:max-w-md sm:rounded-xl sm:border sm:p-6">
         {isSuccess ? (
           <div className="py-8 text-center sm:py-8">
             <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-green-50 dark:bg-green-950 sm:mb-6 sm:size-16">
@@ -155,7 +155,7 @@ export default function LeadCaptureModal({
                     }
                     required
                     disabled={isLoading}
-                    className="mt-2 h-12 rounded-xl border-gray-200 bg-gray-50 text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:bg-white focus:ring-blue-500 sm:h-12"
+                    className="mt-2 h-12 rounded-xl border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:bg-background focus:ring-blue-500 sm:h-12"
                   />
                 </div>
 
@@ -171,7 +171,7 @@ export default function LeadCaptureModal({
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     required
                     disabled={isLoading}
-                    className="mt-2 h-12 rounded-xl border-gray-200 bg-gray-50 text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:bg-white focus:ring-blue-500 sm:h-12"
+                    className="mt-2 h-12 rounded-xl border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:bg-background focus:ring-blue-500 sm:h-12"
                   />
                 </div>
 
@@ -189,7 +189,7 @@ export default function LeadCaptureModal({
                     }
                     required
                     disabled={isLoading}
-                    className="mt-2 h-12 rounded-xl border-gray-200 bg-gray-50 text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:bg-white focus:ring-blue-500 sm:h-12"
+                    className="mt-2 h-12 rounded-xl border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:bg-background focus:ring-blue-500 sm:h-12"
                   />
                 </div>
 
@@ -210,7 +210,7 @@ export default function LeadCaptureModal({
                       handleInputChange("companyWebsite", e.target.value)
                     }
                     disabled={isLoading}
-                    className="mt-2 h-12 rounded-xl border-gray-200 bg-gray-50 text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:bg-white focus:ring-blue-500 sm:h-12"
+                    className="mt-2 h-12 rounded-xl border-border bg-muted text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:bg-background focus:ring-blue-500 sm:h-12"
                   />
                 </div>
               </div>
