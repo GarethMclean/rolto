@@ -8,17 +8,6 @@ export const size = {
 };
 
 export default async function Image() {
-  const interRegular = fetch(
-    new URL("../../assets/fonts/Inter-Regular.ttf", import.meta.url),
-  ).then((res) => res.arrayBuffer());
-
-  const interBold = fetch(
-    new URL("../../assets/fonts/CalSans-SemiBold.ttf", import.meta.url),
-  ).then((res) => res.arrayBuffer());
-
-  const fontRegular = await interRegular;
-  const fontBold = await interBold;
-
   return new ImageResponse(
     (
       <div
@@ -42,8 +31,6 @@ export default async function Image() {
           <div
             tw="flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 mb-8 w-fit"
             style={{
-              fontFamily: "Inter",
-              fontWeight: "normal",
               borderColor: "#bfdbfe",
               backgroundColor: "#eff6ff",
               color: "#1d4ed8",
@@ -57,8 +44,6 @@ export default async function Image() {
           <div
             tw="text-6xl font-extrabold leading-tight mb-6"
             style={{
-              fontFamily: "Cal Sans",
-              fontWeight: "bold",
               background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
               backgroundClip: "text",
               color: "transparent",
@@ -73,8 +58,6 @@ export default async function Image() {
           <div
             tw="text-2xl leading-relaxed text-gray-600 mb-8 max-w-2xl"
             style={{
-              fontFamily: "Inter",
-              fontWeight: "normal",
               color: "#4b5563",
               fontSize: "28px",
               lineHeight: "1.4",
@@ -87,8 +70,6 @@ export default async function Image() {
           <div
             tw="text-lg leading-relaxed text-gray-500 mb-8 max-w-xl"
             style={{
-              fontFamily: "Inter",
-              fontWeight: "normal",
               color: "#6b7280",
               fontSize: "20px",
               lineHeight: "1.5",
@@ -101,15 +82,15 @@ export default async function Image() {
           <div tw="flex items-center gap-6 text-sm text-gray-500">
             <div tw="flex items-center gap-2">
               <div tw="w-4 h-4 rounded-full bg-green-500" />
-              <span style={{ fontFamily: "Inter", fontWeight: "normal" }}>Setup in 5 minutes</span>
+              <span>Setup in 5 minutes</span>
             </div>
             <div tw="flex items-center gap-2">
               <div tw="w-4 h-4 rounded-full bg-green-500" />
-              <span style={{ fontFamily: "Inter", fontWeight: "normal" }}>14-day free trial</span>
+              <span>14-day free trial</span>
             </div>
             <div tw="flex items-center gap-2">
               <div tw="w-4 h-4 rounded-full bg-green-500" />
-              <span style={{ fontFamily: "Inter", fontWeight: "normal" }}>24/7 AI support</span>
+              <span>24/7 AI support</span>
             </div>
           </div>
         </div>
@@ -119,7 +100,6 @@ export default async function Image() {
           <div tw="flex items-center text-xl">
             <div
               tw="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600"
-              style={{ fontFamily: "Inter", fontWeight: "normal" }}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
@@ -148,11 +128,10 @@ export default async function Image() {
             <div tw="flex flex-col ml-3">
               <div
                 tw="text-lg font-semibold"
-                style={{ fontFamily: "Cal Sans", fontWeight: "bold" }}
               >
                 Rolto
               </div>
-              <div style={{ fontFamily: "Inter", fontWeight: "normal" }}>
+              <div>
                 AI-Powered Conversational Platform
               </div>
             </div>
@@ -160,7 +139,6 @@ export default async function Image() {
 
           <div
             tw="flex items-center text-lg"
-            style={{ fontFamily: "Inter", fontWeight: "normal" }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path
@@ -186,20 +164,6 @@ export default async function Image() {
     {
       width: 1200,
       height: 630,
-      fonts: [
-        {
-          name: "Inter",
-          data: fontRegular,
-          weight: 400,
-          style: "normal",
-        },
-        {
-          name: "Cal Sans",
-          data: fontBold,
-          weight: 700,
-          style: "normal",
-        },
-      ],
     },
   );
 }
