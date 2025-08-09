@@ -24,6 +24,26 @@ interface ChatBubble {
   bounceCount: number;
   finalX: number;
   finalY: number;
+  width: number;
+  height: number;
+  isVisible: boolean;
+}
+
+interface AvoidTarget {
+  id: string;
+  rect: DOMRect;
+}
+
+interface Anchor {
+  x: number; // percentage
+  y: number; // percentage
+  name: string;
+}
+
+interface BubblePosition {
+  x: number;
+  y: number;
+  breakpoint: string;
 }
 
 const chatMessages = [
@@ -46,25 +66,198 @@ const chatMessages = [
   "💼 Perfect for any business size",
   "🎯 Increase customer engagement",
   "⚡ Lightning-fast responses",
-  "🌟 Rated #1 in customer satisfaction",
 ];
 
 export default function HeroLanding() {
   const [chatBubbles, setChatBubbles] = useState<ChatBubble[]>([]);
   const [draggedBubble, setDraggedBubble] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [currentBreakpoint, setCurrentBreakpoint] = useState<string>('desktop');
+  const [isLayoutStable, setIsLayoutStable] = useState(false);
   const { setShowLeadCaptureModal } = useContext(ModalContext);
+  const heroRef = useRef<HTMLElement>(null);
+  const resizeTimeoutRef = useRef<NodeJS.Timeout>();
 
-  // Detect mobile device
+  // Constants
+  const GAP = 16; // minimum padding between bubble and avoid targets/edges
+  const BREAKPOINTS = {
+    mobile: 640,
+    tablet: 1024,
+    desktop: 1024
+  };
+
+  // Anchor positions per breakpoint (ordered by preference) - very permissive
+  const ANCHORS: Record<string, Anchor[]> = {
+    desktop: [
+      { x: 20, y: 20, name: 'top-left' },
+      { x: 80, y: 20, name: 'top-right' },
+      { x: 20, y: 80, name: 'bottom-left' },
+      { x: 80, y: 80, name: 'bottom-right' },
+      { x: 30, y: 50, name: 'mid-left' },
+      { x: 70, y: 50, name: 'mid-right' },
+    ],
+    tablet: [
+      { x: 20, y: 20, name: 'top-left' },
+      { x: 80, y: 20, name: 'top-right' },
+      { x: 20, y: 80, name: 'bottom-left' },
+      { x: 80, y: 80, name: 'bottom-right' },
+      { x: 30, y: 50, name: 'mid-left' },
+      { x: 70, y: 50, name: 'mid-right' },
+    ],
+    mobile: [
+      { x: 25, y: 25, name: 'top-left' },
+      { x: 75, y: 25, name: 'top-right' },
+      { x: 25, y: 75, name: 'bottom-left' },
+      { x: 75, y: 75, name: 'bottom-right' },
+      { x: 25, y: 50, name: 'mid-left' },
+      { x: 75, y: 50, name: 'mid-right' },
+    ]
+  };
+
+  // Detect breakpoint and layout stability
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const checkBreakpoint = () => {
+      const width = window.innerWidth;
+      let newBreakpoint = 'desktop';
+      
+      if (width < BREAKPOINTS.mobile) {
+        newBreakpoint = 'mobile';
+        setIsMobile(true);
+      } else if (width < BREAKPOINTS.tablet) {
+        newBreakpoint = 'tablet';
+        setIsMobile(false);
+      } else {
+        newBreakpoint = 'desktop';
+        setIsMobile(false);
+      }
+      
+      setCurrentBreakpoint(newBreakpoint);
     };
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const handleResize = () => {
+      // Clear existing timeout
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+      
+      // Debounce resize events
+      resizeTimeoutRef.current = setTimeout(() => {
+        checkBreakpoint();
+        setIsLayoutStable(false);
+        // Re-run placement after layout stabilizes
+        setTimeout(() => {
+          setIsLayoutStable(true);
+        }, 100);
+      }, 150);
+    };
+
+    checkBreakpoint();
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+    
+    // Wait for fonts to load and layout to stabilize
+    document.fonts.ready.then(() => {
+      setTimeout(() => {
+        setIsLayoutStable(true);
+      }, 100);
+    });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+    };
   }, []);
+
+  // Positioning utilities
+  const getBubbleKey = (bubbleId: number, breakpoint: string) => `bubblePos:${bubbleId}:${breakpoint}`;
+  
+  const saveBubblePosition = (bubbleId: number, breakpoint: string, x: number, y: number) => {
+    try {
+      const key = getBubbleKey(bubbleId, breakpoint);
+      const position: BubblePosition = { x, y, breakpoint };
+      localStorage.setItem(key, JSON.stringify(position));
+    } catch (error) {
+      console.warn('Failed to save bubble position:', error);
+    }
+  };
+
+  const loadBubblePosition = (bubbleId: number, breakpoint: string): BubblePosition | null => {
+    try {
+      const key = getBubbleKey(bubbleId, breakpoint);
+      const saved = localStorage.getItem(key);
+      return saved ? JSON.parse(saved) : null;
+    } catch (error) {
+      console.warn('Failed to load bubble position:', error);
+      return null;
+    }
+  };
+
+  const resetBubblePositions = () => {
+    try {
+      const keys = Object.keys(localStorage);
+      keys.forEach(key => {
+        if (key.startsWith('bubblePos:')) {
+          localStorage.removeItem(key);
+        }
+      });
+    } catch (error) {
+      console.warn('Failed to reset bubble positions:', error);
+    }
+  };
+
+  const measureAvoidTargets = (): AvoidTarget[] => {
+    if (!heroRef.current) return [];
+    
+    const avoidElements = heroRef.current.querySelectorAll('[data-avoid]');
+    const targets: AvoidTarget[] = [];
+    const heroRect = heroRef.current.getBoundingClientRect();
+    
+    console.log('Hero dimensions:', { width: heroRect.width, height: heroRect.height });
+    
+    avoidElements.forEach((element, index) => {
+      const rect = element.getBoundingClientRect();
+      
+      // Convert to relative coordinates within hero
+      const relativeRect = new DOMRect(
+        ((rect.left - heroRect.left) / heroRect.width) * 100,
+        ((rect.top - heroRect.top) / heroRect.height) * 100,
+        (rect.width / heroRect.width) * 100,
+        (rect.height / heroRect.height) * 100
+      );
+      
+      const target = {
+        id: element.getAttribute('data-avoid') || `target-${index}`,
+        rect: relativeRect
+      };
+      
+      console.log(`Avoid target ${target.id}:`, {
+        x: relativeRect.x,
+        y: relativeRect.y,
+        width: relativeRect.width,
+        height: relativeRect.height
+      });
+      
+      targets.push(target);
+    });
+    
+    return targets;
+  };
+
+  // Simple validation - just check if position is within bounds
+  const isPositionValid = (
+    x: number, 
+    y: number, 
+    bubbleWidth: number, 
+    bubbleHeight: number, 
+    avoidTargets: AvoidTarget[], 
+    placedBubbles: ChatBubble[]
+  ): boolean => {
+    // Basic bounds check - ensure position is within the hero container
+    return x >= 5 && x <= 95 && y >= 5 && y <= 95;
+  };
 
   const startWaterDropAnimation = useCallback(
     (bubbleId: number) => {
@@ -116,84 +309,115 @@ export default function HeroLanding() {
     console.log("Hero useEffect triggered, isMobile:", isMobile);
 
     const createWaterDrops = () => {
+      if (!isLayoutStable || !heroRef.current) return;
+
       const bubbles: ChatBubble[] = [];
-
-      // Create very conservative safe zones - far left and far right only
-      // Content is centered, so safe zones are the extreme left and right edges
-      const safeZones = isMobile
-        ? [
-            // Far left strip - well away from any content
-            { x: 8, y: 20, width: 12, height: 60 },
-            // Far right strip - well away from any content
-            { x: 80, y: 20, width: 12, height: 60 },
-            // Top-left corner - above all content
-            { x: 8, y: 8, width: 12, height: 10 },
-            // Top-right corner - above all content
-            { x: 80, y: 8, width: 12, height: 10 },
-          ]
-        : [
-            // Far left strip - well away from any content
-            { x: 10, y: 15, width: 15, height: 70 },
-            // Far right strip - well away from any content
-            { x: 75, y: 15, width: 15, height: 70 },
-            // Top-left corner - above all content
-            { x: 10, y: 8, width: 15, height: 8 },
-            // Top-right corner - above all content
-            { x: 75, y: 8, width: 15, height: 8 },
-          ];
-
+      const avoidTargets = measureAvoidTargets();
+      const anchors = ANCHORS[currentBreakpoint];
+      
       // Create a shuffled array of messages to ensure no repetition
       const shuffledMessages = [...chatMessages].sort(() => Math.random() - 0.5);
 
-      for (let i = 0; i < 4; i++) {
-        // Select a safe zone and position within it precisely
-        const safeZone = safeZones[i % safeZones.length];
-        
-        // Position within the safe zone with controlled randomness
-        // Leave 10% padding from edges to ensure bubble fits
-        const finalX = safeZone.x + (safeZone.width * 0.1) + (Math.random() * safeZone.width * 0.6);
-        const finalY = safeZone.y + (safeZone.height * 0.1) + (Math.random() * safeZone.height * 0.6);
+      // Sort bubbles by size (larger bubbles first for placement difficulty)
+      const bubbleSizes = [
+        { id: 0, width: isMobile ? 200 : 280, height: isMobile ? 80 : 100 },
+        { id: 1, width: isMobile ? 200 : 280, height: isMobile ? 80 : 100 },
+        { id: 2, width: isMobile ? 200 : 280, height: isMobile ? 80 : 100 },
+        { id: 3, width: isMobile ? 200 : 280, height: isMobile ? 80 : 100 },
+      ].sort((a, b) => (b.width * b.height) - (a.width * a.height));
 
+      const placedBubbles: ChatBubble[] = [];
+
+      for (const bubbleSize of bubbleSizes) {
+        const bubbleId = bubbleSize.id;
+        
+        // Try to load saved position first
+        const savedPosition = loadBubblePosition(bubbleId, currentBreakpoint);
+        let placed = false;
+        let finalX = 0;
+        let finalY = 0;
+
+        // Check if saved position is still valid
+        if (savedPosition) {
+          const isValid = isPositionValid(
+            savedPosition.x, 
+            savedPosition.y, 
+            bubbleSize.width, 
+            bubbleSize.height, 
+            avoidTargets, 
+            placedBubbles
+          );
+          
+          if (isValid) {
+            finalX = savedPosition.x;
+            finalY = savedPosition.y;
+            placed = true;
+          }
+        }
+
+        // If no valid saved position, use predefined positions for each bubble
+        if (!placed) {
+          // Positions in the open spaces - top 2 high, bottom 2 lower
+          const positions = [
+            { x: 12, y: 12, name: 'top-left' },      // Above headline, left side
+            { x: 88, y: 12, name: 'top-right' },     // Above headline, right side
+            { x: 20, y: 75, name: 'mid-left' },      // Below content, left side
+            { x: 80, y: 75, name: 'mid-right' },     // Below content, right side
+          ];
+          
+          const position = positions[bubbleId];
+          finalX = position.x;
+          finalY = position.y;
+          placed = true;
+          console.log(`  Placed bubble ${bubbleId} at ${position.name} (${finalX}, ${finalY})`);
+        }
+
+        // Create bubble (visible or hidden)
         const bubble: ChatBubble = {
-          id: i,
-          message: shuffledMessages[i], // Use shuffled array to ensure unique messages
-          x: finalX + (Math.random() - 0.5) * (isMobile ? 0.5 : 1),
+          id: bubbleId,
+          message: shuffledMessages[bubbleId],
+          x: finalX,
           y: -30, // Start above viewport
           isDragging: false,
-          isFalling: true,
+          isFalling: placed,
           isBouncing: false,
           hasLanded: false,
           velocity: 0.8 + Math.random() * 0.4,
-          rotation: (Math.random() - 0.5) * (isMobile ? 10 : 15),
-          scale:
-            (isMobile ? 0.5 : 0.7) + Math.random() * (isMobile ? 0.06 : 0.12),
-          opacity:
-            (isMobile ? 0.65 : 0.75) + Math.random() * (isMobile ? 0.2 : 0.25),
+          rotation: (Math.random() - 0.5) * (isMobile ? 8 : 12),
+          scale: (isMobile ? 0.5 : 0.7) + Math.random() * (isMobile ? 0.06 : 0.12),
+          opacity: (isMobile ? 0.65 : 0.75) + Math.random() * (isMobile ? 0.2 : 0.25),
           bounceCount: 0,
           finalX: finalX,
           finalY: finalY,
+          width: bubbleSize.width,
+          height: bubbleSize.height,
+          isVisible: placed,
         };
+
         bubbles.push(bubble);
+        if (placed) {
+          placedBubbles.push(bubble);
+        }
       }
 
-      console.log("Created bubbles:", bubbles.length);
+      // Sort bubbles back to original order by ID
+      bubbles.sort((a, b) => a.id - b.id);
+
+      console.log(`Created ${bubbles.length} bubbles, ${placedBubbles.length} visible for ${currentBreakpoint}`);
       setChatBubbles(bubbles);
 
-      // Start falling animations with staggered timing
-      bubbles.forEach((bubble, index) => {
-        setTimeout(
-          () => {
-            startWaterDropAnimation(bubble.id);
-          },
-          index * (isMobile ? 600 : 800),
-        );
+      // Start falling animations for visible bubbles
+      placedBubbles.forEach((bubble, index) => {
+        setTimeout(() => {
+          startWaterDropAnimation(bubble.id);
+        }, index * (isMobile ? 600 : 800));
       });
     };
 
     // Start the animation after a short delay
     const timer = setTimeout(createWaterDrops, 500);
     return () => clearTimeout(timer);
-  }, [isMobile, startWaterDropAnimation]);
+  }, [isLayoutStable, currentBreakpoint, startWaterDropAnimation]);
 
   // Handle bounce completion
   useEffect(() => {
@@ -234,9 +458,14 @@ export default function HeroLanding() {
       const x = ((e.clientX - rect.left) / rect.width) * 100;
       const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-      // Very conservative drag boundaries to prevent edge cutting
-      const constrainedX = Math.max(12, Math.min(88, x));
-      const constrainedY = Math.max(10, Math.min(90, y));
+      // Allow full freedom to drag anywhere on the hero section
+      // Apply edge padding to prevent bubbles from going off-screen or into header
+      const minEdgePadding = isMobile ? 6 : 8;
+      const maxEdgePadding = isMobile ? 94 : 92;
+      const headerHeight = isMobile ? 8 : 6; // Prevent going into header area
+      
+      const constrainedX = Math.max(minEdgePadding, Math.min(maxEdgePadding, x));
+      const constrainedY = Math.max(headerHeight + 2, Math.min(maxEdgePadding, y)); // Start below header
 
       setChatBubbles((prev) =>
         prev.map((bubble) =>
@@ -255,11 +484,14 @@ export default function HeroLanding() {
   const handleMouseUp = () => {
     if (draggedBubble !== null) {
       setChatBubbles((prev) =>
-        prev.map((bubble) =>
-          bubble.id === draggedBubble
-            ? { ...bubble, isDragging: false }
-            : bubble,
-        ),
+        prev.map((bubble) => {
+          if (bubble.id === draggedBubble) {
+            // Save the final position
+            saveBubblePosition(bubble.id, currentBreakpoint, bubble.x, bubble.y);
+            return { ...bubble, isDragging: false };
+          }
+          return bubble;
+        }),
       );
       setDraggedBubble(null);
     }
@@ -284,9 +516,14 @@ export default function HeroLanding() {
       const x = ((touch.clientX - rect.left) / rect.width) * 100;
       const y = ((touch.clientY - rect.top) / rect.height) * 100;
 
-      // Very conservative drag boundaries to prevent edge cutting
-      const constrainedX = Math.max(12, Math.min(88, x));
-      const constrainedY = Math.max(10, Math.min(90, y));
+      // Allow full freedom to drag anywhere on the hero section
+      // Apply edge padding to prevent bubbles from going off-screen or into header
+      const minEdgePadding = isMobile ? 6 : 8;
+      const maxEdgePadding = isMobile ? 94 : 92;
+      const headerHeight = isMobile ? 8 : 6; // Prevent going into header area
+      
+      const constrainedX = Math.max(minEdgePadding, Math.min(maxEdgePadding, x));
+      const constrainedY = Math.max(headerHeight + 2, Math.min(maxEdgePadding, y)); // Start below header
 
       setChatBubbles((prev) =>
         prev.map((bubble) =>
@@ -305,11 +542,14 @@ export default function HeroLanding() {
   const handleTouchEnd = () => {
     if (draggedBubble !== null) {
       setChatBubbles((prev) =>
-        prev.map((bubble) =>
-          bubble.id === draggedBubble
-            ? { ...bubble, isDragging: false }
-            : bubble,
-        ),
+        prev.map((bubble) => {
+          if (bubble.id === draggedBubble) {
+            // Save the final position
+            saveBubblePosition(bubble.id, currentBreakpoint, bubble.x, bubble.y);
+            return { ...bubble, isDragging: false };
+          }
+          return bubble;
+        }),
       );
       setDraggedBubble(null);
     }
@@ -317,6 +557,7 @@ export default function HeroLanding() {
 
   return (
     <section
+      ref={heroRef}
       className="relative overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24"
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -326,25 +567,25 @@ export default function HeroLanding() {
     >
       <div className="container flex max-w-5xl flex-col items-center gap-6 text-center sm:gap-8 md:gap-10">
         {/* Trust Indicator Badge */}
-        <div className="mb-8 flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-300 sm:mb-12">
+        <div data-avoid="trust-badge" className="mb-8 flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-300 sm:mb-12">
           <div className="size-2 animate-pulse rounded-full bg-green-500"></div>
           Join the Future of Business Engagement
         </div>
 
-        <h1 className="mb-6 text-balance font-urban text-3xl font-extrabold tracking-tight sm:mb-8 sm:text-4xl md:mb-10 md:text-5xl lg:text-6xl xl:text-7xl">
+        <h1 data-avoid="headline" className="mb-6 text-balance font-urban text-3xl font-extrabold tracking-tight sm:mb-8 sm:text-4xl md:mb-10 md:text-5xl lg:text-6xl xl:text-7xl">
           Transform Your Website into an{" "}
           <span className="text-gradient_indigo-purple font-extrabold">
             Intelligent Engagement Platform
           </span>
         </h1>
 
-        <p className="mb-8 max-w-2xl text-balance text-base leading-normal text-muted-foreground sm:mb-10 sm:text-lg md:mb-12 md:text-xl lg:text-2xl">
+        <p data-avoid="subheadline" className="mb-8 max-w-2xl text-balance text-base leading-normal text-muted-foreground sm:mb-10 sm:text-lg md:mb-12 md:text-xl lg:text-2xl">
           Capture leads, close deals, and support customers — all through AI
           that understands your business. With one line of code, turn any website
           into a powerful, intelligent engagement hub.
         </p>
 
-        <div className="mb-8 flex w-full flex-col items-center justify-center gap-3 sm:mb-10 sm:w-auto sm:flex-row sm:gap-4 md:mb-12">
+        <div data-avoid="cta-buttons" className="mb-8 flex w-full flex-col items-center justify-center gap-3 sm:mb-10 sm:w-auto sm:flex-row sm:gap-4 md:mb-12">
           <button
             onClick={() => setShowLeadCaptureModal(true)}
             className={cn(
@@ -372,7 +613,7 @@ export default function HeroLanding() {
         </div>
 
         {/* Trust Indicators */}
-        <div className="mb-4 flex flex-col items-center justify-center gap-4 text-sm text-muted-foreground sm:mb-6 sm:flex-row sm:gap-6 md:gap-8">
+        <div data-avoid="trust-indicators" className="mb-4 flex flex-col items-center justify-center gap-4 text-sm text-muted-foreground sm:mb-6 sm:flex-row sm:gap-6 md:gap-8">
           <div className="flex items-center gap-2">
             <Icons.check className="size-4 shrink-0 text-green-500" />
             <span>Setup in 5 minutes</span>
@@ -388,14 +629,26 @@ export default function HeroLanding() {
         </div>
 
         {/* Social Proof */}
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div data-avoid="social-proof" className="flex items-center gap-2 text-sm text-muted-foreground">
           <div className="size-2 rounded-full bg-green-500"></div>
           <span>Join the future of conversational AI</span>
         </div>
+        
+        {/* Debug: Reset button (remove in production) */}
+        <button
+          onClick={() => {
+            resetBubblePositions();
+            setIsLayoutStable(false);
+            setTimeout(() => setIsLayoutStable(true), 100);
+          }}
+          className="mt-4 text-xs text-gray-500 hover:text-gray-700"
+        >
+          Reset Bubble Positions
+        </button>
       </div>
 
       {/* Water-Drop Chat Bubbles */}
-      {chatBubbles.map((bubble) => (
+      {chatBubbles.filter(bubble => bubble.isVisible).map((bubble) => (
         <div
           key={bubble.id}
           className={cn(
