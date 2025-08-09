@@ -53,7 +53,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           property="og:description"
           content="Transform any website into an intelligent conversational platform with Rolto's embeddable AI assistant. Capture leads, provide instant support, and engage visitors."
         />
-        <meta property="og:image" content="https://rolto.io/og.png" />
+        <meta property="og:image" content="https://rolto.io/R-Logo-blue.svg" />
         <meta property="og:site_name" content="Rolto" />
         <meta property="og:locale" content="en_US" />
 
@@ -85,22 +85,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="canonical" href="https://rolto.io" />
 
         {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/R-Logo-blue.svg" type="image/svg+xml" />
         <link
           rel="apple-touch-icon"
-          href="/_static/favicons/apple-touch-icon.png"
+          href="/R-Logo-blue.svg"
         />
         <link
           rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/_static/favicons/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/_static/favicons/favicon-16x16.png"
+          type="image/svg+xml"
+          sizes="any"
+          href="/R-Logo-blue.svg"
         />
         <link rel="manifest" href="/site.webmanifest" />
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
@@ -77,6 +77,7 @@ export default function HeroLanding() {
   const { setShowLeadCaptureModal } = useContext(ModalContext);
   const heroRef = useRef<HTMLElement>(null);
   const resizeTimeoutRef = useRef<NodeJS.Timeout>();
+  const bubblesInitializedRef = useRef(false);
 
   // Constants
   const GAP = 16; // minimum padding between bubble and avoid targets/edges
@@ -87,7 +88,7 @@ export default function HeroLanding() {
   };
 
   // Anchor positions per breakpoint (ordered by preference) - very permissive
-  const ANCHORS: Record<string, Anchor[]> = {
+  const ANCHORS = useMemo<Record<string, Anchor[]>>(() => ({
     desktop: [
       { x: 20, y: 20, name: 'top-left' },
       { x: 80, y: 20, name: 'top-right' },
@@ -112,7 +113,7 @@ export default function HeroLanding() {
       { x: 25, y: 50, name: 'mid-left' },
       { x: 75, y: 50, name: 'mid-right' },
     ]
-  };
+  }), []);
 
   // Detect breakpoint and layout stability
   useEffect(() => {
@@ -169,10 +170,10 @@ export default function HeroLanding() {
         clearTimeout(resizeTimeoutRef.current);
       }
     };
-  }, []);
+  }, [BREAKPOINTS.mobile, BREAKPOINTS.tablet]);
 
   // Positioning utilities
-  const getBubbleKey = (bubbleId: number, breakpoint: string) => `bubblePos:${bubbleId}:${breakpoint}`;
+  const getBubbleKey = useCallback((bubbleId: number, breakpoint: string) => `bubblePos:${bubbleId}:${breakpoint}`, []);
   
   const saveBubblePosition = (bubbleId: number, breakpoint: string, x: number, y: number) => {
     try {
@@ -184,7 +185,7 @@ export default function HeroLanding() {
     }
   };
 
-  const loadBubblePosition = (bubbleId: number, breakpoint: string): BubblePosition | null => {
+  const loadBubblePosition = useCallback((bubbleId: number, breakpoint: string): BubblePosition | null => {
     try {
       const key = getBubbleKey(bubbleId, breakpoint);
       const saved = localStorage.getItem(key);
@@ -193,7 +194,7 @@ export default function HeroLanding() {
       console.warn('Failed to load bubble position:', error);
       return null;
     }
-  };
+  }, [getBubbleKey]);
 
   const resetBubblePositions = () => {
     try {
@@ -306,10 +307,10 @@ export default function HeroLanding() {
 
   // Create water-drop style falling bubbles
   useEffect(() => {
-    console.log("Hero useEffect triggered, isMobile:", isMobile);
-
     const createWaterDrops = () => {
-      if (!isLayoutStable || !heroRef.current) return;
+      if (!isLayoutStable || !heroRef.current || bubblesInitializedRef.current) {
+        return;
+      }
 
       const bubbles: ChatBubble[] = [];
       const avoidTargets = measureAvoidTargets();
@@ -369,7 +370,6 @@ export default function HeroLanding() {
           finalX = position.x;
           finalY = position.y;
           placed = true;
-          console.log(`  Placed bubble ${bubbleId} at ${position.name} (${finalX}, ${finalY})`);
         }
 
         // Create bubble (visible or hidden)
@@ -403,8 +403,8 @@ export default function HeroLanding() {
       // Sort bubbles back to original order by ID
       bubbles.sort((a, b) => a.id - b.id);
 
-      console.log(`Created ${bubbles.length} bubbles, ${placedBubbles.length} visible for ${currentBreakpoint}`);
       setChatBubbles(bubbles);
+      bubblesInitializedRef.current = true;
 
       // Start falling animations for visible bubbles
       placedBubbles.forEach((bubble, index) => {
@@ -417,7 +417,7 @@ export default function HeroLanding() {
     // Start the animation after a short delay
     const timer = setTimeout(createWaterDrops, 500);
     return () => clearTimeout(timer);
-  }, [isLayoutStable, currentBreakpoint, startWaterDropAnimation]);
+  }, [isLayoutStable, currentBreakpoint, ANCHORS, isMobile, loadBubblePosition, startWaterDropAnimation]);
 
   // Handle bounce completion
   useEffect(() => {
