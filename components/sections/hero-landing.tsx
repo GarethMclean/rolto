@@ -170,7 +170,7 @@ export default function HeroLanding() {
         clearTimeout(resizeTimeoutRef.current);
       }
     };
-  }, []);
+  }, [BREAKPOINTS.mobile, BREAKPOINTS.tablet]);
 
   // Positioning utilities
   const getBubbleKey = (bubbleId: number, breakpoint: string) => `bubblePos:${bubbleId}:${breakpoint}`;
@@ -417,7 +417,7 @@ export default function HeroLanding() {
     // Start the animation after a short delay
     const timer = setTimeout(createWaterDrops, 500);
     return () => clearTimeout(timer);
-  }, [isLayoutStable, currentBreakpoint]);
+  }, [isLayoutStable, currentBreakpoint, ANCHORS, isMobile, loadBubblePosition, startWaterDropAnimation]);
 
   // Handle bounce completion
   useEffect(() => {

@@ -47,13 +47,13 @@ const RoltoLogo = ({ className, ...props }: LucideProps) => (
     <img
       src="/R-logo-blue.svg"
       alt="Rolto Logo"
-      className={`${className} dark:hidden w-10 h-10`}
+      className={`${className} size-10 dark:hidden`}
       {...props}
     />
     <img
       src="/R-Logo-White.svg"
       alt="Rolto Logo"
-      className={`${className} hidden dark:block w-10 h-10`}
+      className={`${className} hidden size-10 dark:block`}
       {...props}
     />
   </>
