@@ -122,17 +122,20 @@ export default function HeroLanding() {
       // Avoid covering text and stay within screen bounds
       const positions = isMobile
         ? [
-            { x: 12, y: 5 }, // Top-left - well above headline, minimal overlap
-            { x: 88, y: 5 }, // Top-right - well above headline, minimal overlap
-            { x: 12, y: 50 }, // Mid-left - well to the left of content
-            { x: 88, y: 70 }, // Bottom-right - well to the right of content
+            { x: 8, y: 8 }, // Top-left - well above headline, minimal overlap
+            { x: 92, y: 8 }, // Top-right - well above headline, minimal overlap
+            { x: 8, y: 55 }, // Mid-left - well to the left of content
+            { x: 92, y: 75 }, // Bottom-right - well to the right of content
           ]
         : [
-            { x: 12, y: 25 }, // Top left - more open space above headline
-            { x: 85, y: 20 }, // Top right - moved higher and more to edge to avoid headline
-            { x: 15, y: 75 }, // Bottom left - more open space
-            { x: 85, y: 75 }, // Bottom right - more open space
+            { x: 10, y: 30 }, // Top left - more open space above headline
+            { x: 90, y: 25 }, // Top right - moved higher and more to edge to avoid headline
+            { x: 12, y: 80 }, // Bottom left - more open space
+            { x: 88, y: 80 }, // Bottom right - more open space
           ];
+
+      // Create a shuffled array of messages to ensure no repetition
+      const shuffledMessages = [...chatMessages].sort(() => Math.random() - 0.5);
 
       for (let i = 0; i < 4; i++) {
         const finalX =
@@ -142,8 +145,7 @@ export default function HeroLanding() {
 
         const bubble: ChatBubble = {
           id: i,
-          message:
-            chatMessages[Math.floor(Math.random() * chatMessages.length)],
+          message: shuffledMessages[i], // Use shuffled array to ensure unique messages
           x: finalX + (Math.random() - 0.5) * (isMobile ? 0.5 : 1),
           y: -30, // Start above viewport
           isDragging: false,
@@ -305,25 +307,25 @@ export default function HeroLanding() {
     >
       <div className="container flex max-w-5xl flex-col items-center gap-6 text-center sm:gap-8 md:gap-10">
         {/* Trust Indicator Badge */}
-        <div className="mb-6 flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-300 sm:mb-8">
+        <div className="mb-8 flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-700 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-300 sm:mb-12">
           <div className="size-2 animate-pulse rounded-full bg-green-500"></div>
           Join the future of customer support
         </div>
 
-        <h1 className="mb-4 text-balance font-urban text-3xl font-extrabold tracking-tight sm:mb-6 sm:text-4xl md:mb-8 md:text-5xl lg:text-6xl xl:text-7xl">
+        <h1 className="mb-6 text-balance font-urban text-3xl font-extrabold tracking-tight sm:mb-8 sm:text-4xl md:mb-10 md:text-5xl lg:text-6xl xl:text-7xl">
           Transform Your Website into an{" "}
           <span className="text-gradient_indigo-purple font-extrabold">
             Intelligent Conversational Platform
           </span>
         </h1>
 
-        <p className="mb-6 max-w-2xl text-balance text-base leading-normal text-muted-foreground sm:mb-8 sm:text-lg md:mb-10 md:text-xl lg:text-2xl">
+        <p className="mb-8 max-w-2xl text-balance text-base leading-normal text-muted-foreground sm:mb-10 sm:text-lg md:mb-12 md:text-xl lg:text-2xl">
           Capture leads, provide instant support, and engage visitors with AI
           that understands your business. One line of code to turn any website
           into a powerful conversational experience.
         </p>
 
-        <div className="mb-6 flex w-full flex-col items-center justify-center gap-3 sm:mb-8 sm:w-auto sm:flex-row sm:gap-4 md:mb-10">
+        <div className="mb-8 flex w-full flex-col items-center justify-center gap-3 sm:mb-10 sm:w-auto sm:flex-row sm:gap-4 md:mb-12">
           <button
             onClick={() => setShowLeadCaptureModal(true)}
             className={cn(
