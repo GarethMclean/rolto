@@ -42,7 +42,7 @@ import {
 export type Icon = LucideProps;
 
 // Custom Rolto Logo - Using img tags for the actual SVG files
-const RoltoLogo = ({ className, ...props }: LucideProps) => (
+const RoltoLogo = ({ className, ...props }: { className?: string; [key: string]: any }) => (
   <>
     <img
       src="/R-logo-blue.svg"
