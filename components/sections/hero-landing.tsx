@@ -108,15 +108,15 @@ export default function HeroLanding() {
       const positions = isMobile
         ? [
             { x: 8, y: 12 }, // Top left - above heading
-            { x: 92, y: 12 }, // Top right - above heading
+            { x: 92, y: 12 }, // Top right - at edge but with space for width
             { x: 8, y: 75 }, // Bottom left - above CTA buttons
-            { x: 92, y: 75 }, // Bottom right - above CTA buttons
+            { x: 92, y: 75 }, // Bottom right - at edge but with space for width
           ]
         : [
             { x: 10, y: 15 }, // Top left - above heading
-            { x: 90, y: 15 }, // Top right - above heading
+            { x: 90, y: 15 }, // Top right - at edge but with space for width
             { x: 12, y: 70 }, // Bottom left - above CTA buttons
-            { x: 88, y: 70 }, // Bottom right - above CTA buttons
+            { x: 90, y: 70 }, // Bottom right - at edge but with space for width
           ];
 
       for (let i = 0; i < 4; i++) {
@@ -379,7 +379,7 @@ export default function HeroLanding() {
           >
             <div
               className={cn(
-                "relative max-w-[160px] rounded-3xl border border-gray-200/50 bg-white/90 px-3 py-2 shadow-lg backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/90 sm:max-w-[180px] sm:px-3.5 sm:py-2.5 md:max-w-[200px] md:px-4 md:py-3",
+                "relative max-w-[280px] rounded-3xl border border-gray-200/50 bg-white/90 px-5 py-1 shadow-lg backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/90 sm:max-w-[320px] sm:px-6 sm:py-1.5 md:max-w-[360px] md:px-7 md:py-2",
                 bubble.isDragging && "scale-105 shadow-xl",
               )}
             >
