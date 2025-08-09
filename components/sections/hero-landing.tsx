@@ -77,6 +77,7 @@ export default function HeroLanding() {
   const { setShowLeadCaptureModal } = useContext(ModalContext);
   const heroRef = useRef<HTMLElement>(null);
   const resizeTimeoutRef = useRef<NodeJS.Timeout>();
+  const bubblesInitializedRef = useRef(false);
 
   // Constants
   const GAP = 16; // minimum padding between bubble and avoid targets/edges
@@ -306,10 +307,10 @@ export default function HeroLanding() {
 
   // Create water-drop style falling bubbles
   useEffect(() => {
-    console.log("Hero useEffect triggered, isMobile:", isMobile);
-
     const createWaterDrops = () => {
-      if (!isLayoutStable || !heroRef.current) return;
+      if (!isLayoutStable || !heroRef.current || bubblesInitializedRef.current) {
+        return;
+      }
 
       const bubbles: ChatBubble[] = [];
       const avoidTargets = measureAvoidTargets();
@@ -369,7 +370,6 @@ export default function HeroLanding() {
           finalX = position.x;
           finalY = position.y;
           placed = true;
-          console.log(`  Placed bubble ${bubbleId} at ${position.name} (${finalX}, ${finalY})`);
         }
 
         // Create bubble (visible or hidden)
@@ -403,8 +403,8 @@ export default function HeroLanding() {
       // Sort bubbles back to original order by ID
       bubbles.sort((a, b) => a.id - b.id);
 
-      console.log(`Created ${bubbles.length} bubbles, ${placedBubbles.length} visible for ${currentBreakpoint}`);
       setChatBubbles(bubbles);
+      bubblesInitializedRef.current = true;
 
       // Start falling animations for visible bubbles
       placedBubbles.forEach((bubble, index) => {
@@ -417,7 +417,7 @@ export default function HeroLanding() {
     // Start the animation after a short delay
     const timer = setTimeout(createWaterDrops, 500);
     return () => clearTimeout(timer);
-  }, [isLayoutStable, currentBreakpoint, startWaterDropAnimation]);
+  }, [isLayoutStable, currentBreakpoint]);
 
   // Handle bounce completion
   useEffect(() => {

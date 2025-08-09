@@ -41,19 +41,19 @@ import {
 
 export type Icon = LucideProps;
 
-// Custom Rolto Logo - Using the new SVG files with dark mode support
+// Custom Rolto Logo - Using img tags for the actual SVG files
 const RoltoLogo = ({ className, ...props }: LucideProps) => (
   <>
-    <img 
-      src="/R-Blue.svg" 
-      alt="Rolto Logo" 
-      className={`${className} dark:hidden`}
+    <img
+      src="/R-logo-blue.svg"
+      alt="Rolto Logo"
+      className={`${className} dark:hidden w-10 h-10`}
       {...props}
     />
-    <img 
-      src="/R-White.svg" 
-      alt="Rolto Logo" 
-      className={`${className} hidden dark:block`}
+    <img
+      src="/R-Logo-White.svg"
+      alt="Rolto Logo"
+      className={`${className} hidden dark:block w-10 h-10`}
       {...props}
     />
   </>

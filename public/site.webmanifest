@@ -3,7 +3,7 @@
   "short_name": "Rolto",
   "icons": [
     {
-      "src": "./R-Blue.svg",
+      "src": "./R-logo-blue.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     }
