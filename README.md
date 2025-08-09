@@ -126,3 +126,61 @@ This project was inspired by shadcn's [Taxonomy](https://github.com/shadcn-ui/ta
 - Shadcn ([@shadcn](https://twitter.com/shadcn))
 - Steven Tey ([@steventey](https://twitter.com/steventey))
 - Antonio Erdeljac ([@YTCodeAntonio](https://twitter.com/AntonioErdeljac))
+
+# Rolto
+
+AI-powered conversational platform for websites.
+
+## Development
+
+### Code Formatting
+
+To prevent Tailwind CSS class order issues and maintain consistent code formatting:
+
+1. **Format all files:**
+   ```bash
+   npm run format
+   ```
+
+2. **Check formatting without changes:**
+   ```bash
+   npm run format:check
+   ```
+
+3. **Fix linting issues:**
+   ```bash
+   npm run lint:fix
+   ```
+
+4. **Before committing, run:**
+   ```bash
+   npm run format && npm run lint:fix
+   ```
+
+The project uses:
+- **Prettier** with `prettier-plugin-tailwindcss` for automatic Tailwind CSS class sorting
+- **ESLint** with `tailwindcss/classnames-order` rule to enforce proper class order
+- **Husky** for pre-commit hooks (if configured)
+
+### Tailwind CSS Class Order
+
+The ESLint rule `tailwindcss/classnames-order` enforces the correct order of Tailwind CSS classes. Always run `npm run format` after making changes to automatically sort classes correctly.
+
+## Getting Started
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Set up environment variables:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
