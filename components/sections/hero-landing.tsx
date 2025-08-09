@@ -32,6 +32,22 @@ const chatMessages = [
   "💬 Need help with your order?",
   "🎯 Want to see our pricing?",
   "✨ Transform your website today!",
+  "🤖 AI that actually understands you",
+  "📈 Boost your conversion rates",
+  "⚡ Setup in under 5 minutes",
+  "🎉 Join 10,000+ happy customers",
+  "💡 Get instant customer support",
+  "🔧 One line of code integration",
+  "📱 Works on all devices",
+  "🌙 24/7 AI assistance",
+  "🎨 Customize to match your brand",
+  "📊 Real-time analytics included",
+  "🔒 Enterprise-grade security",
+  "🚀 Start your free trial today",
+  "💼 Perfect for any business size",
+  "🎯 Increase customer engagement",
+  "⚡ Lightning-fast responses",
+  "🌟 Rated #1 in customer satisfaction",
 ];
 
 export default function HeroLanding() {
@@ -107,28 +123,28 @@ export default function HeroLanding() {
       // Avoid covering text and stay within screen bounds
       const positions = isMobile
         ? [
-            { x: 8, y: 12 }, // Top left - above heading
-            { x: 92, y: 12 }, // Top right - at edge but with space for width
-            { x: 8, y: 75 }, // Bottom left - above CTA buttons
-            { x: 92, y: 75 }, // Bottom right - at edge but with space for width
+            { x: 12, y: 5 }, // Top-left - well above headline, minimal overlap
+            { x: 88, y: 5 }, // Top-right - well above headline, minimal overlap
+            { x: 12, y: 50 }, // Mid-left - well to the left of content
+            { x: 88, y: 70 }, // Bottom-right - well to the right of content
           ]
         : [
-            { x: 10, y: 15 }, // Top left - above heading
-            { x: 90, y: 15 }, // Top right - at edge but with space for width
-            { x: 12, y: 70 }, // Bottom left - above CTA buttons
-            { x: 90, y: 70 }, // Bottom right - at edge but with space for width
+            { x: 12, y: 25 }, // Top left - more open space above headline
+            { x: 85, y: 20 }, // Top right - moved higher and more to edge to avoid headline
+            { x: 15, y: 75 }, // Bottom left - more open space
+            { x: 85, y: 75 }, // Bottom right - more open space
           ];
 
       for (let i = 0; i < 4; i++) {
         const finalX =
-          positions[i].x + (Math.random() - 0.5) * (isMobile ? 1 : 2);
+          positions[i].x + (Math.random() - 0.5) * (isMobile ? 0.5 : 1);
         const finalY =
-          positions[i].y + (Math.random() - 0.5) * (isMobile ? 1 : 2);
+          positions[i].y + (Math.random() - 0.5) * (isMobile ? 0.5 : 1);
 
         const bubble: ChatBubble = {
           id: i,
-          message: chatMessages[i % chatMessages.length],
-          x: finalX + (Math.random() - 0.5) * (isMobile ? 2 : 12),
+          message: chatMessages[Math.floor(Math.random() * chatMessages.length)],
+          x: finalX + (Math.random() - 0.5) * (isMobile ? 0.5 : 1),
           y: -30, // Start above viewport
           isDragging: false,
           isFalling: true,
@@ -379,7 +395,7 @@ export default function HeroLanding() {
           >
             <div
               className={cn(
-                "relative max-w-[280px] rounded-3xl border border-gray-200/50 bg-white/90 px-5 py-1 shadow-lg backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/90 sm:max-w-[320px] sm:px-6 sm:py-1.5 md:max-w-[360px] md:px-7 md:py-2",
+                "relative w-[200px] h-[80px] rounded-3xl border border-gray-200/50 bg-white/90 px-4 py-3 shadow-lg backdrop-blur-sm dark:border-gray-700/50 dark:bg-gray-800/90 sm:w-[240px] sm:h-[90px] sm:px-5 sm:py-3.5 md:w-[280px] md:h-[100px] md:px-6 md:py-4",
                 bubble.isDragging && "scale-105 shadow-xl",
               )}
             >
@@ -400,7 +416,7 @@ export default function HeroLanding() {
                     </span>
                     <span className="text-xs text-muted-foreground">• now</span>
                   </div>
-                  <p className="text-xs leading-relaxed text-foreground sm:text-sm">
+                  <p className="text-xs leading-relaxed text-foreground sm:text-sm whitespace-normal break-words line-clamp-2">
                     {bubble.message}
                   </p>
                 </div>

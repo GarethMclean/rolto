@@ -48,7 +48,6 @@ export default function Testimonials() {
                       : "hover:shadow-md"
                   }`}
                   onClick={() => handleCardPress(index)}
-                  onTouchStart={() => handleCardPress(index)}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
