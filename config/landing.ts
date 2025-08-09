@@ -53,37 +53,37 @@ export const features: FeatureLdg[] = [
   {
     title: "Embeddable AI Widget",
     description: "A fully branded, intelligent chatbot that integrates seamlessly with any website.",
-    link: "/docs/installation",
+    link: "/docs",
     icon: "bot",
   },
   {
     title: "Content Indexing & Search",
     description: "Upload documents, connect knowledge bases, and let AI learn from your content.",
-    link: "/docs/knowledge-base",
+    link: "/docs",
     icon: "search",
   },
   {
     title: "Human Handoff System",
     description: "Seamlessly escalate conversations to your support team when needed.",
-    link: "/docs/handoff",
+    link: "/docs",
     icon: "user",
   },
   {
     title: "Real-Time Analytics",
     description: "Track top questions, satisfaction ratings, handoff rates, and content gaps.",
-    link: "/docs/analytics",
+    link: "/docs",
     icon: "analytics",
   },
   {
     title: "Customizable Workflows",
     description: "Set conversation flows, pre-chat forms, and business rules without coding.",
-    link: "/docs/workflows",
+    link: "/docs",
     icon: "settings",
   },
   {
     title: "Multi-Platform Support",
     description: "Works with your existing helpdesk, chat platforms, and CRM systems.",
-    link: "/docs/integrations",
+    link: "/docs",
     icon: "laptop",
   },
 ];
