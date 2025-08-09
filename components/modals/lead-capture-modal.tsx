@@ -110,7 +110,7 @@ export default function LeadCaptureModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="mx-2 max-h-[90vh] w-[calc(100vw-16px)] overflow-y-auto rounded-2xl border-0 bg-background p-0 shadow-2xl sm:mx-0 sm:max-h-[95vh] sm:w-auto sm:max-w-md sm:rounded-xl sm:border sm:p-6">
+      <DialogContent className="mx-0 max-h-[100vh] w-full overflow-y-auto rounded-none border-0 bg-background p-0 shadow-none sm:mx-0 sm:max-h-[95vh] sm:w-auto sm:max-w-md sm:rounded-xl sm:border sm:p-6 sm:shadow-2xl">
         {isSuccess ? (
           <div className="py-8 text-center sm:py-8">
             <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-green-50 dark:bg-green-950 sm:mb-6 sm:size-16">
