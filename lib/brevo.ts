@@ -101,13 +101,6 @@ function generateEmailHTML(firstName: string, referralLink: string): string {
     
     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
         
-        <!-- Sender Name Display (Fallback) -->
-        <div style="text-align: left; padding: 20px 40px 0; border-bottom: 1px solid #f0f0f0;">
-            <p style="font-size: 14px; margin: 0; color: #86868b; font-weight: 500;">
-                From: <span style="color: #1d1d1f; font-weight: 600;">Rolto Team</span>
-            </p>
-        </div>
-        
         <!-- Header -->
         <div class="mobile-header-padding" style="text-align: center; padding: 60px 40px 40px;">
             <h1 class="mobile-main-heading" style="font-size: 36px; font-weight: 600; margin: 0 0 16px; color: #1d1d1f;">
