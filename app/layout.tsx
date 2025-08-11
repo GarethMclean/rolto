@@ -3,14 +3,20 @@ import "@/styles/globals.css";
 import { fontGeist, fontHeading, fontSans, fontUrban } from "@/assets/fonts";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import dynamic from "next/dynamic";
 
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@/components/analytics";
 import ChatbotWidget from "@/components/chatbot-widget";
 import { MobileMenuProvider } from "@/components/layout/mobile-menu-context";
-import ModalProvider from "@/components/modals/providers";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
+
+// Dynamically import ModalProvider to prevent SSR issues with useSearchParams
+const ModalProvider = dynamic(() => import("@/components/modals/providers"), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface RootLayoutProps {
   children: React.ReactNode;

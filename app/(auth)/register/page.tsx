@@ -1,10 +1,16 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { UserAuthForm } from "@/components/forms/user-auth-form";
 import { Icons } from "@/components/shared/icons";
+
+// Dynamically import UserAuthForm to prevent SSR issues with useSearchParams
+const UserAuthForm = dynamic(() => import("@/components/forms/user-auth-form").then(mod => ({ default: mod.UserAuthForm })), {
+  ssr: false,
+  loading: () => <div>Loading...</div>,
+});
 
 export const metadata = {
   title: "Create an account",

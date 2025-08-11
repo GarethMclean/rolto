@@ -1,8 +1,14 @@
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
-import LeadCaptureModal from "@/components/modals/lead-capture-modal";
+
+// Dynamically import LeadCaptureModal to prevent SSR issues with useSearchParams
+const LeadCaptureModal = dynamic(() => import("@/components/modals/lead-capture-modal"), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface ReferralPageProps {
   params: { code: string };
