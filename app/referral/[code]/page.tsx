@@ -16,7 +16,40 @@ interface ReferralPageProps {
 
 async function getReferralInfo(code: string) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/referrals/${code}`, {
+    // Ensure we use the correct domain for API calls
+    let baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+    
+    // Check if the URL is localhost, 127.0.0.1, or any other local development URL
+    if (!baseUrl || 
+        baseUrl.includes('localhost') || 
+        baseUrl.includes('127.0.0.1') || 
+        baseUrl.includes('0.0.0.0') ||
+        baseUrl.includes('192.168.') ||
+        baseUrl.includes('10.0.') ||
+        baseUrl.includes('172.16.') ||
+        baseUrl.includes('172.17.') ||
+        baseUrl.includes('172.18.') ||
+        baseUrl.includes('172.19.') ||
+        baseUrl.includes('172.20.') ||
+        baseUrl.includes('172.21.') ||
+        baseUrl.includes('172.22.') ||
+        baseUrl.includes('172.23.') ||
+        baseUrl.includes('172.24.') ||
+        baseUrl.includes('172.25.') ||
+        baseUrl.includes('172.26.') ||
+        baseUrl.includes('172.27.') ||
+        baseUrl.includes('172.28.') ||
+        baseUrl.includes('172.29.') ||
+        baseUrl.includes('172.30.') ||
+        baseUrl.includes('172.31.') ||
+        baseUrl.startsWith('http://')) {
+      // Fallback to production domain if any local/development URL is detected
+      baseUrl = 'https://rolto.io';
+    }
+    
+    console.log("Using base URL for API call:", baseUrl);
+    
+    const response = await fetch(`${baseUrl}/api/referrals/${code}`, {
       cache: 'no-store'
     });
     
