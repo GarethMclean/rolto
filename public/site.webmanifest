@@ -3,9 +3,14 @@
   "short_name": "Rolto",
   "icons": [
     {
-      "src": "./R-logo-blue.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "./R-logo-blue.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./R-logo-blue.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "theme_color": "#0370e3",

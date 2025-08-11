@@ -7,11 +7,12 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { BillingInfo } from "@/components/pricing/billing-info";
 import { Icons } from "@/components/shared/icons";
+import { Metadata } from "next";
 
-export const metadata = constructMetadata({
-  title: "Billing – SaaS Starter",
+export const metadata: Metadata = {
+  title: "Billing – Rolto",
   description: "Manage billing and your subscription plan.",
-});
+};
 
 export default async function BillingPage() {
   const user = await getCurrentUser();
@@ -34,7 +35,7 @@ export default async function BillingPage() {
           <Icons.warning />
           <AlertTitle>This is a demo app.</AlertTitle>
           <AlertDescription className="text-balance">
-            SaaS Starter app is a demo app using a Stripe test environment. You
+            Rolto app is a demo app using a Stripe test environment. You
             can find a list of test card numbers on the{" "}
             <a
               href="https://stripe.com/docs/testing#cards"

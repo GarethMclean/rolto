@@ -5,11 +5,12 @@ import { constructMetadata } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
+import { Metadata } from "next";
 
-export const metadata = constructMetadata({
-  title: "Orders – SaaS Starter",
+export const metadata: Metadata = {
+  title: "Orders – Rolto",
   description: "Check and manage your latest orders.",
-});
+};
 
 export default async function OrdersPage() {
   // const user = await getCurrentUser();
