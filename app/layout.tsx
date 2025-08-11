@@ -3,14 +3,20 @@ import "@/styles/globals.css";
 import { fontGeist, fontHeading, fontSans, fontUrban } from "@/assets/fonts";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import dynamic from "next/dynamic";
 
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@/components/analytics";
 import ChatbotWidget from "@/components/chatbot-widget";
 import { MobileMenuProvider } from "@/components/layout/mobile-menu-context";
-import ModalProvider from "@/components/modals/providers";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
+
+// Dynamically import ModalProvider to prevent SSR issues with useSearchParams
+const ModalProvider = dynamic(() => import("@/components/modals/providers"), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -45,6 +51,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/* Search Engine Image (Google, Bing, etc.) */}
         <meta name="image" content="https://rolto.io/R-logo-blue.png" />
         <meta itemProp="image" content="https://rolto.io/R-logo-blue.png" />
+        <meta name="msapplication-TileImage" content="https://rolto.io/R-logo-blue.png" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -95,17 +102,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/* Canonical URL */}
         <link rel="canonical" href="https://rolto.io" />
 
-        {/* Favicon */}
-        <link rel="icon" href="/R-logo-blue.png" type="image/png" />
-        <link rel="icon" href="/R-logo-blue.png" sizes="16x16" type="image/png" />
-        <link rel="icon" href="/R-logo-blue.png" sizes="32x32" type="image/png" />
-        <link rel="icon" href="/R-logo-blue.png" sizes="48x48" type="image/png" />
-        <link rel="icon" href="/R-logo-blue.png" sizes="192x192" type="image/png" />
-        <link rel="shortcut icon" href="/R-logo-blue.png" />
-        <link
-          rel="apple-touch-icon"
-          href="/R-logo-blue.png"
-        />
+        {/* Favicon - Clean, optimized for Google */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="16x16" />
+        <link rel="apple-touch-icon" href="/R-logo-blue.png" />
         <link rel="manifest" href="/site.webmanifest" />
 
         {/* Preconnect for performance */}

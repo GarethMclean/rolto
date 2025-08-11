@@ -77,10 +77,30 @@ model WebsiteLead {
   company       String
   companyWebsite String? @map(name: "company_website")
   source        String?  @default("waitlist")
+  referralCode  String   @unique @default(cuid()) @map(name: "referral_code")
+  referredBy    String?  @map(name: "referred_by")
+  referralCount Int      @default(0) @map(name: "referral_count")
   createdAt     DateTime @default(now()) @map(name: "created_at")
   updatedAt     DateTime @default(now()) @map(name: "updated_at")
 
+  // Referral relationships
+  referrals Referral[] @relation("Referrer")
+  referredFrom Referral? @relation("Referred")
+
   @@map(name: "website_leads")
+}
+
+model Referral {
+  id            String   @id @default(cuid())
+  referrerId    String   @map(name: "referrer_id")
+  referredId    String   @unique @map(name: "referred_id")
+  createdAt     DateTime @default(now()) @map(name: "created_at")
+  
+  referrer      WebsiteLead @relation("Referrer", fields: [referrerId], references: [id])
+  referred      WebsiteLead @relation("Referred", fields: [referredId], references: [id])
+
+  @@unique([referrerId, referredId])
+  @@map(name: "referrals")
 }
 
 model VerificationToken {

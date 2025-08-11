@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Pool } from 'pg';
+import { sendWaitlistConfirmationEmail } from "@/lib/brevo";
+import { env } from "@/env.mjs";
 
 // Create a connection pool
 const pool = new Pool({
@@ -14,9 +16,9 @@ export async function POST(request: NextRequest) {
     console.log("DATABASE_URL starts with:", process.env.DATABASE_URL?.substring(0, 20) + "...");
     
     const body = await request.json();
-    const { fullName, email, company, companyWebsite, source } = body;
+    const { fullName, email, company, companyWebsite, source, referralCode } = body;
 
-    console.log("Received data:", { fullName, email, company, companyWebsite, source });
+    console.log("Received data:", { fullName, email, company, companyWebsite, source, referralCode });
 
     // Validate required fields
     if (!fullName || !email || !company) {
@@ -68,23 +70,46 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Generate a unique ID
-      const id = `lead_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      // Handle referral tracking
+      let referredBy = null;
+      if (referralCode) {
+        // Find the referrer
+        const referrerResult = await client.query(
+          'SELECT id FROM website_leads WHERE referral_code = $1',
+          [referralCode]
+        );
+        
+        if (referrerResult.rows.length > 0) {
+          referredBy = referrerResult.rows[0].id;
+          
+          // Update referrer's referral count
+          await client.query(
+            'UPDATE website_leads SET referral_count = referral_count + 1 WHERE id = $1',
+            [referredBy]
+          );
+        }
+      }
 
-      console.log("Inserting new lead with ID:", id);
+      // Generate a unique ID and referral code
+      const id = `lead_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const newReferralCode = `ref_${Math.random().toString(36).substr(2, 9)}`;
+
+      console.log("Inserting new lead with ID:", id, "and referral code:", newReferralCode);
 
       // Create new lead
       const result = await client.query(
-        `INSERT INTO website_leads (id, full_name, email, company, company_website, source)
-         VALUES ($1, $2, $3, $4, $5, $6)
-         RETURNING id, email, company, source, created_at`,
+        `INSERT INTO website_leads (id, full_name, email, company, company_website, source, referral_code, referred_by)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+         RETURNING id, email, company, source, referral_code, created_at`,
         [
           id,
           fullName.trim(),
           email.toLowerCase().trim(),
           company.trim(),
           cleanedWebsite,
-          source || "waitlist"
+          source || "waitlist",
+          newReferralCode,
+          referredBy
         ]
       );
 
@@ -97,14 +122,37 @@ export async function POST(request: NextRequest) {
         email: newLead.email,
         company: newLead.company,
         source: newLead.source,
+        referralCode: newLead.referral_code,
         timestamp: newLead.created_at,
       });
+
+      // Send confirmation email
+      try {
+        const firstName = fullName.split(' ')[0];
+        const referralLink = `${env.NEXT_PUBLIC_APP_URL}?ref=${newReferralCode}`;
+        
+        const emailResult = await sendWaitlistConfirmationEmail(
+          email,
+          firstName,
+          referralLink
+        );
+
+        if (emailResult.success) {
+          console.log("Confirmation email sent successfully to:", email);
+        } else {
+          console.error("Failed to send confirmation email to:", email);
+        }
+      } catch (emailError) {
+        console.error("Error sending confirmation email:", emailError);
+        // Don't fail the lead submission if email fails
+      }
 
       return NextResponse.json(
         {
           success: true,
           message: "Lead captured successfully",
           leadId: newLead.id,
+          referralCode: newLead.referral_code,
         },
         { status: 201 },
       );
