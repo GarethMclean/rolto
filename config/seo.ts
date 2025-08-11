@@ -40,7 +40,7 @@ export const structuredData = {
     "@type": "Organization",
     name: "Rolto",
     url: "https://rolto.io",
-    logo: "https://rolto.io/_static/og.jpg",
+    logo: "https://rolto.io/og.png",
     description: "AI-powered conversational platform that transforms websites into intelligent helpdesks",
     sameAs: [
       "https://twitter.com/rolto_ai",
@@ -128,7 +128,7 @@ export const structuredData = {
       name: "Rolto",
       logo: {
         "@type": "ImageObject",
-        url: "https://rolto.io/_static/og.jpg",
+        url: "https://rolto.io/og.png",
       },
     },
     datePublished: article.publishedDate,
