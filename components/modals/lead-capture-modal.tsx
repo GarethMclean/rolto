@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,7 @@ export default function LeadCaptureModal({
   onClose,
 }: LeadCaptureModalProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -34,6 +35,15 @@ export default function LeadCaptureModal({
     company: "",
     companyWebsite: "",
   });
+
+  // Get referral code from URL if present
+  const referralCode = searchParams.get("ref");
+
+  useEffect(() => {
+    if (referralCode) {
+      console.log("Referral code detected:", referralCode);
+    }
+  }, [referralCode]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,13 +60,19 @@ export default function LeadCaptureModal({
           email: formData.email,
           company: formData.company,
           companyWebsite: formData.companyWebsite,
+          referralCode: referralCode, // Include referral code if present
         }),
       });
 
       if (response.ok) {
         const result = await response.json();
         setIsSuccess(true);
-        toast.success("Successfully joined the waitlist!", {
+        
+        const successMessage = referralCode 
+          ? "Successfully joined the waitlist with referral!"
+          : "Successfully joined the waitlist!";
+        
+        toast.success(successMessage, {
           description: "We'll notify you as soon as Rolto launches.",
         });
 

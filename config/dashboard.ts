@@ -28,6 +28,12 @@ export const sidebarLinks: SidebarNavItem[] = [
         authorizeOnly: UserRole.ADMIN,
       },
       {
+        href: "/admin/referrals",
+        icon: "users",
+        title: "Referrals",
+        authorizeOnly: UserRole.ADMIN,
+      },
+      {
         href: "#/dashboard/posts",
         icon: "post",
         title: "User Posts",
