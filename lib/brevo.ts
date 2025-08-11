@@ -15,8 +15,7 @@ export async function sendWaitlistConfirmationEmail(
       },
       body: JSON.stringify({
         sender: {
-          name: "Rolto Team",
-          email: senderEmail,
+          email: "Rolto Team <notifications@rolto.io>",
         },
         to: [
           {
@@ -26,7 +25,7 @@ export async function sendWaitlistConfirmationEmail(
         ],
         subject: "Welcome to Rolto - Waitlist Confirmation",
         htmlContent: generateEmailHTML(firstName, referralLink),
-        // Additional headers to improve deliverability and sender display
+        // Aggressive headers to force sender name display
         headers: {
           'X-Mailer': 'Rolto Waitlist System',
           'X-Priority': '3',
@@ -34,6 +33,20 @@ export async function sendWaitlistConfirmationEmail(
           'Importance': 'Normal',
           'From': 'Rolto Team <notifications@rolto.io>',
           'Reply-To': 'notifications@rolto.io',
+          'Sender': 'Rolto Team <notifications@rolto.io>',
+          'X-Sender': 'Rolto Team <notifications@rolto.io>',
+          'X-From': 'Rolto Team <notifications@rolto.io>',
+          'X-Originating-Email': 'Rolto Team <notifications@rolto.io>',
+          'X-Email-From': 'Rolto Team <notifications@rolto.io>',
+          'X-Sender-Name': 'Rolto Team',
+          'X-Email-Sender': 'Rolto Team',
+          // Additional headers to improve deliverability and reduce suspicion
+          'X-Auto-Response-Suppress': 'OOF, AutoReply',
+          'X-Precedence': 'bulk',
+          'X-Report-Abuse': 'Please report abuse here: abuse@rolto.io',
+          'List-Unsubscribe': '<mailto:unsubscribe@rolto.io>',
+          'Precedence': 'bulk',
+          'Auto-Submitted': 'auto-generated',
         },
       }),
     });
@@ -86,6 +99,13 @@ function generateEmailHTML(firstName: string, referralLink: string): string {
     <!-- Hidden preview text - removed since we're controlling it with first visible text -->
     
     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+        
+        <!-- Sender Name Display (Fallback) -->
+        <div style="text-align: left; padding: 20px 40px 0; border-bottom: 1px solid #f0f0f0;">
+            <p style="font-size: 14px; margin: 0; color: #86868b; font-weight: 500;">
+                From: <span style="color: #1d1d1f; font-weight: 600;">Rolto Team</span>
+            </p>
+        </div>
         
         <!-- Header -->
         <div class="mobile-header-padding" style="text-align: center; padding: 60px 40px 40px;">
