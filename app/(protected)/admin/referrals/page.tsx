@@ -18,7 +18,7 @@ export default function ReferralsPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Leads</CardTitle>
-            <Icons.users className="h-4 w-4 text-muted-foreground" />
+            <Icons.users className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">Loading...</div>
@@ -30,7 +30,7 @@ export default function ReferralsPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Referrals</CardTitle>
-            <Icons.share className="h-4 w-4 text-muted-foreground" />
+            <Icons.share className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">Loading...</div>
@@ -42,7 +42,7 @@ export default function ReferralsPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Conversion Rate</CardTitle>
-            <Icons.trendingUp className="h-4 w-4 text-muted-foreground" />
+            <Icons.trendingUp className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">Loading...</div>
@@ -54,7 +54,7 @@ export default function ReferralsPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Top Referrer</CardTitle>
-            <Icons.star className="h-4 w-4 text-muted-foreground" />
+            <Icons.star className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">Loading...</div>

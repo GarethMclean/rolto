@@ -63,7 +63,7 @@ export default function ReferralsTable() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
-        <Icons.spinner className="h-8 w-8 animate-spin" />
+        <Icons.spinner className="size-8 animate-spin" />
       </div>
     );
   }
@@ -75,7 +75,7 @@ export default function ReferralsTable() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Leads</CardTitle>
-            <Icons.users className="h-4 w-4 text-muted-foreground" />
+            <Icons.users className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalLeads}</div>
@@ -87,7 +87,7 @@ export default function ReferralsTable() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Referrals</CardTitle>
-            <Icons.share className="h-4 w-4 text-muted-foreground" />
+            <Icons.share className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalReferrals}</div>
@@ -99,7 +99,7 @@ export default function ReferralsTable() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Conversion Rate</CardTitle>
-            <Icons.trendingUp className="h-4 w-4 text-muted-foreground" />
+            <Icons.trendingUp className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.conversionRate.toFixed(1)}%</div>
@@ -111,7 +111,7 @@ export default function ReferralsTable() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Top Referrer</CardTitle>
-            <Icons.star className="h-4 w-4 text-muted-foreground" />
+            <Icons.star className="size-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.topReferrer.count}</div>
@@ -131,7 +131,7 @@ export default function ReferralsTable() {
           className="max-w-sm"
         />
         <Button variant="outline" onClick={fetchReferrals}>
-          <Icons.refresh className="h-4 w-4" />
+          <Icons.refresh className="size-4" />
         </Button>
       </div>
 
@@ -190,8 +190,8 @@ export default function ReferralsTable() {
       </div>
 
       {filteredReferrals.length === 0 && (
-        <div className="text-center py-8">
-          <Icons.users className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+        <div className="py-8 text-center">
+          <Icons.users className="mx-auto mb-4 size-12 text-muted-foreground" />
           <p className="text-muted-foreground">
             {searchTerm ? "No referrals found matching your search." : "No referrals yet."}
           </p>

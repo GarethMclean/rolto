@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,13 +34,7 @@ export default function ReferralStats({ referralCode }: ReferralStatsProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (referralCode) {
-      fetchReferralStats();
-    }
-  }, [referralCode]);
-
-  const fetchReferralStats = async () => {
+  const fetchReferralStats = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await fetch(`/api/referrals/${referralCode}`);
@@ -58,7 +52,13 @@ export default function ReferralStats({ referralCode }: ReferralStatsProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [referralCode]);
+
+  useEffect(() => {
+    if (referralCode) {
+      fetchReferralStats();
+    }
+  }, [referralCode, fetchReferralStats]);
 
   const copyReferralLink = async () => {
     const referralLink = `${window.location.origin}?ref=${referralCode}`;
@@ -77,7 +77,7 @@ export default function ReferralStats({ referralCode }: ReferralStatsProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Icons.spinner className="h-5 w-5 animate-spin" />
+            <Icons.spinner className="size-5 animate-spin" />
             Loading referral stats...
           </CardTitle>
         </CardHeader>
@@ -111,7 +111,7 @@ export default function ReferralStats({ referralCode }: ReferralStatsProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Icons.users className="h-5 w-5" />
+            <Icons.users className="size-5" />
             Your Referral Stats
           </CardTitle>
           <CardDescription>
@@ -158,7 +158,7 @@ export default function ReferralStats({ referralCode }: ReferralStatsProps) {
               className="font-mono text-sm"
             />
             <Button onClick={copyReferralLink} size="sm">
-              <Icons.copy className="h-4 w-4" />
+              <Icons.copy className="size-4" />
             </Button>
           </div>
           <p className="text-sm text-muted-foreground">
@@ -171,7 +171,7 @@ export default function ReferralStats({ referralCode }: ReferralStatsProps) {
       {stats.referrals.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle>People You've Referred</CardTitle>
+            <CardTitle>People You&apos;ve Referred</CardTitle>
             <CardDescription>
               {stats.referrals.length} person{stats.referrals.length !== 1 ? 's' : ''} joined through your referral
             </CardDescription>
@@ -211,9 +211,9 @@ export default function ReferralStats({ referralCode }: ReferralStatsProps) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-center py-8">
-              <Icons.users className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-              <p className="text-muted-foreground mb-4">
+            <div className="py-8 text-center">
+              <Icons.users className="mx-auto mb-4 size-12 text-muted-foreground" />
+              <p className="mb-4 text-muted-foreground">
                 Share your referral link with colleagues, friends, and your network
               </p>
               <Button onClick={copyReferralLink}>

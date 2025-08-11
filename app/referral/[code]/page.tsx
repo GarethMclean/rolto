@@ -42,10 +42,10 @@ export default async function ReferralPage({ params }: ReferralPageProps) {
               <Icons.users className="size-10 text-blue-600 dark:text-blue-400" />
             </div>
             <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
-              You've been invited to join Rolto!
+              You&apos;ve been invited to join Rolto!
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300">
-              {referralInfo.referrer.fullName} from {referralInfo.referrer.company} thinks you'd love Rolto
+              {referralInfo.referrer.fullName} from {referralInfo.referrer.company} thinks you&apos;d love Rolto
             </p>
           </div>
 
