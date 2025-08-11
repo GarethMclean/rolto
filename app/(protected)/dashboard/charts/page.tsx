@@ -10,11 +10,12 @@ import { RadialShapeChart } from "@/components/charts/radial-shape-chart";
 import { RadialStackedChart } from "@/components/charts/radial-stacked-chart";
 import { RadialTextChart } from "@/components/charts/radial-text-chart";
 import { DashboardHeader } from "@/components/dashboard/header";
+import { Metadata } from "next";
 
-export const metadata = constructMetadata({
-  title: "Charts – SaaS Starter",
+export const metadata: Metadata = {
+  title: "Charts – Rolto",
   description: "List of charts by shadcn-ui",
-});
+};
 
 export default function ChartsPage() {
   return (

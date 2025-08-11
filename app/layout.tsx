@@ -101,6 +101,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="icon" href="/R-logo-blue.png" sizes="32x32" type="image/png" />
         <link rel="icon" href="/R-logo-blue.png" sizes="48x48" type="image/png" />
         <link rel="icon" href="/R-logo-blue.png" sizes="192x192" type="image/png" />
+        <link rel="shortcut icon" href="/R-logo-blue.png" />
         <link
           rel="apple-touch-icon"
           href="/R-logo-blue.png"

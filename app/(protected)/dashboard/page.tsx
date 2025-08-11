@@ -3,11 +3,12 @@ import { constructMetadata } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
+import { Metadata } from "next";
 
-export const metadata = constructMetadata({
-  title: "Dashboard – SaaS Starter",
+export const metadata: Metadata = {
+  title: "Dashboard – Rolto",
   description: "Create and manage content.",
-});
+};
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
