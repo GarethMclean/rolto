@@ -161,7 +161,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               "@type": "Organization",
               name: "Rolto",
               url: "https://rolto.io",
-              logo: "https://rolto.io/_static/og.jpg",
+              logo: "https://rolto.io/og.png",
               description: "AI-powered website helpdesk solution",
               sameAs: [
                 "https://twitter.com/rolto_ai",
@@ -248,7 +248,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 "Human handoff capabilities",
                 "CRM integration",
               ],
-              screenshot: "https://rolto.io/_static/og.jpg",
+              screenshot: "https://rolto.io/og.png",
               softwareVersion: "1.0.0",
               releaseNotes:
                 "Initial release with core conversational AI functionality",

@@ -8,7 +8,7 @@ export const siteConfig: SiteConfig = {
   description:
     "Transform any website into an intelligent helpdesk with Rolto's embeddable AI assistant. Get instant, context-aware answers from your content with just one line of code.",
   url: site_url,
-  ogImage: `${site_url}/_static/og.jpg`,
+  ogImage: `${site_url}/og.png`,
   links: {
     twitter: "https://twitter.com/rolto_ai",
   },
