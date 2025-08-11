@@ -129,7 +129,41 @@ export async function POST(request: NextRequest) {
       // Send confirmation email
       try {
         const firstName = fullName.split(' ')[0];
-        const referralLink = `${env.NEXT_PUBLIC_APP_URL}?ref=${newReferralCode}`;
+        
+        // Ensure we use the correct domain for referral links
+        let baseUrl = env.NEXT_PUBLIC_APP_URL;
+        
+        // Check if the URL is localhost, 127.0.0.1, or any other local development URL
+        if (!baseUrl || 
+            baseUrl.includes('localhost') || 
+            baseUrl.includes('127.0.0.1') || 
+            baseUrl.includes('0.0.0.0') ||
+            baseUrl.includes('192.168.') ||
+            baseUrl.includes('10.0.') ||
+            baseUrl.includes('172.16.') ||
+            baseUrl.includes('172.17.') ||
+            baseUrl.includes('172.18.') ||
+            baseUrl.includes('172.19.') ||
+            baseUrl.includes('172.20.') ||
+            baseUrl.includes('172.21.') ||
+            baseUrl.includes('172.22.') ||
+            baseUrl.includes('172.23.') ||
+            baseUrl.includes('172.24.') ||
+            baseUrl.includes('172.25.') ||
+            baseUrl.includes('172.26.') ||
+            baseUrl.includes('172.27.') ||
+            baseUrl.includes('172.28.') ||
+            baseUrl.includes('172.29.') ||
+            baseUrl.includes('172.30.') ||
+            baseUrl.includes('172.31.') ||
+            baseUrl.startsWith('http://')) {
+          // Fallback to production domain if any local/development URL is detected
+          baseUrl = 'https://rolto.io';
+        }
+        
+        const referralLink = `${baseUrl}?ref=${newReferralCode}`;
+        
+        console.log("Generated referral link:", referralLink);
         
         const emailResult = await sendWaitlistConfirmationEmail(
           email,
