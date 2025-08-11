@@ -15,7 +15,8 @@ export async function sendWaitlistConfirmationEmail(
       },
       body: JSON.stringify({
         sender: {
-          email: "Rolto Team <notifications@rolto.io>",
+          name: "Rolto Team",
+          email: "notifications@rolto.io",
         },
         to: [
           {
@@ -32,7 +33,7 @@ export async function sendWaitlistConfirmationEmail(
           'X-MSMail-Priority': 'Normal',
           'Importance': 'Normal',
           'From': 'Rolto Team <notifications@rolto.io>',
-          'Reply-To': 'notifications@rolto.io',
+          'Reply-To': 'contact@rolto.io',
           'Sender': 'Rolto Team <notifications@rolto.io>',
           'X-Sender': 'Rolto Team <notifications@rolto.io>',
           'X-From': 'Rolto Team <notifications@rolto.io>',
