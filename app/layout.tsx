@@ -102,19 +102,32 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/* Canonical URL */}
         <link rel="canonical" href="https://rolto.io" />
 
-        {/* Favicon - Clean, optimized for Google */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="32x32" />
-        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="16x16" />
-        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="48x48" />
-        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="96x96" />
-        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="128x128" />
-        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="192x192" />
-        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="512x512" />
-        <link rel="apple-touch-icon" href="/R-logo-blue.png" />
-        <link rel="apple-touch-icon" href="/R-logo-blue.png" sizes="180x180" />
+        {/* Favicon - Theme-Aware with Light/Dark Mode Support */}
+        {/* Light Theme Favicons */}
+        <link rel="icon" href="/favicon-light-16x16.png" media="(prefers-color-scheme: light)" type="image/png" sizes="16x16" />
+        <link rel="icon" href="/favicon-light-32x32.png" media="(prefers-color-scheme: light)" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon-light-96x96.png" media="(prefers-color-scheme: light)" type="image/png" sizes="96x96" />
+        <link rel="icon" href="/favicon-light-192x192.png" media="(prefers-color-scheme: light)" type="image/png" sizes="192x192" />
+        <link rel="icon" href="/favicon-light-512x512.png" media="(prefers-color-scheme: light)" type="image/png" sizes="512x512" />
+        
+        {/* Dark Theme Favicons - White logo for better contrast */}
+        <link rel="icon" href="/favicon-dark-16x16.png" media="(prefers-color-scheme: dark)" type="image/png" sizes="16x16" />
+        <link rel="icon" href="/favicon-dark-32x32.png" media="(prefers-color-scheme: dark)" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon-dark-96x96.png" media="(prefers-color-scheme: dark)" type="image/png" sizes="96x96" />
+        <link rel="icon" href="/favicon-dark-192x192.png" media="(prefers-color-scheme: dark)" type="image/png" sizes="192x192" />
+        <link rel="icon" href="/favicon-dark-512x512.png" media="(prefers-color-scheme: dark)" type="image/png" sizes="512x512" />
+        
+        {/* Fallback favicon for browsers that don't support media queries */}
+        <link rel="icon" href="/favicon-light-96x96.png" type="image/png" sizes="96x96" />
+        
+        {/* Apple Touch Icon */}
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        
+        {/* Web App Manifest */}
         <link rel="manifest" href="/site.webmanifest" />
-        <meta name="msapplication-TileImage" content="/R-logo-blue.png" />
+        
+        {/* Windows Tile */}
+        <meta name="msapplication-TileImage" content="/favicon-light-192x192.png" />
         <meta name="msapplication-TileColor" content="#0370e3" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
