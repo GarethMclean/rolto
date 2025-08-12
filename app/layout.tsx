@@ -106,8 +106,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="32x32" />
         <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="16x16" />
+        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="48x48" />
+        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="96x96" />
+        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="128x128" />
+        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="192x192" />
+        <link rel="icon" href="/R-logo-blue.png" type="image/png" sizes="512x512" />
         <link rel="apple-touch-icon" href="/R-logo-blue.png" />
+        <link rel="apple-touch-icon" href="/R-logo-blue.png" sizes="180x180" />
         <link rel="manifest" href="/site.webmanifest" />
+        <meta name="msapplication-TileImage" content="/R-logo-blue.png" />
+        <meta name="msapplication-TileColor" content="#0370e3" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
 
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
